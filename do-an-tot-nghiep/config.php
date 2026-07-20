@@ -25,3 +25,4 @@ define('PAYMENT_BANK_CODE', getenv('PAYMENT_BANK_CODE') ?: '');
 define('PAYMENT_ACCOUNT_NO', getenv('PAYMENT_ACCOUNT_NO') ?: '');
 define('PAYMENT_ACCOUNT_NAME', getenv('PAYMENT_ACCOUNT_NAME') ?: '');
 define('PAYMENT_WEBHOOK_SECRET', getenv('PAYMENT_WEBHOOK_SECRET') ?: '');
+define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: 'tn8018074@gmail.com');

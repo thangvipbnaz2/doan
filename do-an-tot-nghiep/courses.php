@@ -1762,7 +1762,7 @@
                 <li>Đề mô phỏng cùng chiến thuật làm bài</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>4.290.000₫</strong><del>6.000.000₫</del></div><span
+                <div class="cm-course-price__row"><strong>Miễn phí</strong><del>4.290.000₫</del></div><span
                   class="cm-course-price__save">Tiết kiệm 1.710.000₫</span>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-6-chuyen-sau">Xem lộ
@@ -1882,7 +1882,7 @@
                   <td>60 bài</td>
                   <td>5.000+</td>
                   <td>24 tuần</td>
-                  <td><strong>4.290.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-6-chuyen-sau">Xem khóa →</a></td>
                 </tr>
               </tbody>

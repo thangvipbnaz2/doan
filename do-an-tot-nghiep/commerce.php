@@ -62,19 +62,39 @@ function commerceQrUrl(string $orderCode, float $amount): string
 
 function commerceCompletePayment(PDO $conn, int $orderId, string $transactionId, string $method, ?string $rawData, ?int $adminId): array
 {
+    if ($orderId <= 0 || trim($transactionId) === '') {
+        throw new RuntimeException('Missing payment transaction ID.');
+    }
+
     $conn->beginTransaction();
     try {
-        $s = $conn->prepare('SELECT * FROM orders WHERE id=? AND status=? FOR UPDATE');
-        $s->execute([$orderId, 'pending']);
+        $s = $conn->prepare('SELECT * FROM orders WHERE id=? FOR UPDATE');
+        $s->execute([$orderId]);
         $order = $s->fetch();
+        // Webhook providers retry deliveries. A retry for the same bank
+        // transaction must not create another payment, invoice or enrolment.
+        if ($order && $order['status'] === 'paid') {
+            $payment = $conn->prepare("SELECT provider_transaction_id FROM payments WHERE order_id=? AND status='paid' LIMIT 1");
+            $payment->execute([$orderId]);
+            $savedTransactionId = (string) $payment->fetchColumn();
+            if ($savedTransactionId !== '' && !hash_equals($savedTransactionId, trim($transactionId))) {
+                throw new RuntimeException('Order was paid by a different transaction.');
+            }
+            $conn->commit();
+            return commerceOrderDetails($conn, $orderId);
+        }
         if (!$order)
             throw new RuntimeException('Đơn hàng không hợp lệ hoặc đã xử lý.');
+
+        if ($order['status'] !== 'pending') {
+            throw new RuntimeException('Order is not awaiting payment.');
+        }
 
         $now = date('Y-m-d H:i:s');
         $invNumber = 'INV-' . strtoupper(bin2hex(random_bytes(6)));
 
-        $conn->prepare("UPDATE orders SET status='paid', paid_at=?, invoice_number=? WHERE id=?")
-            ->execute([$now, $invNumber, $orderId]);
+        $conn->prepare("UPDATE orders SET status='paid', paid_at=? WHERE id=?")
+            ->execute([$now, $orderId]);
 
         $conn->prepare("INSERT INTO payments (order_id, provider, provider_transaction_id, amount, status, raw_payload, confirmed_by, confirmed_at) VALUES (?,?,?,?,?,?,?,?)")
             ->execute([$orderId, $method, $transactionId, $order['amount'], 'paid', $rawData, $adminId, $now]);
@@ -119,10 +139,13 @@ function commerceSendInvoiceEmail(PDO $conn, array $order): bool
         $fromName = defined('SMTP_FROM_NAME') ? SMTP_FROM_NAME : 'HànNgữ';
         $mail->setFrom($fromEmail, $fromName);
 
-        $userEmail = $order['email'] ?? '';
+        $userEmail = trim((string) ($order['email'] ?? ''));
         $userName = ($order['display_name'] ?? $order['username'] ?? '');
-        if (!$userEmail) return false;
-        $mail->addAddress($userEmail, $userName);
+        $adminEmail = trim((string) (defined('ADMIN_NOTIFICATION_EMAIL') ? ADMIN_NOTIFICATION_EMAIL : ''));
+        if (!$userEmail && !$adminEmail) return false;
+        if ($userEmail) $mail->addAddress($userEmail, $userName);
+        if ($adminEmail && strcasecmp($adminEmail, $userEmail) !== 0)
+            $mail->addAddress($adminEmail, 'HanNgu admin');
 
         $invoiceLink = SITE_URL . '/invoice.php?order=' . $order['id'];
         $mail->isHTML(true);

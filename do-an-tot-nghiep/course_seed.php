@@ -53,7 +53,8 @@ function commerceDefaultCourseCatalog(): array
         [
             'slug' => 'hsk-6-chuyen-sau',
             'title' => 'HSK 6 · Chuyên sâu & luyện kỹ năng',
-            'price' => 4290000,
+            // Mở miễn phí để kiểm tra nội dung khóa HSK 6.
+            'price' => 0,
             'short_description' => '10 chuyên đề chuyên sâu về tư tưởng, khoa học, lịch sử, quản lý, công nghệ, y học và toàn cầu hóa.',
             'description' => "Khóa HSK 6 dành cho người học trình độ cao muốn nâng năng lực đọc hiểu, tổng hợp thông tin và diễn đạt ý phức tạp. Giáo trình gồm 10 chuyên đề mở rộng từ triết học, khoa học, lịch sử đến quản lý, công nghệ và toàn cầu hóa.\n\nBạn làm quen với các cấu trúc mang tính lập luận như 从…角度来看, 之所以…是因为…, 由此可见, 尽管如此, 与其…不如…, 基于…, 以至于… và 从…出发. Mỗi chuyên đề đi kèm nội dung từ vựng, ví dụ và bài học tương tác để ôn tập có hệ thống.\n\nHoàn thành lộ trình, bạn có thể tiếp cận văn bản khó hơn, nêu quan điểm có lập luận và chủ động ôn luyện kỹ năng ở trình độ HSK cao.",
             'hsk_level' => 6,

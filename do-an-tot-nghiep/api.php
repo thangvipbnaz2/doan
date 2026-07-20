@@ -1683,7 +1683,7 @@ if ($action === 'get_course') {
         echo json_encode(['success' => false, 'message' => 'Không tìm thấy khóa học.']);
         exit;
     }
-    $stmt = $conn->prepare('SELECT l.id,l.title,l.level,l.lesson_num,l.description FROM course_lessons cl JOIN lessons l ON l.id=cl.lesson_id WHERE cl.course_id=? ORDER BY cl.sort_order,l.lesson_num');
+    $stmt = $conn->prepare('SELECT l.id,l.title,l.level,l.lesson_num,l.description,l.vocab_count,l.grammar,l.type FROM course_lessons cl JOIN lessons l ON l.id=cl.lesson_id WHERE cl.course_id=? ORDER BY cl.sort_order,l.lesson_num');
     $stmt->execute([$course['id']]);
     $course['lessons'] = $stmt->fetchAll();
     $course['enrolled'] = false;
@@ -1711,8 +1711,10 @@ if ($action === 'create_order') {
         $owned->execute([$userId, $courseId]);
         if ($owned->fetchColumn())
             throw new RuntimeException('Bạn đã sở hữu khóa học này.');
-        $old = $conn->prepare("SELECT id FROM orders WHERE user_id=? AND course_id=? AND status='pending' AND expires_at > NOW() ORDER BY id DESC LIMIT 1");
-        $old->execute([$userId, $courseId]);
+        // Never reuse an old pending order when an administrator has changed
+        // the course price. Its VietQR image would otherwise contain the old amount.
+        $old = $conn->prepare("SELECT id FROM orders WHERE user_id=? AND course_id=? AND amount=? AND status='pending' AND expires_at > NOW() ORDER BY id DESC LIMIT 1");
+        $old->execute([$userId, $courseId, $course['price']]);
         $orderId = $old->fetchColumn();
         if (!$orderId) {
             $code = commerceOrderCode();
@@ -1721,6 +1723,17 @@ if ($action === 'create_order') {
             $orderId = (int) $conn->lastInsertId();
         }
         $order = commerceOrderDetails($conn, (int) $orderId);
+        // Free courses are enrolled immediately; no bank transfer or QR code is needed.
+        if ((float) $course['price'] <= 0 && $order['status'] === 'pending') {
+            $order = commerceCompletePayment(
+                $conn,
+                (int) $orderId,
+                'FREE-' . $order['order_code'],
+                'free_course',
+                json_encode(['source' => 'free_course'], JSON_UNESCAPED_UNICODE),
+                null
+            );
+        }
         $order['qr_url'] = commerceQrUrl($order['order_code'], (float) $order['amount']);
         echo json_encode(['success' => true, 'order' => $order]);
     } catch (Throwable $e) {

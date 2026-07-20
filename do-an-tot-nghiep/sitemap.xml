@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://hanngu.local/index.php</loc><priority>1.0</priority></url>
+  <url><loc>https://hanngu.local/lessons.php</loc><priority>0.9</priority></url>
+  <url><loc>https://hanngu.local/flashcard.php</loc><priority>0.8</priority></url>
+  <url><loc>https://hanngu.local/practice.php</loc><priority>0.8</priority></url>
+  <url><loc>https://hanngu.local/dictionary.php</loc><priority>0.8</priority></url>
+  <url><loc>https://hanngu.local/notebook.php</loc><priority>0.7</priority></url>
+  <url><loc>https://hanngu.local/community.php</loc><priority>0.7</priority></url>
+  <url><loc>https://hanngu.local/radicals.php</loc><priority>0.7</priority></url>
+  <url><loc>https://hanngu.local/leaderboard.php</loc><priority>0.6</priority></url>
+  <url><loc>https://hanngu.local/pvp.php</loc><priority>0.6</priority></url>
+  <url><loc>https://hanngu.local/ai_image.php</loc><priority>0.6</priority></url>
+  <url><loc>https://hanngu.local/live_chat.php</loc><priority>0.6</priority></url>
+  <url><loc>https://hanngu.local/login.php</loc><priority>0.5</priority></url>
+  <url><loc>https://hanngu.local/register.php</loc><priority>0.5</priority></url>
+</urlset>

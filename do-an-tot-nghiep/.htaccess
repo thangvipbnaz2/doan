@@ -1,0 +1,17 @@
+RewriteEngine On
+
+# Error pages
+ErrorDocument 404 /404.php
+
+# Block sensitive files
+<FilesMatch "\.(env|log|sql|md|gitignore)$">
+  Require all denied
+</FilesMatch>
+
+# Block directory listing
+Options -Indexes
+
+# Cache static assets
+<FilesMatch "\.(css|js|ico|svg|woff2)$">
+  Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>

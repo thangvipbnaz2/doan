@@ -1,4 +1,6 @@
 <?php
+function escape($str) { return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8'); }
+
 $envFile = __DIR__ . '/.env';
 if (file_exists($envFile)) {
     $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);

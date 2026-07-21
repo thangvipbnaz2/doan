@@ -9,7 +9,6 @@ $userId = $_SESSION['user_id'] ?? 0;
 
 $baseUrl = 'exam_mvc.php';
 
-function escape($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
 
 switch ($action) {
     case 'list':

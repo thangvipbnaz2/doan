@@ -53,12 +53,12 @@ if ($query) {
 
 $recentSearches = [];
 if ($userId) {
-    $recent = $conn->prepare("SELECT DISTINCT query, result_type FROM dictionary_lookup_history WHERE user_id = ? GROUP BY query, result_type ORDER BY MAX(created_at) DESC LIMIT 10");
+    $recent = $conn->prepare("SELECT query, result_type, MAX(created_at) as last_searched FROM dictionary_lookup_history WHERE user_id = ? GROUP BY query, result_type ORDER BY last_searched DESC LIMIT 10");
     $recent->execute([$userId]);
     $recentSearches = $recent->fetchAll();
 }
 
-$radicals = $conn->query("SELECT * FROM radicals ORDER BY strokes, char")->fetchAll();
+$radicals = $conn->query("SELECT * FROM radicals ORDER BY strokes, `char`")->fetchAll();
 $radicalsByCategory = [];
 foreach ($radicals as $r) {
     $cat = $r['category'] ?? 'Khác';

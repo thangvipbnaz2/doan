@@ -18,8 +18,7 @@ $db = $conn;
 
 $baseUrl = 'admin_mvc.php';
 
-function escape($s) { return htmlspecialchars($s ?? '', ENT_QUOTES, 'UTF-8'); }
-function mb_truncate($str, $len = 60) { return mb_strlen($str) > $len ? mb_substr($str, 0, $len) . '...' : $str; }
+if (!function_exists('mb_truncate')) { function mb_truncate($str, $len = 60) { return mb_strlen($str) > $len ? mb_substr($str, 0, $len) . '...' : $str; } }
 
 $sidebarActive = function($check) use ($action) {
     return $action === $check ? 'admin-nav-item--active' : '';

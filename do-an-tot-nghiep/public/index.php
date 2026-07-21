@@ -7,7 +7,7 @@ $url = $_SERVER['REQUEST_URI'] ?? '/';
 $url = parse_url($url, PHP_URL_PATH);
 $url = rtrim($url, '/');
 
-$basePath = '/do-an-tot-nghiep';
+$basePath = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 if (strpos($url, $basePath) === 0) {
     $url = substr($url, strlen($basePath));
 }

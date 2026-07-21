@@ -10,7 +10,7 @@ return [
 
     'session' => [
         'lifetime' => 86400 * 30,
-        'name' => 'HANNGU_SESSION',
+        'name' => 'PHPSESSID',
     ],
 
     'pagination' => [

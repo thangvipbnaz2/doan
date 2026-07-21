@@ -44,11 +44,26 @@ class View
 
     public static function asset(string $path): string
     {
-        return '/do-an-tot-nghiep/' . ltrim($path, '/');
+        return self::baseUrl() . '/' . ltrim($path, '/');
     }
 
     public static function url(string $path = ''): string
     {
-        return '/do-an-tot-nghiep/' . ltrim($path, '/');
+        return self::baseUrl() . '/' . ltrim($path, '/');
+    }
+
+    public static function baseUrl(): string
+    {
+        static $base = null;
+        if ($base === null) {
+            $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+            // In CLI, SCRIPT_NAME may be a full filesystem path
+            if (php_sapi_name() === 'cli' || strpos($scriptName, DIRECTORY_SEPARATOR) !== false) {
+                $base = '';
+            } else {
+                $base = rtrim(dirname($scriptName), '/');
+            }
+        }
+        return $base;
     }
 }

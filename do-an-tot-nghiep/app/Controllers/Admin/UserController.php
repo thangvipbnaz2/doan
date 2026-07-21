@@ -15,7 +15,7 @@ class UserController extends BaseController
         $where = '';
         $params = [];
         if ($search !== '') {
-            $where = 'WHERE fullname LIKE ? OR email LIKE ? OR username LIKE ?';
+            $where = 'WHERE display_name LIKE ? OR email LIKE ? OR username LIKE ?';
             $params = ["%{$search}%", "%{$search}%", "%{$search}%"];
         }
 

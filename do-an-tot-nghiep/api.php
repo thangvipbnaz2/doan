@@ -1243,18 +1243,16 @@ if ($action === 'get_study_stats') {
     $userId = $_GET['user_id'] ?? 'default_user';
     $days = min(90, max(7, intval($_GET['days'] ?? 30)));
 
-    // Total words studied (distinct vocab in progress or study_logs)
-    $total = $conn->prepare("SELECT COUNT(DISTINCT vocab_id) as count FROM study_logs WHERE user_id = ? AND vocab_id IS NOT NULL");
+    $total = $conn->prepare("SELECT COUNT(DISTINCT reference_id) as count FROM study_logs WHERE user_id = ? AND reference_id IS NOT NULL AND activity_type = 'vocab'");
     $total->execute([$userId]);
     $totalStudied = $total->fetch()['count'];
 
-    // Daily activity (last N days)
     $daily = $conn->prepare("
         SELECT DATE(created_at) as date, 
                COUNT(*) as total,
-               SUM(CASE WHEN action = 'review' AND score = 1 THEN 1 ELSE 0 END) as reviewed,
-               SUM(CASE WHEN action = 'write' THEN 1 ELSE 0 END) as written,
-               SUM(CASE WHEN action = 'view' THEN 1 ELSE 0 END) as viewed
+               SUM(CASE WHEN activity_type IN ('vocab','flashcard') AND score >= 1 THEN 1 ELSE 0 END) as reviewed,
+               SUM(CASE WHEN activity_type = 'writing' THEN 1 ELSE 0 END) as written,
+               SUM(CASE WHEN activity_type = 'lesson' THEN 1 ELSE 0 END) as viewed
         FROM study_logs 
         WHERE user_id = ? AND created_at >= DATE_SUB(NOW(), INTERVAL ? DAY)
         GROUP BY DATE(created_at)
@@ -1263,7 +1261,6 @@ if ($action === 'get_study_stats') {
     $daily->execute([$userId, $days]);
     $dailyData = $daily->fetchAll();
 
-    // Streak from daily_streak
     $streak = $conn->prepare("SELECT streak_date FROM daily_streak WHERE user_id = ? ORDER BY streak_date DESC");
     $streak->execute([$userId]);
     $dates = $streak->fetchAll(PDO::FETCH_COLUMN);
@@ -1278,25 +1275,22 @@ if ($action === 'get_study_stats') {
         }
     }
 
-    // Total reviews done
-    $reviews = $conn->prepare("SELECT COUNT(*) as count FROM study_logs WHERE user_id = ? AND action = 'review'");
+    $reviews = $conn->prepare("SELECT COUNT(*) as count FROM study_logs WHERE user_id = ? AND activity_type IN ('vocab','flashcard')");
     $reviews->execute([$userId]);
 
-    // Words by level
     $byLevel = $conn->prepare("
-        SELECT v.level, COUNT(DISTINCT s.vocab_id) as count 
+        SELECT v.level, COUNT(DISTINCT s.reference_id) as count 
         FROM study_logs s 
-        JOIN vocab v ON v.id = s.vocab_id 
-        WHERE s.user_id = ? AND s.vocab_id IS NOT NULL
+        JOIN vocab v ON v.id = s.reference_id 
+        WHERE s.user_id = ? AND s.reference_id IS NOT NULL AND s.activity_type = 'vocab'
         GROUP BY v.level ORDER BY v.level
     ");
     $byLevel->execute([$userId]);
 
-    // Recent activity
     $recent = $conn->prepare("
-        SELECT s.action, s.score, s.created_at, v.hanzi, v.pinyin, v.meaning
+        SELECT s.activity_type as action, s.score, s.created_at, v.hanzi, v.pinyin, v.meaning
         FROM study_logs s 
-        LEFT JOIN vocab v ON v.id = s.vocab_id 
+        LEFT JOIN vocab v ON v.id = s.reference_id 
         WHERE s.user_id = ? 
         ORDER BY s.created_at DESC LIMIT 20
     ");

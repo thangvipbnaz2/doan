@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Helpers\View;
+use App\Helpers\Session;
 
 class Controller
 {
@@ -22,13 +23,19 @@ class Controller
 
     protected function redirect(string $url): void
     {
+        $prefix = rtrim(View::baseUrl(), '/');
+        // Strip any hardcoded base path from legacy code
+        $url = preg_replace('#^/do-an-tot-nghiep#', '', $url);
+        if (str_starts_with($url, '/')) {
+            $url = $prefix . $url;
+        }
         header('Location: ' . $url);
         exit;
     }
 
     protected function back(): void
     {
-        $referer = $_SERVER['HTTP_REFERER'] ?? '/do-an-tot-nghiep';
+        $referer = $_SERVER['HTTP_REFERER'] ?? (View::baseUrl() . '/');
         $this->redirect($referer);
     }
 

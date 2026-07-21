@@ -14,7 +14,7 @@ class BaseController extends Controller
 
         if (!$userId || $role !== 'admin') {
             Session::flash('error', 'Bạn cần đăng nhập với quyền admin để truy cập trang này.');
-            header('Location: /do-an-tot-nghiep/login.php');
+            header('Location: ' . View::baseUrl() . '/login.php');
             exit;
         }
     }

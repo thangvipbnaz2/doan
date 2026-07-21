@@ -25,7 +25,7 @@ class OrderController extends BaseController
         $offset = ($page - 1) * $perPage;
 
         $orders = Database::fetchAll(
-            "SELECT o.*, u.fullname, u.email FROM orders o JOIN users u ON o.user_id = u.id {$where} ORDER BY o.created_at DESC LIMIT {$perPage} OFFSET {$offset}",
+            "SELECT o.*, u.display_name as fullname, u.email FROM orders o JOIN users u ON o.user_id = u.id {$where} ORDER BY o.created_at DESC LIMIT {$perPage} OFFSET {$offset}",
             $params
         );
 
@@ -59,7 +59,7 @@ class OrderController extends BaseController
     public function invoice(int $id): void
     {
         $order = Database::fetch(
-            "SELECT o.*, u.fullname, u.email, u.address FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?",
+            "SELECT o.*, u.display_name as fullname, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?",
             [$id]
         );
         if (!$order) {
@@ -67,7 +67,8 @@ class OrderController extends BaseController
             $this->redirect('/do-an-tot-nghiep/admin/orders');
         }
 
-        $items = Database::fetchAll("SELECT * FROM order_items WHERE order_id = ?", [$id]);
+        $items = Database::fetchAll("SELECT * FROM orders WHERE id = ?", [$id]);
+        $items = $items ? [$items[0]] : [];
 
         $this->adminView('orders/invoice', [
             'order' => $order,

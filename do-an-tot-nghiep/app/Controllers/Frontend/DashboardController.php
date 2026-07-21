@@ -12,7 +12,7 @@ class DashboardController extends Controller
         $userId = Session::get('user_id');
         if (!$userId) {
             Session::flash('error', 'Vui lòng đăng nhập để xem bảng điều khiển.');
-            header('Location: /do-an-tot-nghiep/login.php');
+            header('Location: ' . \App\Helpers\View::baseUrl() . '/login.php');
             exit;
         }
     }

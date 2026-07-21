@@ -49,10 +49,16 @@ class LessonController extends Controller
             );
         }
 
-        $reading = Database::fetch("SELECT * FROM reading_passages WHERE lesson_id = ?", [$id]);
+        $reading = Database::fetch("SELECT * FROM readings WHERE lesson_id = ?", [$id]);
         $listening = Database::fetch("SELECT * FROM listening_exercises WHERE lesson_id = ?", [$id]);
 
-        $exercises = Database::fetchAll("SELECT * FROM exercises WHERE lesson_id = ?", [$id]);
+        $gIds = Database::fetchAll("SELECT id FROM grammar WHERE lesson_id = ?", [$id]);
+        $gIds = array_column($gIds, 'id');
+        $exercises = [];
+        if (!empty($gIds)) {
+            $placeholders = implode(',', array_fill(0, count($gIds), '?'));
+            $exercises = Database::fetchAll("SELECT * FROM grammar_exercises WHERE grammar_id IN ($placeholders) ORDER BY sort_order", $gIds);
+        }
 
         $this->view('frontend/lesson/show', [
             'lesson' => $lesson,

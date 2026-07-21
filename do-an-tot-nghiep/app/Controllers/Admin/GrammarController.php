@@ -53,10 +53,10 @@ class GrammarController extends BaseController
             'lesson_id' => (int) ($_POST['lesson_id'] ?? 0),
             'title' => $_POST['title'] ?? '',
             'formula' => $_POST['formula'] ?? '',
-            'explanation' => $_POST['explanation'] ?? '',
-            'example_cn' => $_POST['example_cn'] ?? '',
-            'example_vi' => $_POST['example_vi'] ?? '',
+            'meaning' => $_POST['meaning'] ?? '',
+            'usage' => $_POST['usage'] ?? '',
             'notes' => $_POST['notes'] ?? '',
+            'sort_order' => (int) ($_POST['sort_order'] ?? 0),
         ];
 
         Database::insert('grammar', $data);
@@ -81,10 +81,10 @@ class GrammarController extends BaseController
             'lesson_id' => (int) ($_POST['lesson_id'] ?? 0),
             'title' => $_POST['title'] ?? '',
             'formula' => $_POST['formula'] ?? '',
-            'explanation' => $_POST['explanation'] ?? '',
-            'example_cn' => $_POST['example_cn'] ?? '',
-            'example_vi' => $_POST['example_vi'] ?? '',
+            'meaning' => $_POST['meaning'] ?? '',
+            'usage' => $_POST['usage'] ?? '',
             'notes' => $_POST['notes'] ?? '',
+            'sort_order' => (int) ($_POST['sort_order'] ?? 0),
         ];
 
         Database::update('grammar', $data, 'id = :id', ['id' => $id]);

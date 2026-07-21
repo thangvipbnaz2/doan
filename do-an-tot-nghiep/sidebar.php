@@ -1,8 +1,10 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
-function sidebarActive(string $page, string $current): string
-{
-    return $current === $page ? ' sidebar__link--active' : '';
+if (!function_exists('sidebarActive')) {
+    function sidebarActive(string $page, string $current): string
+    {
+        return $current === $page ? ' sidebar__link--active' : '';
+    }
 }
 ?>
 <div class="loading-overlay" id="loading-overlay" style="display:none">

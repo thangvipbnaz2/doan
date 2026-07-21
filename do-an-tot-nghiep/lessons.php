@@ -237,7 +237,7 @@
 
     function goToLesson(lessonId, level) {
         showToast(' Đang mở bài học...', 'info', 1000);
-        window.location.href = `lesson.php?level=${level}&lesson=${lessonId}`;
+        window.location.href = `lesson_view.php?id=${lessonId}`;
     }
 
     // Tab switching

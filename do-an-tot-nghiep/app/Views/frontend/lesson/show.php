@@ -95,6 +95,7 @@
 .exercise-item{padding:16px;border:1px solid #e2e8f0;border-radius:12px;margin-bottom:10px}
 .exercise-item .q{font-weight:600;margin-bottom:10px;font-size:.9rem}
 .exercise-options{display:flex;flex-direction:column;gap:6px}
+.matching-grid{display:flex;gap:24px;justify-content:center;margin:8px 0}.matching-col{display:flex;flex-direction:column;gap:6px;min-width:140px}.matching-item{padding:8px 14px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:.2s;font-size:.9rem;text-align:center;background:#fff}.matching-item.selected{border-color:var(--teal);background:var(--teal-light);font-weight:600}.matching-item.correct{border-color:#059669;background:#d1fae5;color:#065f46}.matching-item.wrong{border-color:#dc2626;background:#fef2f2;color:#991b1b}.wrong-sentence{padding:10px 14px;background:#fef2f2;border-left:3px solid #dc2626;border-radius:0 8px 8px 0;margin:8px 0;font-size:.95rem}.grammar-correction textarea,.reading-qa textarea{width:100%;box-sizing:border-box;resize:vertical}
 .exercise-option{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;cursor:pointer;transition:.15s;font-size:.85rem}
 .exercise-option:hover{border-color:var(--teal);background:#f0fdfa}
 .exercise-option.selected{border-color:var(--teal);background:#ecfdf5}
@@ -436,7 +437,7 @@
   <div class="exercise-item" id="ex-<?=$ei?>">
     <span style="font-size:.75rem;color:#94a3b8;font-weight:600;text-transform:uppercase">
       <?php 
-        $types = ['fill_blank' => '&#272;i&#7873;n t&#7915;', 'multiple_choice' => 'Tr&#7855;c nghi&#7879;m', 'transform' => 'Bi&#7871;n &#273;&#7889;i', 'sentence_order' => 'S&#7855;p x&#7871;p'];
+        $types = ['fill_blank'=>'Điền từ','multiple_choice'=>'Trắc nghiệm','transform'=>'Biến đổi','sentence_order'=>'Sắp xếp','true_false'=>'Đúng/Sai','matching'=>'Nối từ','listening_write'=>'Nghe viết','choice_word'=>'Chọn từ','grammar_correction'=>'Sửa lỗi','reading_qa'=>'Đọc hiểu'];
         echo $types[$ex['type']] ?? $ex['type'];
       ?>
     </span>
@@ -453,7 +454,7 @@
       <?php endforeach; ?>
     </div>
     <?php elseif($ex['type']==='fill_blank'): ?>
-    <input type="text" class="exercise-fill-input" id="ex-input-<?=$ei?>" placeholder="Nh&#7853;p &dstrok;&aacute;p &aacute;n...">
+    <input type="text" class="exercise-fill-input" id="ex-input-<?=$ei?>" placeholder="Nhập đáp án...">
     <?php elseif($ex['type']==='sentence_order'): ?>
     <div class="order-chips" id="ex-order-avail-<?=$ei?>">
       <?php $words = explode(' ', $ex['question']); shuffle($words); foreach($words as $w): ?>
@@ -461,6 +462,54 @@
       <?php endforeach; ?>
     </div>
     <div class="order-chips" id="ex-order-ans-<?=$ei?>" style="border-style:dashed;min-height:36px"></div>
+    <?php elseif($ex['type']==='true_false'): ?>
+    <div class="exercise-options" id="ex-opts-<?=$ei?>">
+      <label class="exercise-option" onclick="selectOption(<?=$ei?>,0,this)"><input type="radio" name="ex-<?=$ei?>" value="0" style="display:none"><span>✅ Đúng</span></label>
+      <label class="exercise-option" onclick="selectOption(<?=$ei?>,1,this)"><input type="radio" name="ex-<?=$ei?>" value="1" style="display:none"><span>❌ Sai</span></label>
+    </div>
+    <?php elseif($ex['type']==='matching' && $ex['options']): 
+      $pairs = json_decode($ex['options'], true); $left = array_keys($pairs); $right = array_values($pairs); shuffle($right);
+    ?>
+    <div class="matching-grid" id="ex-matching-<?=$ei?>">
+      <div class="matching-col">
+        <?php foreach($left as $li=>$lk): ?>
+        <div class="matching-item" data-side="left" data-key="<?=$li?>" onclick="selectMatching(<?=$ei?>,this)"><?=escape($lk)?></div>
+        <?php endforeach; ?>
+      </div>
+      <div class="matching-col">
+        <?php foreach($right as $ri=>$rv): ?>
+        <div class="matching-item" data-side="right" data-key="<?=$ri?>" data-val="<?=escape($rv)?>" onclick="selectMatching(<?=$ei?>,this)"><?=escape($rv)?></div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <div id="ex-matching-status-<?=$ei?>" style="font-size:.8rem;color:#64748b;margin-top:4px"></div>
+    <?php elseif($ex['type']==='listening_write'): ?>
+    <button class="btn btn--primary" onclick="speakExercise(<?=$ei?>,'<?=escape($ex['question'])?>')">▶ Nghe và viết</button>
+    <input type="text" class="exercise-fill-input" id="ex-input-<?=$ei?>" placeholder="Gõ những gì bạn nghe được..." style="margin-top:8px">
+    <?php elseif($ex['type']==='choice_word' && $ex['options']): 
+      $opts = json_decode($ex['options'], true);
+    ?>
+    <div class="exercise-options" id="ex-opts-<?=$ei?>">
+      <?php foreach($opts as $oi=>$opt): ?>
+      <label class="exercise-option" onclick="selectOption(<?=$ei?>,<?=$oi?>,this)">
+        <input type="radio" name="ex-<?=$ei?>" value="<?=$oi?>" style="display:none">
+        <span><?=escape($opt)?></span>
+      </label>
+      <?php endforeach; ?>
+    </div>
+    <?php elseif($ex['type']==='grammar_correction'): ?>
+    <div class="grammar-correction">
+      <div class="wrong-sentence"><?=escape($ex['question'])?></div>
+      <input type="text" class="exercise-fill-input" id="ex-input-<?=$ei?>" placeholder="Nhập câu đã sửa...">
+    </div>
+    <?php elseif($ex['type']==='reading_qa'): ?>
+    <div class="reading-qa">
+      <p style="font-size:.85rem;color:#64748b;margin-bottom:4px"><?=escape($ex['question'])?></p>
+      <textarea class="exercise-fill-input" id="ex-input-<?=$ei?>" rows="2" placeholder="Nhập câu trả lời..."></textarea>
+    </div>
+    <?php elseif($ex['type']==='transform'): ?>
+    <p style="font-size:.85rem;color:#64748b;margin-bottom:4px">Viết lại câu theo yêu cầu:</p>
+    <input type="text" class="exercise-fill-input" id="ex-input-<?=$ei?>" placeholder="Nhập câu đã biến đổi...">
     <?php endif; ?>
     <button class="toggle-btn" onclick="checkExercise(<?=$ei?>,'<?=escape($ex['answer'])?>','<?=$ex['type']?>')" style="margin-top:6px">Ki&#7875;m tra</button>
     <div id="ex-result-<?=$ei?>" style="font-size:.8rem;margin-top:4px"></div>
@@ -711,6 +760,31 @@ function selectOption(exIdx, optIdx, el) {
     el.querySelector('input').checked = true;
 }
 
+function selectMatching(exIdx, el) {
+    var grid = document.getElementById('ex-matching-' + exIdx);
+    var side = el.dataset.side;
+    grid.querySelectorAll('[data-side="' + side + '"].selected').forEach(function(o) { o.classList.remove('selected'); });
+    el.classList.add('selected');
+    var left = grid.querySelector('[data-side=left].selected');
+    var right = grid.querySelector('[data-side=right].selected');
+    if (left && right) {
+        document.getElementById('ex-matching-status-' + exIdx).textContent = 'Đã chọn: ' + left.textContent.trim() + ' ↔ ' + right.textContent.trim();
+    } else {
+        document.getElementById('ex-matching-status-' + exIdx).textContent = 'Chọn một mục mỗi cột rồi bấm Kiểm tra';
+    }
+}
+
+function speakExercise(exIdx, text) {
+    if ('speechSynthesis' in window) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.8;
+        speechSynthesis.speak(msg);
+    } else {
+        alert('Trình duyệt không hỗ trợ đọc văn bản.');
+    }
+}
+
 function toggleOrderChip(el, exIdx) {
     if (el.classList.contains('selected')) {
         el.classList.remove('selected');
@@ -727,9 +801,9 @@ function checkExercise(exIdx, answer, type) {
     var explain = document.getElementById('ex-explain-' + exIdx);
     var isCorrect = false;
     
-    if (type === 'multiple_choice') {
+    if (type === 'multiple_choice' || type === 'choice_word') {
         var selected = document.querySelector('input[name="ex-' + exIdx + '"]:checked');
-        if (!selected) { result.textContent = '\u274C Vui l&ograve;ng ch&#7885;n &dstrok;&aacute;p &aacute;n.'; result.style.color = '#b91c1c'; return; }
+        if (!selected) { result.textContent = '❌ Vui lòng chọn đáp án.'; result.style.color = '#b91c1c'; return; }
         var opts = document.querySelectorAll('#ex-opts-' + exIdx + ' .exercise-option span');
         var userAnswer = opts[parseInt(selected.value)]?.textContent || '';
         isCorrect = userAnswer.trim() === answer.trim();
@@ -738,7 +812,16 @@ function checkExercise(exIdx, answer, type) {
             if (opts[i]?.textContent.trim() === answer.trim()) o.classList.add('correct');
         });
         if (!isCorrect) selected.closest('.exercise-option').classList.add('wrong');
-    } else if (type === 'fill_blank') {
+    } else if (type === 'true_false') {
+        var selected = document.querySelector('input[name="ex-' + exIdx + '"]:checked');
+        if (!selected) { result.textContent = '❌ Vui lòng chọn Đúng hoặc Sai.'; result.style.color = '#b91c1c'; return; }
+        isCorrect = selected.value === answer;
+        document.querySelectorAll('#ex-opts-' + exIdx + ' .exercise-option').forEach(function(o,i) {
+            o.classList.remove('correct','wrong');
+            if ((answer === '0' && i === 0) || (answer === '1' && i === 1)) o.classList.add('correct');
+        });
+        if (!isCorrect) selected.closest('.exercise-option').classList.add('wrong');
+    } else if (type === 'fill_blank' || type === 'listening_write' || type === 'grammar_correction' || type === 'reading_qa') {
         var input = document.getElementById('ex-input-' + exIdx);
         var clean = function(s) { return s.replace(/[\s\uFF0C\u3002\u3001\uFF01\uFF1F\uFF1B\uFF1A,\.!?;:'"]/g,''); };
         isCorrect = clean(input.value).includes(clean(answer)) || clean(answer).includes(clean(input.value));
@@ -748,9 +831,23 @@ function checkExercise(exIdx, answer, type) {
         var userOrder = Array.from(ans.children).map(function(c) { return c.dataset.word; }).join('');
         var clean = function(s) { return s.replace(/[\s\uFF0C\u3002\u3001\uFF01\uFF1F\uFF1B\uFF1A,\.!?;:'"]/g,''); };
         isCorrect = clean(userOrder) === clean(answer);
+    } else if (type === 'matching') {
+        var leftItems = document.querySelectorAll('#ex-matching-' + exIdx + ' [data-side=left].selected');
+        var rightItems = document.querySelectorAll('#ex-matching-' + exIdx + ' [data-side=right].selected');
+        if (leftItems.length === 0 || rightItems.length === 0) { result.textContent = '❌ Chọn một mục bên trái và một mục bên phải.'; result.style.color = '#b91c1c'; return; }
+        var pairs = JSON.parse(answer);
+        var li = leftItems[0].dataset.key;
+        var rv = rightItems[0].dataset.val;
+        isCorrect = pairs[li] === rv;
+        if (isCorrect) { leftItems[0].classList.add('correct'); rightItems[0].classList.add('correct'); }
+        else { leftItems[0].classList.add('wrong'); rightItems[0].classList.add('wrong'); }
+    } else if (type === 'transform') {
+        var input = document.getElementById('ex-input-' + exIdx);
+        isCorrect = input ? input.value.trim().length > 0 : false;
+        if (input) input.className = 'exercise-fill-input ' + (isCorrect ? 'correct' : 'wrong');
     }
     
-    result.textContent = isCorrect ? '\u2705 Ch&iacute;nh x&aacute;c!' : '\u274C Sai. &Dstrok;&aacute;p &aacute;n: ' + answer;
+    result.textContent = isCorrect ? '✅ Chính xác!' : '❌ Sai. Đáp án: ' + answer;
     result.style.color = isCorrect ? '#047857' : '#b91c1c';
     if (explain && explain.textContent.trim()) explain.style.display = 'block';
 }

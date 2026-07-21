@@ -18,7 +18,7 @@ function sidebarActive(string $page, string $current): string
         <li><a href="index.php" class="sidebar__link<?= sidebarActive('index.php', $current_page) ?>"> Trang chủ</a>
         </li>
         <li><a href="lessons.php"
-                class="sidebar__link<?= sidebarActive('lessons.php', $current_page) ?><?= ($current_page === 'lesson.php' || $current_page === 'lesson-detail.php') ? ' sidebar__link--active' : '' ?>">
+                class="sidebar__link<?= sidebarActive('lessons.php', $current_page) ?><?= ($current_page === 'lesson_view.php' || $current_page === 'lesson.php' || $current_page === 'lesson-detail.php') ? ' sidebar__link--active' : '' ?>">
                 Bài học</a></li>
         <li><a href="courses.php"
                 class="sidebar__link<?= (in_array($current_page, ['courses.php', 'course.php', 'orders.php'])) ? ' sidebar__link--active' : '' ?>">
@@ -26,7 +26,8 @@ function sidebarActive(string $page, string $current): string
         <li><a href="flashcard.php" class="sidebar__link<?= sidebarActive('flashcard.php', $current_page) ?>">
                 Flashcard</a></li>
         <li><a href="flashcard_srs.php" class="sidebar__link<?= sidebarActive('flashcard_srs.php', $current_page) ?>">
-                SRS</a></li>
+                SRS Flashcard</a></li>
+        <li><a href="exam_mvc.php" class="sidebar__link<?= sidebarActive('exam_mvc.php', $current_page) ?>"> Thi thử</a></li>
         <li><a href="practice.php" class="sidebar__link<?= sidebarActive('practice.php', $current_page) ?>"> Luyện
                 tập</a></li>
         <li><a href="dictionary_mvc.php" class="sidebar__link<?= sidebarActive('dictionary_mvc.php', $current_page) ?>"> Từ

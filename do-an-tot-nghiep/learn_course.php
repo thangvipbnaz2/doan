@@ -34,7 +34,7 @@ try {
   <section class="learning-list" aria-label="Danh sách bài học">
     <?php if (!$lessons): ?><p class="learning-empty">Khóa học đang được cập nhật nội dung.</p><?php endif; ?>
     <?php foreach ($lessons as $index => $lesson): ?>
-      <a class="learning-item" href="lesson.php?level=<?= (int) $lesson['level'] ?>&lesson=<?= (int) $lesson['lesson_num'] ?>">
+      <a class="learning-item" href="course_dictation.php?slug=<?= urlencode($course['slug']) ?>&lesson=<?= (int) $lesson['id'] ?>">
         <span class="learning-no"><?= $index + 1 ?></span>
         <span><strong><?= htmlspecialchars($lesson['title']) ?></strong><br><small><?= htmlspecialchars($lesson['description'] ?? '') ?></small></span>
         <?php if ($lesson['completed']): ?><span class="learning-done">Đã hoàn thành</span><?php endif; ?>

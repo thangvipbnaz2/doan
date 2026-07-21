@@ -1,5 +1,13 @@
 RewriteEngine On
 
+# Serve existing files directly (don't rewrite)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route /app/* paths to MVC framework
+RewriteRule ^app/(.*)$ public/index.php [QSA,L]
+
 # Error pages
 ErrorDocument 404 /404.php
 

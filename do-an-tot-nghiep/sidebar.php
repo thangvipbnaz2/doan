@@ -25,9 +25,11 @@ function sidebarActive(string $page, string $current): string
                 Khóa học</a></li>
         <li><a href="flashcard.php" class="sidebar__link<?= sidebarActive('flashcard.php', $current_page) ?>">
                 Flashcard</a></li>
+        <li><a href="flashcard_srs.php" class="sidebar__link<?= sidebarActive('flashcard_srs.php', $current_page) ?>">
+                SRS</a></li>
         <li><a href="practice.php" class="sidebar__link<?= sidebarActive('practice.php', $current_page) ?>"> Luyện
                 tập</a></li>
-        <li><a href="dictionary.php" class="sidebar__link<?= sidebarActive('dictionary.php', $current_page) ?>"> Từ
+        <li><a href="dictionary_mvc.php" class="sidebar__link<?= sidebarActive('dictionary_mvc.php', $current_page) ?>"> Từ
                 điển</a></li>
         <li><a href="notebook.php" class="sidebar__link<?= sidebarActive('notebook.php', $current_page) ?>"> Sổ tay</a>
         </li>

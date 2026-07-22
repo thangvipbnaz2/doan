@@ -298,7 +298,7 @@
     'grammar' => [
         ['point' => '量词"口"与家庭成员', 'explain' => '"口" là lượng từ dùng cho số lượng thành viên trong gia đình: "我家有四口人" (nhà tôi có bốn người). Các từ chỉ thành viên gia đình: 爸爸 (bố), 妈妈 (mẹ), 哥哥 (anh trai), 姐姐 (chị gái), 弟弟 (em trai), 妹妹 (em gái).', 'examples' => ['你家有几口人？', '我家有三口人。', '她家有五口人。']],
         ['point' => '职业表达的几种方式', 'explain' => 'Để hỏi và nói về nghề nghiệp: "你是做什么工作的？" (Bạn làm nghề gì?), "我是医生/老师/工程师" (Tôi là bác sĩ...). Hoặc dùng cấu trúc "在......工作" (làm việc ở...). "当" cũng có nghĩa là làm (công việc).', 'examples' => ['你做什么工作？', '我在医院工作。', '我想当老师。']],
-        ['point' => '程度副词"很、非常、太......了"', 'explain' => 'Các phó từ chỉ mức độ được sử dụng khác nhau: "很" đơn giản chỉ mức độ khá; "非常" mạnh hơn, nghĩa là rất, vô cùng; "太...了" mang sắc thái nhấn mạnh cảm xúc, thường dùng trong câu cảm thán như "太好了！"', 'examples' => ['她非常漂亮。', '这个课很有意思。', '太好了！'],
+        ['point' => '程度副词"很、非常、太......了"', 'explain' => 'Các phó từ chỉ mức độ được sử dụng khác nhau: "很" đơn giản chỉ mức độ khá; "非常" mạnh hơn, nghĩa là rất, vô cùng; "太...了" mang sắc thái nhấn mạnh cảm xúc, thường dùng trong câu cảm thán như "太好了！"', 'examples' => ['她非常漂亮。', '这个课很有意思。', '太好了！']],
         ['point' => '"在"表示地点', 'explain' => '"在" có thể là động từ (ở tại) hoặc giới từ (ở). Là động từ: "我在家" (tôi ở nhà). Là giới từ: "我在医院工作" (tôi làm việc ở bệnh viện). "在" + địa điểm + động từ là cấu trúc chỉ nơi chốn thực hiện hành động.', 'examples' => ['我在学校学习。', '爸爸在医院工作。', '她在家吗？']],
     ],
     'pronunciation' => ['focus' => 'Thanh mẫu b p d t g k và sự phân biệt có bật hơi', 'drill' => ['爸爸', '医院', '工作', '老师', '姐姐', '医生']],

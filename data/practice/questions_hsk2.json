@@ -1,0 +1,228 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "机场",
+      "pinyin": "jīchǎng",
+      "options": ["Sân bay", "Nhà ga", "Bến xe", "Bến tàu"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "天气",
+      "pinyin": "tiānqì",
+      "options": ["Thời tiết", "Khí hậu", "Nhiệt độ", "Bầu trời"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "上班",
+      "pinyin": "shàngbān",
+      "options": ["Đi làm", "Đi học", "Tan làm", "Nghỉ làm"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "便宜",
+      "pinyin": "piányi",
+      "options": ["Rẻ", "Đắt", "Tốt", "Xấu"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "旁边",
+      "pinyin": "pángbiān",
+      "options": ["Bên cạnh", "Phía trước", "Phía sau", "Bên trong"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "跑步",
+      "pinyin": "pǎobù",
+      "options": ["Chạy bộ", "Đi bộ", "Bơi lội", "Đạp xe"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "教室",
+      "pinyin": "jiàoshì",
+      "options": ["Phòng học", "Thư viện", "Văn phòng", "Nhà ăn"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "快乐",
+      "pinyin": "kuàilè",
+      "options": ["Vui vẻ", "Buồn", "Mệt", "Đau"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "牛奶",
+      "pinyin": "niúnǎi",
+      "options": ["Sữa bò", "Nước trái cây", "Cà phê", "Trà"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "已经",
+      "pinyin": "yǐjīng",
+      "options": ["Đã, rồi", "Đang", "Sẽ", "Chưa"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["宀", "子"],
+      "correct_character": "字",
+      "meaning": "Chữ"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["阝", "日"],
+      "correct_character": "阳",
+      "meaning": "Dương, mặt trời"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["纟", "工"],
+      "correct_character": "红",
+      "meaning": "Đỏ"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["疒", "丁"],
+      "correct_character": "厅",
+      "meaning": "Phòng khách"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["扌", "包"],
+      "correct_character": "抱",
+      "meaning": "Ôm"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["火", "少"],
+      "correct_character": "炒",
+      "meaning": "Xào, rán"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "yóu jú",
+      "meaning": "bưu điện",
+      "correct_hanzi": "邮局"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "gōng zuò",
+      "meaning": "công việc",
+      "correct_hanzi": "工作"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "yīn wèi",
+      "meaning": "bởi vì",
+      "correct_hanzi": "因为"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "dì tú",
+      "meaning": "bản đồ",
+      "correct_hanzi": "地图"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "xiū xi",
+      "meaning": "nghỉ ngơi",
+      "correct_hanzi": "休息"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "fàn guǎn",
+      "meaning": "nhà hàng",
+      "correct_hanzi": "饭馆"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "今天天气很好。",
+      "pinyin": "Jīntiān tiānqì hěn hǎo.",
+      "meaning": "Hôm nay thời tiết rất đẹp."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我每天早上跑步。",
+      "pinyin": "Wǒ měitiān zǎoshang pǎobù.",
+      "meaning": "Tôi chạy bộ mỗi sáng."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这个苹果多少钱？",
+      "pinyin": "Zhège píngguǒ duōshao qián?",
+      "meaning": "Quả táo này bao nhiêu tiền?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我坐公交车去公司。",
+      "pinyin": "Wǒ zuò gōngjiāo chē qù gōngsī.",
+      "meaning": "Tôi đi xe buýt đến công ty."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你吃饭了吗？",
+      "pinyin": "Nǐ chī fàn le ma?",
+      "meaning": "Bạn ăn cơm chưa?"
+    }
+  }
+]

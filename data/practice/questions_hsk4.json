@@ -1,0 +1,420 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "签证",
+      "pinyin": "qiānzhèng",
+      "options": ["Thị thực", "Hộ chiếu", "Vé máy bay", "Giấy tờ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "导游",
+      "pinyin": "dǎoyóu",
+      "options": ["Hướng dẫn viên", "Phiên dịch", "Lái xe", "Giáo viên"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "付款",
+      "pinyin": "fùkuǎn",
+      "options": ["Thanh toán", "Nhận tiền", "Vay mượn", "Tiết kiệm"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "大概",
+      "pinyin": "dàgài",
+      "options": ["Đại khái, khoảng", "Chính xác", "Hoàn toàn", "Tuyệt đối"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "结果",
+      "pinyin": "jiéguǒ",
+      "options": ["Kết quả", "Nguyên nhân", "Quá trình", "Mục đích"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "招聘",
+      "pinyin": "zhāopìn",
+      "options": ["Tuyển dụng", "Xin việc", "Nghỉ việc", "Thăng chức"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "上网",
+      "pinyin": "shàngwǎng",
+      "options": ["Lên mạng", "Tải xuống", "Cài đặt", "Khởi động"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "温度",
+      "pinyin": "wēndù",
+      "options": ["Nhiệt độ", "Độ ẩm", "Áp suất", "Chiều cao"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "按时",
+      "pinyin": "ànshí",
+      "options": ["Đúng giờ", "Muộn giờ", "Tăng ca", "Nghỉ làm"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "严格",
+      "pinyin": "yángé",
+      "options": ["Nghiêm khắc", "Thoải mái", "Tùy tiện", "Lỏng lẻo"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "印象",
+      "pinyin": "yìnxiàng",
+      "options": ["Ấn tượng", "Ký ức", "Suy nghĩ", "Cảm xúc"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "基础",
+      "pinyin": "jīchǔ",
+      "options": ["Cơ sở, nền tảng", "Đỉnh cao", "Trình độ", "Kỹ năng"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["扌", "聂"],
+      "correct_character": "摄",
+      "meaning": "Chụp (ảnh), nhiếp"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["钅", "同"],
+      "correct_character": "铜",
+      "meaning": "Đồng (kim loại)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["广", "付"],
+      "correct_character": "府",
+      "meaning": "Phủ, dinh thự"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["衤", "包"],
+      "correct_character": "袍",
+      "meaning": "Áo choàng"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["王", "里"],
+      "correct_character": "理",
+      "meaning": "Lý, đạo lý"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["礻", "氏"],
+      "correct_character": "纸",
+      "meaning": "Giấy"
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "最近工作压力太大，我打算___一个星期假，出去___一下心情。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["请", "放", "休", "拿"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["放松", "紧张", "努力", "坚持"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这家公司的___很好，员工之间互相帮助，大家工作起来非常___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["气氛", "空气", "环境", "温度"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["愉快", "累", "忙", "慢"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "随着互联网的发展，越来越多人___在网上购物，这样既方便又___时间。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["喜欢", "讨厌", "拒绝", "害怕"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["节省", "浪费", "消磨", "打发"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "要想学好一门外语，必须___练习，不能三天打鱼两天___网。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["坚持", "开始", "停止", "拒绝"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["晒", "收", "补", "下"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "他非常___学习汉语，每天除了上课以外，还自己___两个小时。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["努力", "偷懒", "马虎", "随便"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["复习", "玩耍", "休息", "做饭"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这个城市的交通越来越___了，很多人选择坐地铁___上班。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["方便", "麻烦", "拥挤", "安静"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["去", "来", "在", "到"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "bōli",
+      "meaning": "thủy tinh",
+      "correct_hanzi": "玻璃"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "dìzhǐ",
+      "meaning": "địa chỉ",
+      "correct_hanzi": "地址"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "guānxì",
+      "meaning": "quan hệ",
+      "correct_hanzi": "关系"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "jiějué",
+      "meaning": "giải quyết",
+      "correct_hanzi": "解决"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "kēxué",
+      "meaning": "khoa học",
+      "correct_hanzi": "科学"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "lìshǐ",
+      "meaning": "lịch sử",
+      "correct_hanzi": "历史"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "shūfu",
+      "meaning": "thoải mái",
+      "correct_hanzi": "舒服"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "wǎngzhàn",
+      "meaning": "trang web",
+      "correct_hanzi": "网站"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["把", "行李", "我", "已经", "收拾好", "了"],
+      "correct_answer": "我已经把行李收拾好了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["她", "不仅", "会", "唱歌", "还", "会", "跳舞"],
+      "correct_answer": "她不仅会唱歌还会跳舞。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["如果", "明天", "下雨", "比赛", "就", "取消"],
+      "correct_answer": "如果明天下雨比赛就取消。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["从", "上海", "到", "北京", "坐高铁", "要", "五个小时"],
+      "correct_answer": "从上海到北京坐高铁要五个小时。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["虽然", "工作", "很忙", "他", "坚持", "运动", "每天"],
+      "correct_answer": "虽然工作很忙，他每天坚持运动。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["被", "那本书", "他", "借走了"],
+      "correct_answer": "那本书被他借走了。"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "请问，去故宫怎么走？",
+      "pinyin": "Qǐngwèn, qù Gùgōng zěnme zǒu?",
+      "meaning": "Xin hỏi, đi Tử Cấm Thành làm sao?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你的汉语说得真流利，学了多久了？",
+      "pinyin": "Nǐ de Hànyǔ shuō de zhēn liúlì, xuéle duōjiǔ le?",
+      "meaning": "Tiếng Trung của bạn nói thật lưu loát, học được bao lâu rồi?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "麻烦您帮我拍张照片好吗？",
+      "pinyin": "Máfan nín bāng wǒ pāi zhāng zhàopiàn hǎo ma?",
+      "meaning": "Làm phiền ông/bà giúp tôi chụp một bức ảnh được không?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这个月的房租我已经交过了。",
+      "pinyin": "Zhège yuè de fángzū wǒ yǐjīng jiāoguò le.",
+      "meaning": "Tiền thuê nhà tháng này tôi đã nộp rồi."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我想订一张明天飞往上海的机票。",
+      "pinyin": "Wǒ xiǎng dìng yī zhāng míngtiān fēi wǎng Shànghǎi de jīpiào.",
+      "meaning": "Tôi muốn đặt một vé máy bay bay đến Thượng Hải ngày mai."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "不好意思，我迟到了，路上堵车太严重了。",
+      "pinyin": "Bù hǎoyìsi, wǒ chídào le, lùshang dǔchē tài yánzhòng le.",
+      "meaning": "Xin lỗi, tôi đến muộn, tắc đường nghiêm trọng quá."
+    }
+  }
+]

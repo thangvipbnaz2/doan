@@ -1,0 +1,228 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "我",
+      "pinyin": "wǒ",
+      "options": ["Tôi", "Bạn", "Anh ấy", "Cô ấy"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "好",
+      "pinyin": "hǎo",
+      "options": ["Tốt, đẹp", "Xấu", "Lớn", "Nhỏ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "一",
+      "pinyin": "yī",
+      "options": ["Một", "Hai", "Ba", "Bốn"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "人",
+      "pinyin": "rén",
+      "options": ["Người", "Núi", "Nước", "Lửa"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "大",
+      "pinyin": "dà",
+      "options": ["To, lớn", "Nhỏ", "Nhiều", "Ít"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "水",
+      "pinyin": "shuǐ",
+      "options": ["Nước", "Lửa", "Gió", "Đất"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "妈妈",
+      "pinyin": "māma",
+      "options": ["Mẹ", "Bố", "Anh trai", "Chị gái"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "中国",
+      "pinyin": "Zhōngguó",
+      "options": ["Trung Quốc", "Mỹ", "Nhật Bản", "Hàn Quốc"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "朋友",
+      "pinyin": "péngyou",
+      "options": ["Bạn bè", "Thầy giáo", "Học sinh", "Đồng nghiệp"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "吃",
+      "pinyin": "chī",
+      "options": ["Ăn", "Uống", "Ngủ", "Đi"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["亻", "尔"],
+      "correct_character": "你",
+      "meaning": "Bạn"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["女", "子"],
+      "correct_character": "好",
+      "meaning": "Tốt, đẹp"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["氵", "可"],
+      "correct_character": "河",
+      "meaning": "Sông"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["口", "马"],
+      "correct_character": "吗",
+      "meaning": "Phải không (từ để hỏi)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["日", "月"],
+      "correct_character": "明",
+      "meaning": "Sáng, minh"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["木", "子"],
+      "correct_character": "李",
+      "meaning": "Họ Lý"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "nǐ hǎo",
+      "meaning": "xin chào",
+      "correct_hanzi": "你好"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "xiè xie",
+      "meaning": "cảm ơn",
+      "correct_hanzi": "谢谢"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "duì bu qǐ",
+      "meaning": "xin lỗi",
+      "correct_hanzi": "对不起"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "yī shēng",
+      "meaning": "bác sĩ",
+      "correct_hanzi": "医生"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "xué xiào",
+      "meaning": "trường học",
+      "correct_hanzi": "学校"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "lǎo shī",
+      "meaning": "thầy giáo",
+      "correct_hanzi": "老师"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你好。",
+      "pinyin": "Nǐ hǎo.",
+      "meaning": "Xin chào."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "谢谢。",
+      "pinyin": "Xièxie.",
+      "meaning": "Cảm ơn."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我叫小明。",
+      "pinyin": "Wǒ jiào Xiǎo Míng.",
+      "meaning": "Tôi tên là Tiểu Minh."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你是中国人吗？",
+      "pinyin": "Nǐ shì Zhōngguó rén ma?",
+      "meaning": "Bạn là người Trung Quốc phải không?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我爸爸是医生。",
+      "pinyin": "Wǒ bàba shì yīshēng.",
+      "meaning": "Bố tôi là bác sĩ."
+    }
+  }
+]

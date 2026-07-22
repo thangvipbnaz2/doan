@@ -1,0 +1,420 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "房地产",
+      "pinyin": "fángdìchǎn",
+      "options": ["Bất động sản", "Xây dựng", "Kiến trúc", "Nội thất"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "采访",
+      "pinyin": "cǎifǎng",
+      "options": ["Phỏng vấn", "Biên tập", "Dịch thuật", "Phát thanh"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "逐渐",
+      "pinyin": "zhújiàn",
+      "options": ["Dần dần", "Đột ngột", "Nhanh chóng", "Lâu dài"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "欣赏",
+      "pinyin": "xīnshǎng",
+      "options": ["Thưởng thức", "Phê bình", "Chỉ trích", "Phân tích"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "犹豫",
+      "pinyin": "yóuyù",
+      "options": ["Do dự", "Quyết đoán", "Vội vàng", "Bình tĩnh"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "依赖",
+      "pinyin": "yīlài",
+      "options": ["Phụ thuộc", "Tự lập", "Hợp tác", "Cạnh tranh"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "投资",
+      "pinyin": "tóuzī",
+      "options": ["Đầu tư", "Chi tiêu", "Tiết kiệm", "Vay nợ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "污染",
+      "pinyin": "wūrǎn",
+      "options": ["Ô nhiễm", "Bảo vệ", "Làm sạch", "Tái chế"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "协议",
+      "pinyin": "xiéyì",
+      "options": ["Hiệp nghị", "Tranh luận", "Hủy bỏ", "Phủ quyết"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "尊敬",
+      "pinyin": "zūnjìng",
+      "options": ["Kính trọng", "Khinh thường", "Ghen tị", "Ghét bỏ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "执行",
+      "pinyin": "zhíxíng",
+      "options": ["Chấp hành", "Lập kế hoạch", "Bàn luận", "Hủy bỏ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "承认",
+      "pinyin": "chéngrèn",
+      "options": ["Thừa nhận", "Phủ nhận", "Chối bỏ", "Nghi ngờ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["雨", "令"],
+      "correct_character": "零",
+      "meaning": "Số không, linh"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["马", "也"],
+      "correct_character": "驰",
+      "meaning": "Phóng, chạy (ngựa)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["鱼", "工"],
+      "correct_character": "红",
+      "meaning": "Cá hồng"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["酉", "良"],
+      "correct_character": "酿",
+      "meaning": "Ủ (rượu)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["贝", "兼"],
+      "correct_character": "赚",
+      "meaning": "Kiếm tiền"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["山", "由"],
+      "correct_character": "油",
+      "meaning": "Dầu"
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "随着经济的快速发展，环境污染问题越来越受到社会的___。政府正在采取各种措施来___空气质量。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["关注", "忽视", "反对", "破坏"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["改善", "恶化", "污染", "破坏"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "很多年轻人喜欢在大城市工作，因为机会多，但同时也面临着巨大的生活___。如果___不好，很容易感到焦虑。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["压力", "便利", "快乐", "自由"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["调整", "放弃", "抱怨", "逃避"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这家餐厅的菜味道不错，___也很周到，所以生意一直很___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["服务", "价格", "环境", "位置"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["红火", "冷清", "清淡", "稳定"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "学习任何一门语言都需要长时间的积累和___，不能指望___成功。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["坚持", "天赋", "灵感", "运气"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["一蹴而就", "循序渐进", "脚踏实地", "持之以恒"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这项___非常复杂，需要多个部门共同___才能完成。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["工程", "作业", "游戏", "考试"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["合作", "竞争", "争吵", "比较"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "他从小就对音乐有着浓厚的___，经过多年的努力，终于成为了一位著名的___家。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["兴趣", "任务", "责任", "压力"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["钢琴", "科学", "文学", "绘画"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "bàozhǐ",
+      "meaning": "báo chí",
+      "correct_hanzi": "报纸"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "chénggōng",
+      "meaning": "thành công",
+      "correct_hanzi": "成功"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "dānwù",
+      "meaning": "lỡ, trì hoãn",
+      "correct_hanzi": "耽误"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "gǔlì",
+      "meaning": "khuyến khích",
+      "correct_hanzi": "鼓励"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "jiànzhú",
+      "meaning": "kiến trúc",
+      "correct_hanzi": "建筑"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "míngxiǎn",
+      "meaning": "rõ ràng",
+      "correct_hanzi": "明显"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "shèhuì",
+      "meaning": "xã hội",
+      "correct_hanzi": "社会"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "tígāo",
+      "meaning": "nâng cao",
+      "correct_hanzi": "提高"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["不管", "多难", "我", "都会", "坚持", "到底"],
+      "correct_answer": "不管多难我都会坚持到底。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["由于", "天气", "原因", "航班", "推迟", "了"],
+      "correct_answer": "由于天气原因，航班推迟了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["随着", "年龄", "增长", "他", "越来越", "成熟"],
+      "correct_answer": "随着年龄增长他越来越成熟。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["无论", "你", "什么", "时候", "来", "都", "欢迎"],
+      "correct_answer": "无论你什么时候来都欢迎。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["以", "健康", "为", "代价", "追求", "成功", "不值得"],
+      "correct_answer": "以健康为代价追求成功不值得。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["在", "同事", "帮助", "下", "他", "完成", "了", "任务"],
+      "correct_answer": "在同事的帮助下他完成了任务。"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这次出差大概需要三天的时间。",
+      "pinyin": "Zhè cì chūchāi dàgài xūyào sān tiān de shíjiān.",
+      "meaning": "Chuyến công tác này đại khái cần thời gian ba ngày."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你的建议很有价值，我们会认真考虑的。",
+      "pinyin": "Nǐ de jiànyì hěn yǒu jiàzhí, wǒmen huì rènzhēn kǎolǜ de.",
+      "meaning": "Kiến nghị của bạn rất có giá trị, chúng tôi sẽ nghiêm túc xem xét."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我对这个方案还有一些疑问，能再解释一下吗？",
+      "pinyin": "Wǒ duì zhège fāng'àn hái yǒu yīxiē yíwèn, néng zài jiěshì yīxià ma?",
+      "meaning": "Tôi còn có một số nghi vấn về phương án này, có thể giải thích lại được không?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "随着市场竞争越来越激烈，我们必须不断创新。",
+      "pinyin": "Suízhe shìchǎng jìngzhēng yuè lái yuè jīliè, wǒmen bìxū bùduàn chuàngxīn.",
+      "meaning": "Theo sự cạnh tranh thị trường ngày càng khốc liệt, chúng ta phải không ngừng đổi mới."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "环境保护是每个公民应尽的责任和义务。",
+      "pinyin": "Huánjìng bǎohù shì měi gè gōngmín yīng jìn de zérèn hé yìwù.",
+      "meaning": "Bảo vệ môi trường là trách nhiệm và nghĩa vụ của mỗi công dân."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "经过再三考虑，我决定接受这份工作。",
+      "pinyin": "Jīngguò zài sān kǎolǜ, wǒ juédìng jiēshòu zhè fèn gōngzuò.",
+      "meaning": "Sau khi cân nhắc nhiều lần, tôi quyết định nhận công việc này."
+    }
+  }
+]

@@ -1,0 +1,420 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "腐败",
+      "pinyin": "fǔbài",
+      "options": ["Tham nhũng", "Phát triển", "Cải cách", "Tiến bộ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "提倡",
+      "pinyin": "tíchàng",
+      "options": ["Đề xướng", "Cấm đoán", "Phản đối", "Lờ đi"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "范畴",
+      "pinyin": "fànchóu",
+      "options": ["Phạm trù", "Biên giới", "Lãnh thổ", "Khu vực"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "繁荣",
+      "pinyin": "fánróng",
+      "options": ["Phồn vinh", "Suy thoái", "Đình trệ", "Khủng hoảng"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "贯彻",
+      "pinyin": "guànchè",
+      "options": ["Quán triệt", "Bỏ qua", "Trì hoãn", "Từ bỏ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "纠纷",
+      "pinyin": "jiūfēn",
+      "options": ["Tranh chấp", "Hòa giải", "Đồng thuận", "Hợp tác"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "牺牲",
+      "pinyin": "xīshēng",
+      "options": ["Hy sinh", "Hưởng thụ", "Chiếm đoạt", "Bảo toàn"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "制裁",
+      "pinyin": "zhìcái",
+      "options": ["Trừng phạt", "Khen thưởng", "Bảo vệ", "Miễn trừ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "舆论",
+      "pinyin": "yúlùn",
+      "options": ["Dư luận", "Chính sách", "Pháp luật", "Giáo dục"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "障碍",
+      "pinyin": "zhàng'ài",
+      "options": ["Chướng ngại", "Thuận lợi", "Cơ hội", "Hỗ trợ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "垄断",
+      "pinyin": "lǒngduàn",
+      "options": ["Độc quyền", "Cạnh tranh", "Tự do", "Bình đẳng"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "尊严",
+      "pinyin": "zūnyán",
+      "options": ["Tôn nghiêm", "Xấu hổ", "Sỉ nhục", "Hèn hạ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["鹿", "射"],
+      "correct_character": "麝",
+      "meaning": "Hươu xạ"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["黑", "犬"],
+      "correct_character": "默",
+      "meaning": "Im lặng"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["竹", "店"],
+      "correct_character": "簟",
+      "meaning": "Chiếu tre"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["豸", "各"],
+      "correct_character": "貂",
+      "meaning": "Con điêu (chồn)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["髟", "木"],
+      "correct_character": "鬓",
+      "meaning": "Tóc mai"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["革", "更"],
+      "correct_character": "鞭",
+      "meaning": "Roi da"
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "在全球化的背景下，各国之间的文化交流日益___，这有助于促进不同文明之间的相互理解和___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["频繁", "稀少", "缓慢", "停滞"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["尊重", "冲突", "隔阂", "偏见"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这项政策的___实施对于促进社会公平正义具有___意义。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["贯彻", "忽略", "曲解", "抵制"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["深远", "浅显", "表面", "有限"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "科学家们正在___研究这种新型材料的性能，希望能够找到一种更加___的能源解决方案。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["深入", "停止", "中断", "放弃"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["可持续", "昂贵", "复杂", "危险"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这部小说深刻地___了人性的复杂性和社会的矛盾，引起了读者的广泛___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["揭示", "掩盖", "粉饰", "逃避"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["共鸣", "反感", "冷漠", "质疑"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "如何处理经济发展与环境保护之间的___关系，是我们面临的一个重大___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["辩证", "简单", "对立", "模糊"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["课题", "游戏", "玩笑", "障碍"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "法律的___是维护社会秩序的基础，任何人都不能___法律。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["权威", "漏洞", "空白", "建议"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["凌驾于", "遵守", "尊重", "维护"],
+          "correct_index": 0
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "bōxuē",
+      "meaning": "bóc lột",
+      "correct_hanzi": "剥削"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "chíjiǔ",
+      "meaning": "bền vững",
+      "correct_hanzi": "持久"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "dòngdàng",
+      "meaning": "động đậy, bất ổn",
+      "correct_hanzi": "动荡"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "fùyù",
+      "meaning": "phú dụ, giàu có",
+      "correct_hanzi": "富裕"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "gōutōng",
+      "meaning": "giao thông",
+      "correct_hanzi": "沟通"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "hóngwěi",
+      "meaning": "hùng vĩ",
+      "correct_hanzi": "宏伟"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "jiānmiè",
+      "meaning": "tiêu diệt",
+      "correct_hanzi": "歼灭"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "kāngkǎi",
+      "meaning": "hào phóng",
+      "correct_hanzi": "慷慨"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["鉴于", "目前", "形势", "我们", "必须", "调整", "策略"],
+      "correct_answer": "鉴于目前形势我们必须调整策略。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["与其", "抱怨", "不如", "努力", "改变", "现状"],
+      "correct_answer": "与其抱怨不如努力改变现状。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["关于", "这个问题", "我们", "需要", "进一步", "探讨"],
+      "correct_answer": "关于这个问题我们需要进一步探讨。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["考古学家", "在", "挖掘", "过程", "中发现", "了", "古代", "遗址"],
+      "correct_answer": "考古学家在挖掘过程中发现了古代遗址。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["从", "某种", "意义", "上", "说", "失败", "也是", "财富"],
+      "correct_answer": "从某种意义上说失败也是财富。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["通过", "这次", "合作", "双方", "增进", "了", "相互", "信任"],
+      "correct_answer": "通过这次合作双方增进了相互信任。"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "经过长达两个月的谈判，双方终于达成了共识。",
+      "pinyin": "Jīngguò cháng dá liǎng gè yuè de tánpàn, shuāngfāng zhōngyú dáchéng le gòngshí.",
+      "meaning": "Sau cuộc đàm phán kéo dài hai tháng, hai bên cuối cùng đã đạt được đồng thuận."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "在任何情况下，我们都应该维护法律的尊严和权威。",
+      "pinyin": "Zài rènhé qíngkuàng xià, wǒmen dōu yīnggāi wéihù fǎlǜ de zūnyán hé quánwēi.",
+      "meaning": "Trong bất kỳ tình huống nào, chúng ta đều nên duy trì tôn nghiêm và uy quyền của pháp luật."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "实施可持续发展战略是当今世界面临的紧迫任务。",
+      "pinyin": "Shíshī kě chíxù fāzhǎn zhànlüè shì dāngjīn shìjiè miànlín de jǐnpò rènwù.",
+      "meaning": "Thực thi chiến lược phát triển bền vững là nhiệm vụ cấp bách mà thế giới ngày nay đang đối mặt."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这项研究成果在学术界引起了强烈的反响。",
+      "pinyin": "Zhè xiàng yánjiū chéngguǒ zài xuéshù jiè yǐnqǐ le qiángliè de fǎnxiǎng.",
+      "meaning": "Thành quả nghiên cứu này đã gây ra phản ứng mạnh mẽ trong giới học thuật."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "面对困难，我们不能退缩，要勇于迎接挑战。",
+      "pinyin": "Miànduì kùnnán, wǒmen bùnéng tuìsuō, yào yǒngyú yíngjiē tiǎozhàn.",
+      "meaning": "Đối diện với khó khăn, chúng ta không thể lùi bước, phải dũng cảm đón nhận thử thách."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "舆论监督对于维护社会公平正义具有不可替代的作用。",
+      "pinyin": "Yúlùn jiāndū duìyú wéihù shèhuì gōngpíng zhèngyì jùyǒu bùkě tìdài de zuòyòng.",
+      "meaning": "Giám sát dư luận có vai trò không thể thay thế đối với việc duy trì công bằng và chính nghĩa xã hội."
+    }
+  }
+]

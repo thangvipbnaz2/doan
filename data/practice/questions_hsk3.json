@@ -1,0 +1,554 @@
+[
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "特别",
+      "pinyin": "tèbié",
+      "options": ["Đặc biệt", "Bình thường", "Giống nhau", "Khác nhau"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "舒服",
+      "pinyin": "shūfu",
+      "options": ["Thoải mái", "Mệt mỏi", "Đau đớn", "Buồn chán"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "礼物",
+      "pinyin": "lǐwù",
+      "options": ["Quà tặng", "Tiền bạc", "Hoa quả", "Quần áo"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "照顾",
+      "pinyin": "zhàogù",
+      "options": ["Chăm sóc", "Nhìn thấy", "Chờ đợi", "Nhớ lại"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "努力",
+      "pinyin": "nǔlì",
+      "options": ["Nỗ lực", "Vui vẻ", "Dễ dàng", "Nhanh chóng"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "已经",
+      "pinyin": "yǐjīng",
+      "options": ["Đã (xong rồi)", "Còn (chưa)", "Đang (làm)", "Sẽ (làm)"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "放心",
+      "pinyin": "fàngxīn",
+      "options": ["Yên tâm", "Buồn lòng", "Vui vẻ", "Lo lắng"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "聪明",
+      "pinyin": "cōngming",
+      "options": ["Thông minh", "Chăm chỉ", "Tốt bụng", "Cao lớn"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "决定",
+      "pinyin": "juédìng",
+      "options": ["Quyết định", "Thay đổi", "Bắt đầu", "Kết thúc"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "应该",
+      "pinyin": "yīnggāi",
+      "options": ["Nên (phải)", "Có thể", "Muốn", "Cần"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "比较",
+      "pinyin": "bǐjiào",
+      "options": ["Khá là, tương đối", "So sánh", "Không bằng", "Hơn hẳn"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "爱好",
+      "pinyin": "àihào",
+      "options": ["Sở thích", "Ghét bỏ", "Yêu thương", "Thói quen"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "环境",
+      "pinyin": "huánjìng",
+      "options": ["Môi trường", "Phong cảnh", "Nhà ở", "Thành phố"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "检查",
+      "pinyin": "jiǎnchá",
+      "options": ["Kiểm tra", "Sửa chữa", "Tìm kiếm", "Sắp xếp"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "参加",
+      "pinyin": "cānjiā",
+      "options": ["Tham gia", "Tổ chức", "Mời gọi", "Chuẩn bị"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "附近",
+      "pinyin": "fùjìn",
+      "options": ["Gần đây, phụ cận", "Xa xôi", "Bên trong", "Đằng sau"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "生气",
+      "pinyin": "shēngqì",
+      "options": ["Tức giận", "Sinh khí", "Vui mừng", "Buồn bã"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "害怕",
+      "pinyin": "hàipà",
+      "options": ["Sợ hãi", "Xấu hổ", "Ngạc nhiên", "Tò mò"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "关系",
+      "pinyin": "guānxì",
+      "options": ["Quan hệ", "Quan tâm", "Đóng cửa", "Liên lạc"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "trac_nghiem_tu_vung",
+    "data": {
+      "word": "除了",
+      "pinyin": "chúle",
+      "options": ["Ngoại trừ", "Bao gồm", "Thêm vào", "Loại bỏ"],
+      "correct_index": 0
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["氵", "舌"],
+      "correct_character": "活",
+      "meaning": "Sống, hoạt động"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["⺮", "由"],
+      "correct_character": "笛",
+      "meaning": "Sáo, ống sáo"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["阝", "日"],
+      "correct_character": "阳",
+      "meaning": "Mặt trời, dương"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["口", "鸟"],
+      "correct_character": "鸣",
+      "meaning": "Kêu (chim hót)"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["火", "丁"],
+      "correct_character": "灯",
+      "meaning": "Đèn"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["木", "子"],
+      "correct_character": "李",
+      "meaning": "Mận, họ Lý"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["目", "艮"],
+      "correct_character": "眼",
+      "meaning": "Mắt"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["足", "各"],
+      "correct_character": "路",
+      "meaning": "Đường, con đường"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["饣", "包"],
+      "correct_character": "饱",
+      "meaning": "No, ăn no"
+    }
+  },
+  {
+    "module_id": "ghep_bo_thu",
+    "data": {
+      "radicals": ["扌", "分"],
+      "correct_character": "扮",
+      "meaning": "Trang điểm, hoá trang"
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "昨天我___同学生日，我们一起吃了饭，还唱了歌，大家都很___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["参加", "照顾", "决定", "开始"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["累", "忙", "高兴", "生气"],
+          "correct_index": 2
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "这个城市的环境越来越___了，很多人喜欢在这里生活。但是房租也比较___。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["差", "好", "脏", "乱"],
+          "correct_index": 1
+        },
+        {
+          "position": 2,
+          "options": ["便宜", "高", "低", "少"],
+          "correct_index": 1
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "如果你身体不___，就应该去医院___一下。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["高兴", "舒服", "努力", "特别"],
+          "correct_index": 1
+        },
+        {
+          "position": 2,
+          "options": ["休息", "学习", "检查", "运动"],
+          "correct_index": 2
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "我每天坚持运动一个小时，___半年了，身体比以前___多了。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["已经", "正在", "将要", "刚刚"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["差", "瘦", "健康", "胖"],
+          "correct_index": 2
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "doc_hieu_dien_khuyet",
+    "data": {
+      "paragraph": "周末我___去图书馆看书，___有时候也会和朋友一起出去玩儿。",
+      "blanks": [
+        {
+          "position": 1,
+          "options": ["常", "刚", "没", "别"],
+          "correct_index": 0
+        },
+        {
+          "position": 2,
+          "options": ["所以", "但是", "因为", "而且"],
+          "correct_index": 1
+        }
+      ]
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "zhīdao",
+      "meaning": "biết",
+      "correct_hanzi": "知道"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "xuéxí",
+      "meaning": "học tập",
+      "correct_hanzi": "学习"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "jièshào",
+      "meaning": "giới thiệu",
+      "correct_hanzi": "介绍"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "zuòtiān",
+      "meaning": "hôm qua",
+      "correct_hanzi": "昨天"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "diànnǎo",
+      "meaning": "máy tính",
+      "correct_hanzi": "电脑"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "shuǐguǒ",
+      "meaning": "hoa quả",
+      "correct_hanzi": "水果"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "fàngjià",
+      "meaning": "nghỉ phép",
+      "correct_hanzi": "放假"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "shēngbìng",
+      "meaning": "bị ốm",
+      "correct_hanzi": "生病"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "tèbié",
+      "meaning": "đặc biệt",
+      "correct_hanzi": "特别"
+    }
+  },
+  {
+    "module_id": "go_chu_han",
+    "data": {
+      "pinyin": "gōngzuò",
+      "meaning": "công việc",
+      "correct_hanzi": "工作"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["把", "作业", "我", "做完了"],
+      "correct_answer": "我把作业做完了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["比", "我", "她", "跑得快"],
+      "correct_answer": "她比我跑得快。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["被", "猫", "鱼", "吃了"],
+      "correct_answer": "鱼被猫吃了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["明天", "要", "我们", "考试", "了"],
+      "correct_answer": "我们明天要考试了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["虽然", "但是", "雨大", "他", "还是", "来了"],
+      "correct_answer": "虽然雨大，但是他还是来了。"
+    }
+  },
+  {
+    "module_id": "ghep_cau",
+    "data": {
+      "scrambled_words": ["从", "学校", "到", "家", "走", "二十分钟"],
+      "correct_answer": "从学校到家走二十分钟。"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "请把你的名字写在这里。",
+      "pinyin": "Qǐng bǎ nǐ de míngzì xiě zài zhèlǐ.",
+      "meaning": "Xin hãy viết tên của bạn ở đây."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这个周末你打算做什么？",
+      "pinyin": "Zhège zhōumò nǐ dǎsuàn zuò shénme?",
+      "meaning": "Cuối tuần này bạn định làm gì?"
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "我对中国历史很感兴趣。",
+      "pinyin": "Wǒ duì zhōngguó lìshǐ hěn gǎn xìngqù.",
+      "meaning": "Tôi rất hứng thú với lịch sử Trung Quốc."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "天气预报说明天会下雨。",
+      "pinyin": "Tiānqì yùbào shuō míngtiān huì xiàyǔ.",
+      "meaning": "Dự báo thời tiết nói ngày mai sẽ có mưa."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你汉语说得越来越好了。",
+      "pinyin": "Nǐ hànyǔ shuō de yuè lái yuè hǎo le.",
+      "meaning": "Tiếng Trung của bạn nói càng ngày càng tốt rồi."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "他每天坚持跑步三公里。",
+      "pinyin": "Tā měitiān jiānchí pǎobù sān gōnglǐ.",
+      "meaning": "Anh ấy mỗi ngày kiên trì chạy bộ ba cây số."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "别担心，我会帮你的。",
+      "pinyin": "Bié dānxīn, wǒ huì bāng nǐ de.",
+      "meaning": "Đừng lo, tôi sẽ giúp bạn."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "这个礼物是我专门给你买的。",
+      "pinyin": "Zhège lǐwù shì wǒ zhuānmén gěi nǐ mǎi de.",
+      "meaning": "Món quà này là tôi đặc biệt mua cho bạn đấy."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "放假以后我想去南方旅行。",
+      "pinyin": "Fàngjià yǐhòu wǒ xiǎng qù nánfāng lǚxíng.",
+      "meaning": "Sau khi nghỉ phép tôi muốn đi du lịch miền Nam."
+    }
+  },
+  {
+    "module_id": "luyen_noi_shadowing",
+    "data": {
+      "sentence": "你吃过四川菜吗？特别辣。",
+      "pinyin": "Nǐ chī guò sìchuān cài ma? Tèbié là.",
+      "meaning": "Bạn đã ăn món Tứ Xuyên chưa? Cay đặc biệt."
+    }
+  }
+]

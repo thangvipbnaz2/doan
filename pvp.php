@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="utils.js"></script>
     <style>
         .pvp-page { padding: 100px 0 60px; min-height: 100vh; position: relative; overflow: hidden;
             background: linear-gradient(135deg, #0f172a 0%, #0f1a1a 30%, #0f172a 70%, #0f172a 100%); }
@@ -181,6 +182,9 @@
         .pvp-winner-banner--tie { background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(245,158,11,0.05));
             border-color: rgba(251,191,36,0.15); color: #fcd34d; }
 
+        @keyframes pulse-glow { 0%,100%{box-shadow:0 0 0 0 rgba(251,146,60,0.5)} 50%{box-shadow:0 0 0 24px rgba(251,146,60,0)} }
+        .rb-part:hover { transform:scale(1.08);box-shadow:0 4px 16px rgba(0,0,0,0.15);border-color:rgba(13,148,136,0.4) !important; }
+
         .pvp-result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
         .pvp-result-actions .btn { border-radius: 12px; font-weight: 600; min-width: 140px; }
 
@@ -228,6 +232,11 @@
         [data-theme="light"] .pvp-round-badge { background: rgba(13,148,136,0.08); border-color: rgba(13,148,136,0.15); color: #0d9488; }
         [data-theme="light"] .pvp-player-avatar__img { background: #f0fdfa; }
         [data-theme="light"] .pvp-winner-banner { color: #0d9488; }
+        [data-theme="light"] .rb-answer-pvp { background: #fff; border-color: #e2e8f0; }
+        [data-theme="light"] .rb-tray-pvp { background: #f1f5f9; }
+        [data-theme="light"] .rb-part { background: #fff; border-color: #e2e8f0; color: #1e293b; }
+        [data-theme="light"] .rb-part:hover { border-color: var(--teal) !important; }
+        [data-theme="light"] #acLabel { color: #94a3b8; }
     </style>
 </head>
 <body>
@@ -271,7 +280,9 @@
             </select>
             <label>Loại câu hỏi</label>
             <select id="create-type">
-                <option value="choice">Trắc nghiệm (Hán Việt → Nghĩa)</option>
+                <option value="choice">Trắc nghiệm từ vựng</option>
+                <option value="audio">Nghe và chọn</option>
+                <option value="radical">Ghép bộ thủ</option>
             </select>
             <label>Số câu</label>
             <select id="create-count">
@@ -388,7 +399,9 @@ const USER_AVATAR = localStorage.getItem('hanngu_avatar') || '';
 let roomCode = '';
 let roomId = null;
 let isCreator = false;
+let quizType = 'choice';
 let vocabList = [];
+let radicalQuestions = [];
 let currentQ = 0;
 let score = 0;
 let totalQ = 10;
@@ -396,6 +409,29 @@ let answerState = null;
 let questionIndices = [];
 let waitingInterval = null;
 let opponentName = '';
+let audioUnlocked = false;
+
+const radicalQuestionData = [
+    {target:'好',parts:['女','子'],hint:'Nữ + Tử'},
+    {target:'明',parts:['日','月'],hint:'Nhật + Nguyệt'},
+    {target:'林',parts:['木','木'],hint:'Mộc + Mộc'},
+    {target:'休',parts:['亻','木'],hint:'Nhân đứng + Mộc'},
+    {target:'你',parts:['亻','尔'],hint:'Nhân đứng + Nhĩ'},
+    {target:'他',parts:['亻','也'],hint:'Nhân đứng + Dã'},
+    {target:'字',parts:['宀','子'],hint:'Miên + Tử'},
+    {target:'早',parts:['日','十'],hint:'Nhật + Thập'},
+    {target:'男',parts:['田','力'],hint:'Điền + Lực'},
+    {target:'安',parts:['宀','女'],hint:'Miên + Nữ'},
+    {target:'全',parts:['人','王'],hint:'Nhân + Vương'},
+    {target:'音',parts:['立','日'],hint:'Lập + Nhật'},
+    {target:'加',parts:['力','口'],hint:'Lực + Khẩu'},
+    {target:'对',parts:['又','寸'],hint:'Hựu + Thốn'},
+    {target:'红',parts:['纟','工'],hint:'Mịch + Công'},
+    {target:'花',parts:['艹','化'],hint:'Thảo + Hóa'},
+    {target:'草',parts:['艹','早'],hint:'Thảo + Tảo'},
+    {target:'笔',parts:['⺮','毛'],hint:'Trúc + Mao'},
+    {target:'笑',parts:['⺮','夭'],hint:'Trúc + Yểu'},
+];
 
 async function fetchAPI(action, data, method = 'GET') {
     try {
@@ -451,21 +487,23 @@ function copyRoomCode() {
 async function createRoom() {
     const level = document.getElementById('create-level').value;
     const count = document.getElementById('create-count').value;
+    const type = document.getElementById('create-type').value;
     const r = await fetchAPI('create_room', {
         user_id: USER_ID, user_name: USER_NAME,
-        level: parseInt(level), quiz_type: 'choice', total_questions: parseInt(count)
+        level: parseInt(level), quiz_type: type, total_questions: parseInt(count)
     }, 'POST');
     if (r && r.success) {
         roomCode = r.room_code;
         roomId = r.room_id;
         isCreator = true;
+        quizType = type;
         totalQ = parseInt(count);
         document.getElementById('room-code-display').textContent = roomCode;
         setAvatar(document.getElementById('player1-avatar'), USER_AVATAR, USER_NAME);
         document.getElementById('player1-name').textContent = USER_NAME;
         show('step-waiting');
         showToast('⚔ Đã tạo phòng! Mã: ' + roomCode, 'success');
-        await loadVocab(parseInt(level));
+        await loadQuestions(parseInt(level));
         startWaitingForOpponent();
     } else {
         showToast('❌ ' + (r?.message || 'Lỗi tạo phòng'), 'error');
@@ -535,10 +573,11 @@ async function joinRoom() {
         roomCode = code;
         roomId = r.room.id;
         isCreator = false;
+        quizType = r.room.quiz_type || 'choice';
         totalQ = r.room.total_questions;
         opponentName = r.room.player1_name || 'Đối thủ';
         showToast('🎮 Đã vào phòng!', 'success');
-        await loadVocab(r.room.level);
+        await loadQuestions(r.room.level);
         show('step-waiting');
         document.getElementById('room-code-display').textContent = roomCode;
         setAvatar(document.getElementById('player1-avatar'), USER_AVATAR, USER_NAME);
@@ -554,7 +593,13 @@ async function joinRoom() {
     }
 }
 
-async function loadVocab(level) {
+async function loadQuestions(level) {
+    if (quizType === 'radical') {
+        document.getElementById('pvp-question-area').innerHTML = '<div style="text-align:center;padding:20px;color:#64748b;">⏳ Đang tải...</div>';
+        radicalQuestions = shuffleArray([...radicalQuestionData]);
+        if (totalQ > radicalQuestions.length) totalQ = radicalQuestions.length;
+        return;
+    }
     document.getElementById('pvp-question-area').innerHTML = '<div style="text-align:center;padding:20px;color:#64748b;">⏳ Đang tải dữ liệu...</div>';
     const data = await fetchAPI('get_vocab', { level });
     if (data && data.length > 0) {
@@ -621,10 +666,31 @@ function shuffleArray(arr) {
 }
 
 function renderPvPQuestion() {
-    if (currentQ >= totalQ || !vocabList.length) {
+    if (currentQ >= totalQ) {
         submitPvPResult();
         return;
     }
+    if (quizType !== 'radical' && !vocabList.length) {
+        submitPvPResult();
+        return;
+    }
+
+    document.getElementById('pvp-round').textContent = `${currentQ + 1}/${totalQ}`;
+    document.getElementById('pvp-score').textContent = score;
+    document.getElementById('pvp-progress-bar').style.width = `${(currentQ / totalQ) * 100}%`;
+    document.getElementById('pvp-check-btn').style.display = '';
+
+    if (quizType === 'radical') {
+        renderPvPRadical();
+    } else if (quizType === 'audio') {
+        renderPvPAudio();
+    } else {
+        renderPvPQuiz();
+    }
+}
+
+function renderPvPQuiz() {
+    if (!vocabList.length) { submitPvPResult(); return; }
 
     if (questionIndices.length === 0) {
         questionIndices = shuffleArray([...Array(vocabList.length).keys()]);
@@ -632,12 +698,8 @@ function renderPvPQuestion() {
     const idx = questionIndices.pop();
     const v = vocabList[idx];
 
-    document.getElementById('pvp-round').textContent = `${currentQ + 1}/${totalQ}`;
-    document.getElementById('pvp-score').textContent = score;
-    document.getElementById('pvp-progress-bar').style.width = `${(currentQ / totalQ) * 100}%`;
-
     const area = document.getElementById('pvp-question-area');
-    answerState = { vocab: v, answered: false, selected: null };
+    answerState = { type: 'quiz', vocab: v, answered: false, selected: null };
 
     const seen = new Set([v.meaning]);
     const opts = [v.meaning];
@@ -669,8 +731,146 @@ function renderPvPQuestion() {
     document.getElementById('pvp-check-btn').disabled = true;
 }
 
+function renderPvPAudio() {
+    if (!vocabList.length) { submitPvPResult(); return; }
+
+    if (questionIndices.length === 0) {
+        questionIndices = shuffleArray([...Array(vocabList.length).keys()]);
+    }
+    const idx = questionIndices.pop();
+    const v = vocabList[idx];
+
+    const area = document.getElementById('pvp-question-area');
+    audioUnlocked = false;
+    answerState = { type: 'audio', vocab: v, answered: false, selected: null };
+
+    const seen = new Set([v.meaning]);
+    const opts = [v.meaning];
+    const shuffled = shuffleArray([...vocabList]);
+    for (const w of shuffled) {
+        if (opts.length >= 4) break;
+        if (!seen.has(w.meaning)) { opts.push(w.meaning); seen.add(w.meaning); }
+    }
+    shuffleArray(opts);
+
+    const keyLabels = ['1', '2', '3', '4'];
+    area.innerHTML = `
+        <div class="quiz-question">
+            <button class="ac-btn-pvp" id="acPlayBtn" onclick="playPvPAudio()" style="width:80px;height:80px;border-radius:50%;border:none;background:linear-gradient(135deg,#fb923c,#f97316);color:#fff;font-size:2.2rem;cursor:pointer;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(251,146,60,0.3);font-family:inherit;">
+                <i class="bi bi-volume-up-fill"></i>
+            </button>
+            <div id="acLabel" style="font-size:.85rem;color:#94a3b8;margin-bottom:12px;">Nhấn nút để nghe phát âm</div>
+            <div class="quiz-question__pinyin" style="visibility:hidden;height:0">${esc(v.pinyin)}</div>
+            <div class="quiz-question__hint">Nghe và chọn nghĩa đúng</div>
+        </div>
+        <div class="options-grid">
+            ${opts.map((o, i) => `
+                <button class="option-btn" onclick="selectPvPOption(this, '${esc(o)}')" data-key="${i}" style="opacity:.3;filter:blur(4px);pointer-events:none">
+                    <span class="key-hint">${keyLabels[i]}</span>
+                    ${esc(o)}
+                </button>
+            `).join('')}
+        </div>
+    `;
+
+    document.getElementById('pvp-check-btn').textContent = '✓ Kiểm tra';
+    document.getElementById('pvp-check-btn').disabled = true;
+    setTimeout(() => playPvPAudio(), 400);
+}
+
+function playPvPAudio() {
+    const btn = document.getElementById('acPlayBtn');
+    if (!btn) return;
+    if (answerState.answered) return;
+    btn.style.animation = 'pulse-glow 1.2s ease-in-out infinite';
+    document.getElementById('acLabel').textContent = 'Đang phát...';
+    const v = answerState.vocab;
+
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(v.hanzi);
+        u.lang = 'zh-CN';
+        u.rate = 0.75;
+        u.onstart = () => { audioUnlocked = false; };
+        u.onend = () => {
+            btn.style.animation = '';
+            document.getElementById('acLabel').textContent = 'Đã nghe xong! Chọn đáp án.';
+            audioUnlocked = true;
+            document.querySelectorAll('.option-btn').forEach(b => {
+                b.style.opacity = ''; b.style.filter = ''; b.style.pointerEvents = '';
+            });
+        };
+        u.onerror = () => forceUnlockAudio();
+        speechSynthesis.speak(u);
+    } else {
+        forceUnlockAudio();
+    }
+}
+
+function forceUnlockAudio() {
+    audioUnlocked = true;
+    document.getElementById('acLabel').textContent = 'Chọn đáp án:';
+    document.querySelectorAll('.option-btn').forEach(b => {
+        b.style.opacity = ''; b.style.filter = ''; b.style.pointerEvents = '';
+    });
+}
+
+function renderPvPRadical() {
+    if (radicalQuestions.length === 0) { submitPvPResult(); return; }
+
+    const q = radicalQuestions.pop();
+    const area = document.getElementById('pvp-question-area');
+    answerState = { type: 'radical', target: q.target, parts: q.parts, hint: q.hint, answered: false, selected: null };
+
+    area.innerHTML = `
+        <div class="quiz-question">
+            <div class="quiz-question__hint" style="margin-bottom:8px;">Hãy ghép các bộ thủ để tạo thành chữ này:</div>
+            <div class="quiz-question__hanzi" style="font-size:4rem;">${esc(q.target)}</div>
+            <div style="font-size:.85rem;color:#64748b;margin-top:8px;">Gợi ý: ${esc(q.hint)}</div>
+        </div>
+        <div class="rb-answer-pvp" id="rbAnswer" style="display:flex;align-items:center;justify-content:center;gap:12px;min-height:70px;padding:16px;background:rgba(0,0,0,0.15);border:2px dashed rgba(255,255,255,0.08);border-radius:14px;margin-bottom:16px;">
+            <span style="color:#64748b;font-size:.9rem;" id="rbPlaceholder">Chọn bộ thủ vào đây</span>
+        </div>
+        <div class="rb-tray-pvp" id="rbTray" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:50px;padding:16px;background:rgba(0,0,0,0.1);border-radius:14px;margin-bottom:16px;">
+            ${shuffleArray([...q.parts]).map(p => `<span class="rb-part" onclick="rbClickPart(this)" style="font-family:'Noto Sans SC',sans-serif;font-size:2.2rem;font-weight:700;padding:8px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:10px;cursor:pointer;transition:all .2s;color:#f1f5f9;">${esc(p)}</span>`).join('')}
+        </div>
+    `;
+
+    document.getElementById('pvp-check-btn').textContent = '✓ Kiểm tra';
+    document.getElementById('pvp-check-btn').disabled = true;
+}
+
+function rbClickPart(el) {
+    if (answerState.answered) return;
+    const answer = document.getElementById('rbAnswer');
+    const tray = document.getElementById('rbTray');
+    const isInAnswer = answer.contains(el);
+    const placeholder = document.getElementById('rbPlaceholder');
+
+    if (isInAnswer) {
+        tray.appendChild(el);
+        el.style.background = '';
+        el.style.borderColor = '';
+    } else {
+        const currentParts = answer.querySelectorAll('.rb-part');
+        if (currentParts.length < answerState.parts.length) {
+            el.style.background = 'rgba(13,148,136,0.15)';
+            el.style.borderColor = 'rgba(13,148,136,0.3)';
+            answer.appendChild(el);
+        }
+    }
+    if (placeholder) placeholder.style.display = answer.querySelectorAll('.rb-part').length ? 'none' : '';
+    const partsInAnswer = answer.querySelectorAll('.rb-part').length;
+    document.getElementById('pvp-check-btn').disabled = partsInAnswer === 0;
+}
+
 function selectPvPOption(btn, value) {
     if (answerState.answered) return;
+    if (answerState.type === 'audio' && !audioUnlocked) {
+        showToast('Hãy nghe hết audio trước!', 'warning', 2000);
+        btn.blur();
+        return;
+    }
     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     answerState.selected = value;
@@ -679,6 +879,23 @@ function selectPvPOption(btn, value) {
 
 function checkPvPAnswer() {
     if (answerState.answered) return;
+
+    if (answerState.type === 'radical') {
+        const answer = document.getElementById('rbAnswer');
+        const parts = Array.from(answer.querySelectorAll('.rb-part')).map(el => el.textContent);
+        const isCorrect = parts.join('') === answerState.target;
+        if (isCorrect) score++;
+        answerState.answered = true;
+        answerState.correct = isCorrect;
+        document.querySelectorAll('.rb-part').forEach(el => el.style.cursor = 'default');
+        document.getElementById('pvp-check-btn').textContent = isCorrect ? '✅ Đúng! Tiếp →' : '❌ Sai! Tiếp →';
+        document.getElementById('pvp-score').textContent = score;
+        document.getElementById('pvp-check-btn').disabled = false;
+        const delay = isCorrect ? 1000 : 1800;
+        setTimeout(() => { currentQ++; renderPvPQuestion(); }, delay);
+        return;
+    }
+
     const v = answerState.vocab;
     const correct = answerState.selected === v.meaning;
     if (correct) score++;
@@ -786,6 +1003,11 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
         const checkBtn = document.getElementById('pvp-check-btn');
         if (!checkBtn.disabled) checkBtn.click();
+    }
+    if (e.key === ' ' && quizType === 'audio') {
+        e.preventDefault();
+        const playBtn = document.getElementById('acPlayBtn');
+        if (playBtn && !answerState.answered) playBtn.click();
     }
 });
 

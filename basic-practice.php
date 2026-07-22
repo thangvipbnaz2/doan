@@ -320,6 +320,7 @@ const radicalQuestions = [
 {target:'笔',parts:['⺮','毛'],hint:'Trúc + Mao'},
 {target:'笑',parts:['⺮','夭'],hint:'Trúc + Yểu'},
 ];
+const radicalPool=['山','水','火','土','心','手','目','言','金','食','车','马','足','寸','贝','刀','巾','牛','犬','广']; // distractors
 
 let state = {
 module:'',score:0,current:0,questions:[],total:0,level:1,answered:false
@@ -327,7 +328,7 @@ module:'',score:0,current:0,questions:[],total:0,level:1,answered:false
 let audioTimer = null;
 let audioCtx = null;
 
-async function fetchAPI(action,data,method){
+async function fetchAPI(action,data,method='GET'){
 try{
 let url=API_URL+'?action='+action;
 let opts={method,headers:{'Content-Type':'application/json'}};
@@ -371,10 +372,8 @@ onLevelChange();
 function updateScore(){document.getElementById('scoreFloatNum').textContent=state.score}
 
 function backToMenu(){
-document.getElementById('bpMenu').style.display='block';
-document.getElementById('bpModule').classList.remove('active');
-document.getElementById('bpResult').classList.remove('active');
-document.getElementById('scoreFloat').style.display='flex';
+    var l = document.getElementById('bpLevel').value;
+    window.location.href = 'practice.php?level=' + l;
 }
 
 function startModule(type){
@@ -550,7 +549,7 @@ return;
 }
 const q=state.questions[state.current];
 const correct=q.vocab.meaning;
-  const pickeds=btn.dataset.val;
+  const picked=btn.dataset.val;
   const isCorrect=picked===correct;
   state.answered=true;
   document.querySelectorAll('.ac-btn-opt').forEach(b=>{
@@ -571,16 +570,20 @@ const correct=q.vocab.meaning;
 // ===== RADICAL BUILDER =====
 function renderRadical(area){
 const q=state.questions[state.current];
+var trayParts=q.parts.slice();
+var pool=shuffle(radicalPool).filter(function(p){return trayParts.indexOf(p)===-1});
+var extras=pool.slice(0,2);
+trayParts=trayParts.concat(extras);
 area.innerHTML=
 '<div class="rb-card">'+
 '<div class="rb-prompt">'+
-'<div class="rb-prompt__label">Hãy ghép các bộ thủ để tạo thành chữ này:</div>'+
+'<div class="rb-prompt__label">Hãy chọn các bộ thủ tạo thành chữ này:</div>'+
 '<div class="rb-prompt__char">'+q.target+'</div>'+
 '<div class="rb-prompt__hint">Gợi ý: '+q.hint+'</div>'+
 '</div>'+
-'<div class="rb-answer" id="rbAnswer"><span class="rb-answer__placeholder">Kéo bộ thủ vào đây</span></div>'+
+'<div class="rb-answer" id="rbAnswer"><span class="rb-answer__placeholder">Nhấp vào bộ thủ đúng</span></div>'+
 '<div class="rb-tray" id="rbTray">'+
-shuffle(q.parts).map(p=>'<span class="rb-tray__part" draggable="true" onclick="rbClickPart(this)">'+p+'</span>').join('')+
+shuffle(trayParts).map(p=>'<span class="rb-tray__part" draggable="true" onclick="rbClickPart(this)">'+p+'</span>').join('')+
 '</div>'+
 '<button class="rb-check" id="rbCheck" onclick="rbCheck()" disabled>Kiểm tra</button>'+
 '<div class="rb-result" id="rbResult"></div>'+
@@ -670,14 +673,14 @@ btn.disabled=parts.length===0;
 }
 
 function rbCheck(){
-if(state.answered)return;
-const q=state.questions[state.current];
-const answer=document.getElementById('rbAnswer');
-const parts=Array.from(answer.querySelectorAll('.rb-tray__part')).map(el=>el.textContent);
-const result=document.getElementById('rbResult');
-const btn=document.getElementById('rbCheck');
-const nextBtn=document.getElementById('rbNext');
-const isCorrect=parts.join('')===q.target;
+    if(state.answered)return;
+    const q=state.questions[state.current];
+    const answer=document.getElementById('rbAnswer');
+    const parts=Array.from(answer.querySelectorAll('.rb-tray__part')).map(el=>el.textContent);
+    const result=document.getElementById('rbResult');
+    const btn=document.getElementById('rbCheck');
+    const nextBtn=document.getElementById('rbNext');
+    const isCorrect=parts.slice().sort().join('')===q.parts.slice().sort().join('');
 state.answered=true;
 if(isCorrect){
 state.score++;
@@ -744,7 +747,7 @@ const t=state.total;
 const pct=Math.round(s/t*100);
 document.getElementById('resultScore').textContent=s;
 document.getElementById('resultTotal').textContent=t;
-let icon,color,msg;
+let icon,color,bg,msg;
 if(pct>=90){icon='bi bi-trophy-fill';color='#f59e0b';bg='rgba(245,158,11,0.1)';msg='Tuyệt vời! Bạn làm rất tốt!';}
 else if(pct>=70){icon='bi bi-emoji-smile-fill';color='#10b981';bg='rgba(16,185,129,0.1)';msg='Làm tốt lắm! Tiếp tục cố gắng nhé!';}
 else if(pct>=50){icon='bi bi-emoji-neutral-fill';color='#3b82f6';bg='rgba(59,130,246,0.1)';msg='Khá lắm! Hãy ôn lại thêm nhé!';}
@@ -769,6 +772,21 @@ loadQuestions(type);
 }
 
 document.getElementById('scoreFloat').style.display='none';
+
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        document.getElementById('bpMenu').style.display = 'block';
+        document.getElementById('bpModule').classList.remove('active');
+        document.getElementById('bpResult').classList.remove('active');
+    }
+});
+
+(function(){
+    const p=new URLSearchParams(location.search);
+    const m=p.get('module'),l=p.get('level');
+    if(l){var sel=document.getElementById('bpLevel');if(sel)sel.value=l;onLevelChange();}
+    if(m&&['quiz','audio','radical'].includes(m)){startModule(m);}
+})();
 </script>
 
 <footer class="footer"><div class="footer__bottom"><div class="container"><p>&copy; 2026 HànNgữ. Luyện tập cơ bản</p></div></div></footer>

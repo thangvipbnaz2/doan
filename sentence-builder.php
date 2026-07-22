@@ -218,10 +218,8 @@ function escapeHtml(t){if(!t)return'';const d=document.createElement('div');d.te
 function updateScore(){document.getElementById('sbScoreNum').textContent=state.score}
 
 function backToMenu(){
-document.getElementById('sbMenu').style.display='';
-document.getElementById('sbModule').classList.remove('active');
-document.getElementById('sbResult').classList.remove('active');
-document.getElementById('sbScore').style.display='flex';
+    var l = document.getElementById('sbLevel').value;
+    window.location.href = 'practice.php?level=' + l;
 }
 
 async function startGame(){
@@ -528,6 +526,11 @@ renderQuestion();
 }
 
 document.getElementById('sbScore').style.display='none';
+
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) location.reload();
+});
+(function(){var l=new URLSearchParams(location.search).get('level');if(l){var sel=document.getElementById('sbLevel');if(sel)sel.value=l;}startGame();})();
 </script>
 
 <footer class="footer"><div class="footer__bottom"><div class="container"><p>&copy; 2026 HànNgữ. Ghép câu - Luyện thi HSK</p></div></div></footer>

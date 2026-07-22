@@ -18,84 +18,52 @@
         .page-header__desc { font-size: .95rem; color: var(--gray); }
 
         .practice-types { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
-        .practice-card { background: #fff; border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); text-align: center; cursor: pointer; transition: var(--transition); border: 2px solid transparent; }
+        .practice-card { background: #fff; border-radius: var(--radius); padding: 32px 24px; box-shadow: var(--shadow); text-align: center; cursor: pointer; transition: var(--transition); border: 2px solid transparent; text-decoration: none; display:block; position:relative; overflow:hidden; }
         .practice-card:hover { border-color: var(--red); transform: translateY(-6px); box-shadow: var(--shadow-lg); }
-
+        .practice-card__badge { position:absolute; top:12px; right:12px; padding:3px 10px; border-radius:20px; font-size:.72rem; font-weight:700; line-height:1.6; z-index:1; }
+        .practice-card__badge--has { background:#0d9488; color:#fff; }
+        .practice-card__badge--none { background:var(--gray-light); color:var(--gray); }
         .practice-card__icon { font-size: 3rem; margin-bottom: 16px; display:flex; align-items:center; justify-content:center; }
         .practice-card__icon .bi { font-size: 3rem; }
         .practice-card__title { font-size: 1.3rem; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
         .practice-card__desc { font-size: .9rem; color: var(--gray); line-height: 1.6; }
         .practice-card__btn { display: inline-block; margin-top: 16px; padding: 10px 24px; background: var(--red); color: #fff; border-radius: var(--radius-sm); font-weight: 600; }
 
-        /* Practice Box Styles */
-        .practice-box { display: none; background: #fff; border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); max-width: 800px; margin: 0 auto; }
-        .practice-box.active { display: block; }
+        .hist-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; display:none; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+        .hist-overlay.active { display:flex; }
+        .hist-panel { background:#fff; border-radius:24px; max-width:780px; width:100%; max-height:85vh; display:flex; flex-direction:column; box-shadow:0 24px 80px rgba(0,0,0,0.2); animation:histIn .3s ease; }
+        @keyframes histIn { from { opacity:0; transform:scale(.92) translateY(20px); } to { opacity:1; transform:scale(1) translateY(0); } }
+        .hist-header { display:flex; align-items:center; justify-content:space-between; padding:20px 28px 16px; border-bottom:1px solid var(--gray-light); flex-shrink:0; }
+        .hist-header h2 { font-size:1.3rem; font-weight:800; color:var(--dark); margin:0; display:flex; align-items:center; gap:10px; }
+        .hist-header h2 i { color:var(--red); }
+        .hist-close { width:36px; height:36px; border:none; background:var(--gray-light); border-radius:50%; font-size:1.3rem; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--gray); transition:all .2s; }
+        .hist-close:hover { background:var(--red); color:#fff; transform:rotate(90deg); }
+        .hist-body { padding:20px 28px 28px; overflow-y:auto; flex:1; }
+        .hist-empty { text-align:center; padding:40px 20px; color:var(--gray); }
+        .hist-empty i { font-size:3rem; display:block; margin-bottom:12px; opacity:.4; }
 
-        .question-box { text-align: center; margin-bottom: 32px; }
-        .question-box__hanzi { font-family: 'Noto Sans SC', sans-serif; font-size: 4rem; font-weight: 900; color: var(--dark); margin-bottom: 16px; }
-        .question-box__pinyin { font-size: 1.4rem; color: var(--red); font-weight: 600; font-style: italic; margin-bottom: 8px; }
-        .question-box__meaning { font-size: 1.1rem; color: var(--gray); }
+        .hist-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-bottom:28px; }
+        .hist-grid__item { background:var(--gray-light); border-radius:14px; padding:14px 12px; text-align:center; transition:all .2s; }
+        .hist-grid__item:hover { background:var(--teal-light); transform:translateY(-2px); }
+        .hist-grid__item-icon { font-size:1.3rem; margin-bottom:4px; }
+        .hist-grid__item-name { font-size:.78rem; font-weight:600; color:var(--dark); margin-bottom:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .hist-grid__item-score { font-size:.95rem; font-weight:800; }
+        .hist-grid__item-score--good { color:#0d9488; }
+        .hist-grid__item-score--mid { color:#d97706; }
+        .hist-grid__item-score--low { color:#ef4444; }
+        .hist-grid__item-count { font-size:.68rem; color:var(--gray); margin-top:2px; }
 
-        .drag-area { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 24px; min-height: 60px; padding: 16px; background: var(--red-light); border-radius: var(--radius-sm); border: 2px dashed var(--red); }
-        .drag-area.drag-over { background: var(--red); border-color: var(--dark); }
-        .drag-word { padding: 12px 20px; background: #fff; border-radius: var(--radius-sm); font-size: 1.1rem; font-weight: 600; cursor: grab; box-shadow: var(--shadow); user-select: none; transition: all 0.2s; display: inline-block; }
-        .drag-word:hover { transform: scale(1.05); box-shadow: var(--shadow-lg); border: 2px solid var(--red); }
-        .drag-word:active { cursor: grabbing; }
-        .drag-word.dropped { display: none; }
-
-        .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        @media(max-width:480px){.match-grid{grid-template-columns:1fr}}
-        .option-btn { padding: 16px 20px; background: #fff; border: 2px solid var(--gray-light); border-radius: var(--radius-sm); font-size: 1rem; cursor: pointer; transition: var(--transition); }
-        .option-btn:hover { border-color: var(--red); }
-        .option-btn.selected { background: var(--red); border-color: var(--red); color: #fff; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); }
-        .option-btn.correct { background: #d1fae5; border-color: #059669; color: #065f46; }
-        .option-btn.wrong { background: #fef2f2; border-color: #dc2626; color: #dc2626; }
-
-        .sentence-area { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
-        .sentence-slot { min-width: 50px; min-height: 40px; padding: 8px; border-bottom: 3px solid var(--red); text-align: center; font-size: 1.3rem; font-weight: 600; }
-        .sentence-word { padding: 8px 14px; background: var(--red); color: #fff; border-radius: 6px; font-size: 1rem; cursor: pointer; }
-
-        .quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--gray-light); }
-        .quiz-progress { font-size: .9rem; color: var(--gray); }
-        .quiz-actions { display: flex; gap: 12px; }
-
-        .result-box { text-align: center; padding: 40px; }
-        .result-box__score { font-size: 5rem; font-weight: 900; color: var(--red); }
-        .result-box__message { font-size: 1.2rem; color: var(--dark); margin: 16px 0; }
-        .result-detail { margin: 20px auto; max-width: 400px; }
-        .result-detail__row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--gray-light); font-size: .9rem; }
-        .result-detail__label { color: var(--gray); }
-        .result-detail__value { font-weight: 600; color: var(--dark); }
-
-        .passage-box { background: var(--red-light); border-radius: var(--radius-sm); padding: 20px; margin-bottom: 20px; }
-        .passage-box__text { font-family: 'Noto Sans SC', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--dark); line-height: 1.8; margin-bottom: 8px; }
-        .passage-box__note { font-size: .85rem; color: var(--gray); }
-
-        .cloze-blank { display: inline-block; min-width: 80px; border-bottom: 3px solid var(--red); margin: 0 4px; padding: 0 4px; color: var(--red); font-weight: 700; font-size: 1.2rem; }
-
-        .typing-input { width: 100%; max-width: 300px; padding: 16px 20px; border: 3px solid var(--gray-light); border-radius: var(--radius-sm); font-family: 'Noto Sans SC', sans-serif; font-size: 2rem; text-align: center; font-weight: 700; outline: none; transition: var(--transition); }
-        .typing-input:focus { border-color: var(--red); box-shadow: 0 0 0 4px rgba(13,148,136,.15); }
-        .typing-input.correct { border-color: var(--red); background: var(--red-light); }
-        .typing-input.wrong { border-color: var(--red); background: var(--red-light); }
-
-        .timer-bar { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: var(--gray-light); z-index: 1000; }
-        .timer-bar__fill { height: 100%; background: linear-gradient(90deg, var(--red), var(--gold), var(--red)); transition: width 1s linear; }
-        .timer-display { text-align: center; font-size: 1.2rem; font-weight: 800; color: var(--dark); margin-bottom: 16px; }
-        .timer-display span { color: var(--red); }
-        .timer-display.warning span { color: var(--gold-dark); }
-        .timer-display.danger span { color: var(--red); }
-
-        .sentence-parts { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin: 20px 0; padding: 20px; background: #f8fafb; border-radius: var(--radius-sm); border: 1px solid var(--gray-light); }
-        .sentence-part { padding: 12px 20px; background: #fff; border: 2px solid var(--gray-light); border-radius: var(--radius-sm); font-family: 'Noto Sans SC', sans-serif; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: var(--transition); user-select: none; }
-        .sentence-part:hover { border-color: var(--red); transform: translateY(-2px); }
-        .sentence-part.selected { border-color: var(--red); background: var(--red); color: #fff; }
-        .sentence-part.used { opacity: .3; pointer-events: none; }
-        .sentence-answer { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; min-height: 50px; padding: 12px; background: var(--red-light); border-radius: var(--radius-sm); margin-bottom: 12px; border: 2px dashed var(--red); }
-        .sentence-answer__part { padding: 8px 16px; background: var(--red); color: #fff; border-radius: 6px; font-family: 'Noto Sans SC', sans-serif; font-size: 1rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
-        .sentence-answer__part:hover { opacity: .8; }
-
-        @media(max-width:768px) { .options-grid{grid-template-columns:1fr} }
+        .hist-recent-title { font-size:.9rem; font-weight:700; color:var(--dark); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+        .hist-list { display:flex; flex-direction:column; gap:8px; }
+        .hist-row { display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--gray-light); border-radius:10px; font-size:.82rem; transition:all .2s; }
+        .hist-row:hover { background:var(--teal-light); }
+        .hist-row__icon { font-size:1rem; width:24px; text-align:center; flex-shrink:0; }
+        .hist-row__name { font-weight:600; color:var(--dark); min-width:100px; flex-shrink:0; }
+        .hist-row__level { color:var(--gray); font-size:.72rem; min-width:48px; }
+        .hist-row__score { font-weight:700; margin-left:auto; }
+        .hist-row__score--pass { color:#0d9488; }
+        .hist-row__score--fail { color:#ef4444; }
+        .hist-row__date { color:var(--gray); font-size:.72rem; min-width:75px; text-align:right; flex-shrink:0; }
 
         [data-theme="dark"] .practice-page { background: linear-gradient(180deg, #0f172a, #1e293b); }
         [data-theme="dark"] .page-header { background: #1e293b; }
@@ -104,213 +72,287 @@
         [data-theme="dark"] .practice-card { background: #1e293b; }
         [data-theme="dark"] .practice-card__title { color: #f1f5f9; }
         [data-theme="dark"] .practice-card__desc { color: #94a3b8; }
-        [data-theme="dark"] .practice-box { background: #1e293b; }
-        [data-theme="dark"] .question-box__hanzi { color: #f1f5f9; }
-        [data-theme="dark"] .question-box__meaning { color: #94a3b8; }
-        [data-theme="dark"] .drag-area { background: rgba(13,148,136,.08); border-color: rgba(13,148,136,.3); }
-        [data-theme="dark"] .drag-word { background: #1e293b; color: #f1f5f9; }
-        [data-theme="dark"] .option-btn { background: #1e293b; border-color: rgba(255,255,255,.08); color: #f1f5f9; }
-        [data-theme="dark"] .option-btn:hover { border-color: var(--red); }
-        [data-theme="dark"] .option-btn.selected { background: var(--red); color: #fff; }
-        [data-theme="dark"] .option-btn.correct { background: rgba(16,185,129,.15); border-color: #10b981; color: #6ee7b7; }
-        [data-theme="dark"] .option-btn.wrong { background: rgba(239,68,68,.15); border-color: #ef4444; color: #fca5a5; }
-        [data-theme="dark"] .passage-box { background: rgba(13,148,136,.08); }
-        [data-theme="dark"] .passage-box__text { color: #f1f5f9; }
-        [data-theme="dark"] .passage-box__note { color: #94a3b8; }
-        [data-theme="dark"] .quiz-nav { border-top-color: rgba(255,255,255,.08); }
-        [data-theme="dark"] .quiz-progress { color: #64748b; }
-        [data-theme="dark"] .result-box__message { color: #f1f5f9; }
-        [data-theme="dark"] .result-detail__row { border-bottom-color: rgba(255,255,255,.08); }
-        [data-theme="dark"] .result-detail__label { color: #64748b; }
-        [data-theme="dark"] .result-detail__value { color: #f1f5f9; }
-        [data-theme="dark"] .timer-display { color: #f1f5f9; }
-        [data-theme="dark"] .typing-input { background: #1e293b; border-color: rgba(255,255,255,.08); color: #f1f5f9; }
-        [data-theme="dark"] .sentence-parts { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.08); }
-        [data-theme="dark"] .sentence-part { background: #1e293b; border-color: rgba(255,255,255,.08); color: #f1f5f9; }
-        [data-theme="dark"] .sentence-answer { background: rgba(13,148,136,.08); border-color: rgba(13,148,136,.3); }
-        [data-theme="dark"] .sentence-slot { border-bottom-color: var(--red); }
-        [data-theme="dark"] #practice-config label[style*="color"] { color: #f1f5f9 !important; }
+        [data-theme="dark"] .practice-card__badge--none { background:#334155; color:#64748b; }
         [data-theme="dark"] #level-select { background: #1e293b; border-color: rgba(255,255,255,.08); color: #f1f5f9; }
-        [data-theme="dark"] .timer-bar { background: rgba(255,255,255,.08); }
-
-
+        [data-theme="dark"] #practice-config label[style*="color"] { color: #f1f5f9 !important; }
+        [data-theme="dark"] .hist-panel { background:#1e293b; }
+        [data-theme="dark"] .hist-header { border-color:rgba(255,255,255,.06); }
+        [data-theme="dark"] .hist-header h2 { color:#f1f5f9; }
+        [data-theme="dark"] .hist-close { background:#334155; color:#94a3b8; }
+        [data-theme="dark"] .hist-grid__item { background:#334155; }
+        [data-theme="dark"] .hist-grid__item:hover { background:rgba(13,148,136,.15); }
+        [data-theme="dark"] .hist-grid__item-name { color:#f1f5f9; }
+        [data-theme="dark"] .hist-row { background:#334155; }
+        [data-theme="dark"] .hist-row:hover { background:rgba(13,148,136,.12); }
+        [data-theme="dark"] .hist-row__name { color:#f1f5f9; }
+        [data-theme="dark"] .hist-recent-title { color:#f1f5f9; }
+        @media(max-width:600px){ .hist-grid { grid-template-columns:repeat(auto-fill,minmax(110px,1fr)); gap:8px; } .hist-body { padding:16px; } .hist-header { padding:16px 16px 12px; } .hist-row { flex-wrap:wrap; gap:6px; } .hist-row__date { margin-left:36px; } }
     </style>
 </head>
 <body>
 <?php include 'sidebar.php'; ?>
 <main class="practice-page">
-        <div class="container">
-            <div class="page-header">
-                <span class="page-header__badge"> Luyện tập</span>
-                <h1 class="page-header__title">Chọn hình thức <span class="text-gradient">luyện tập</span></h1>
-                <p class="page-header__desc">Ôn tập từ vựng và ngữ pháp qua các bài tập tương tác</p>
-            </div>
-
-            <div id="practice-config">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <label style="font-weight:600;color:var(--dark);"><i class="bi bi-bar-chart"></i> Chọn cấp độ:</label>
-                    <select id="level-select" style="padding:10px 18px;border:2px solid var(--gray-light);border-radius:var(--radius-sm);font-size:.95rem;font-weight:600;background:#fff;cursor:pointer;">
-                        <option value="1" selected>HSK 1</option>
-                        <option value="2">HSK 2</option>
-                        <option value="3">HSK 3</option>
-                        <option value="4">HSK 4</option>
-                        <option value="5">HSK 5</option>
-                        <option value="6">HSK 6</option>
-                    </select>
-                </div>
-                <button class="btn btn--outline btn--sm ripple" onclick="toggleHistory()"><i class="bi bi-clock-history"></i> Lịch sử</button>
-            </div>
-
-            <!-- Quiz History -->
-            <div id="quiz-history" style="display:none;margin-bottom:24px;">
-                <div class="user-progress">
-                    <div class="user-progress__title"> Lịch sử luyện tập</div>
-                    <div id="history-list" style="margin-top:12px;max-height:300px;overflow-y:auto;"></div>
-                </div>
-            </div>
-
-            <div class="practice-types" id="practice-types">
-                <a href="basic-practice.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="1" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-patch-question-fill" style="color:#0d9488"></i></div>
-                    <h3 class="practice-card__title">Trắc nghiệm từ vựng</h3>
-                    <p class="practice-card__desc">Chọn nghĩa đúng của chữ Hán hiển thị</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="basic-practice.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="1" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-headphones" style="color:#fb923c"></i></div>
-                    <h3 class="practice-card__title">Nghe và chọn</h3>
-                    <p class="practice-card__desc">Nghe phát âm và chọn đáp án đúng</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="basic-practice.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="1" data-hsk-max="2">
-                    <div class="practice-card__icon"><i class="bi bi-puzzle-fill" style="color:#8b5cf6"></i></div>
-                    <h3 class="practice-card__title">Ghép bộ thủ</h3>
-                    <p class="practice-card__desc">Kéo các bộ thủ vào khung để tạo thành chữ</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="sentence-builder.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="3" data-hsk-max="4">
-                    <div class="practice-card__icon"><i class="bi bi-columns-gap" style="color:#6366f1"></i></div>
-                    <h3 class="practice-card__title">Ghép câu</h3>
-                    <p class="practice-card__desc">Sắp xếp từ thành câu hoàn chỉnh (HSK 3-4)</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="reading-context.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="4" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-pencil-square" style="color:#d97706"></i></div>
-                    <h3 class="practice-card__title">Điền khuyết</h3>
-                    <p class="practice-card__desc">Điền từ thích hợp vào chỗ trống trong đoạn văn</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="reading-context.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="4" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-shuffle" style="color:#0d9488"></i></div>
-                    <h3 class="practice-card__title">Chọn từ đồng nghĩa</h3>
-                    <p class="practice-card__desc">Chọn từ thay thế phù hợp nhất với ngữ cảnh</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="advanced-academic.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="6" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-exclamation-triangle" style="color:#ef4444"></i></div>
-                    <h3 class="practice-card__title">Tìm lỗi ngữ pháp</h3>
-                    <p class="practice-card__desc">Xác định và sửa lỗi sai trong câu (HSK 6)</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="advanced-academic.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="5" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-pencil-square" style="color:#0d9488"></i></div>
-                    <h3 class="practice-card__title">Viết đoạn văn</h3>
-                    <p class="practice-card__desc">Viết đoạn văn dựa trên từ khoá cho sẵn (HSK 5+)</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-                <a href="advanced-academic.php" class="practice-card reveal" style="text-decoration:none" data-hsk-min="6" data-hsk-max="6">
-                    <div class="practice-card__icon"><i class="bi bi-clock-history" style="color:#7c3aed"></i></div>
-                    <h3 class="practice-card__title">Tóm tắt văn bản</h3>
-                    <p class="practice-card__desc">Đọc và viết tóm tắt văn bản tiếng Trung (HSK 6)</p>
-                    <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
-                </a>
-            </div>
-            </div>
-
-
+    <div class="container">
+        <div class="page-header">
+            <span class="page-header__badge"> Luyện tập</span>
+            <h1 class="page-header__title">Chọn hình thức <span class="text-gradient">luyện tập</span></h1>
+            <p class="page-header__desc">Ôn tập từ vựng và ngữ pháp qua các bài tập tương tác</p>
         </div>
-    </main>
-    
-    <script>
-    // Loading spinner
-    const LO = document.getElementById('loading-overlay');
-    function showLoading(){if(LO)LO.style.display='flex';}
-    function hideLoading(){if(LO)LO.style.display='none';}
-    // Auto-hide on load
-    document.addEventListener('DOMContentLoaded',hideLoading);
-    window.addEventListener('load',hideLoading);
-    </script>
 
-    <script>
-    const API_URL = 'api.php';
-    const USER_ID = localStorage.getItem('hanngu_user_id') || 'default_user';
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:24px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <label style="font-weight:600;color:var(--dark);"><i class="bi bi-bar-chart"></i> Chọn cấp độ:</label>
+                <select id="level-select" style="padding:10px 18px;border:2px solid var(--gray-light);border-radius:var(--radius-sm);font-size:.95rem;font-weight:600;background:#fff;cursor:pointer;">
+                    <option value="1">HSK 1</option>
+                    <option value="2">HSK 2</option>
+                    <option value="3">HSK 3</option>
+                    <option value="4">HSK 4</option>
+                    <option value="5">HSK 5</option>
+                    <option value="6">HSK 6</option>
+                </select>
+            </div>
+            <button class="btn btn--outline btn--sm ripple" onclick="openHistory()"><i class="bi bi-clock-history"></i> Lịch sử</button>
+        </div>
 
-    async function fetchAPI(action, data = null, method = 'GET') {
-        try {
-            let url = `${API_URL}?action=${action}`;
-            let options = { method, headers: { 'Content-Type': 'application/json' } };
-            if (method === 'GET' && data) {
-                const d = { ...data, user_id: USER_ID };
-                url += '&' + new URLSearchParams(d).toString();
-            } else if (data) {
-                data.user_id = USER_ID;
-                options.body = JSON.stringify(data);
-            }
-            return await (await fetch(url, options)).json();
-        } catch (e) { showToast(' Lỗi tải dữ liệu!', 'error'); return null; }
-    }
+        <div class="practice-types" id="practice-types">
+            <a class="practice-card reveal" data-hsk-min="1" data-hsk-max="3" data-module="quiz" onclick="go('basic-practice.php','quiz')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-basic_quiz">—</span>
+                <div class="practice-card__icon"><i class="bi bi-patch-question-fill" style="color:#0d9488"></i></div>
+                <h3 class="practice-card__title">Trắc nghiệm từ vựng</h3>
+                <p class="practice-card__desc">Chọn nghĩa đúng của chữ Hán hiển thị (HSK 1-3)</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="1" data-hsk-max="3" data-module="audio" onclick="go('basic-practice.php','audio')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-basic_audio">—</span>
+                <div class="practice-card__icon"><i class="bi bi-headphones" style="color:#fb923c"></i></div>
+                <h3 class="practice-card__title">Nghe và chọn</h3>
+                <p class="practice-card__desc">Nghe phát âm và chọn đáp án đúng</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="1" data-hsk-max="2" data-module="radical" onclick="go('basic-practice.php','radical')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-basic_radical">—</span>
+                <div class="practice-card__icon"><i class="bi bi-puzzle-fill" style="color:#8b5cf6"></i></div>
+                <h3 class="practice-card__title">Ghép bộ thủ</h3>
+                <p class="practice-card__desc">Kéo các bộ thủ vào khung để tạo thành chữ</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="3" data-hsk-max="4" data-module="ghep_cau" onclick="go('sentence-builder.php','')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-ghep_cau">—</span>
+                <div class="practice-card__icon"><i class="bi bi-columns-gap" style="color:#6366f1"></i></div>
+                <h3 class="practice-card__title">Ghép câu</h3>
+                <p class="practice-card__desc">Sắp xếp từ thành câu hoàn chỉnh (HSK 3-4)</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="4" data-hsk-max="6" data-module="cloze" onclick="go('reading-context.php','cloze')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-reading_cloze">—</span>
+                <div class="practice-card__icon"><i class="bi bi-pencil-square" style="color:#d97706"></i></div>
+                <h3 class="practice-card__title">Điền khuyết</h3>
+                <p class="practice-card__desc">Điền từ thích hợp vào chỗ trống trong đoạn văn</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="4" data-hsk-max="6" data-module="synonym" onclick="go('reading-context.php','synonym')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-reading_synonym">—</span>
+                <div class="practice-card__icon"><i class="bi bi-shuffle" style="color:#0d9488"></i></div>
+                <h3 class="practice-card__title">Chọn từ đồng nghĩa</h3>
+                <p class="practice-card__desc">Chọn từ thay thế phù hợp nhất với ngữ cảnh</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="5" data-hsk-max="6" data-module="grammar" onclick="go('advanced-academic.php','grammar')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-academic_grammar">—</span>
+                <div class="practice-card__icon"><i class="bi bi-exclamation-triangle" style="color:#ef4444"></i></div>
+                <h3 class="practice-card__title">Tìm lỗi ngữ pháp</h3>
+                <p class="practice-card__desc">Xác định và sửa lỗi sai trong câu (HSK 5-6)</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="5" data-hsk-max="6" data-module="essay" onclick="go('advanced-academic.php','essay')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-academic_essay">—</span>
+                <div class="practice-card__icon"><i class="bi bi-pencil-square" style="color:#0d9488"></i></div>
+                <h3 class="practice-card__title">Viết đoạn văn</h3>
+                <p class="practice-card__desc">Viết đoạn văn dựa trên từ khoá cho sẵn (HSK 5-6)</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+            <a class="practice-card reveal" data-hsk-min="5" data-hsk-max="6" data-module="summary" onclick="go('advanced-academic.php','summary')">
+                <span class="practice-card__badge practice-card__badge--none" id="badge-academic_summary">—</span>
+                <div class="practice-card__icon"><i class="bi bi-clock-history" style="color:#7c3aed"></i></div>
+                <h3 class="practice-card__title">Tóm tắt văn bản</h3>
+                <p class="practice-card__desc">Đọc và viết tóm tắt văn bản tiếng Trung (HSK 5-6)</p>
+                <span class="practice-card__btn"><i class="bi bi-play-fill"></i> Luyện tập</span>
+            </a>
+        </div>
+    </div>
+</main>
 
-    // ===== QUIZ HISTORY =====
-    async function toggleHistory() {
-        const el = document.getElementById('quiz-history');
-        if (el.style.display === 'block') { el.style.display = 'none'; return; }
-        el.style.display = 'block';
-        await loadHistory();
-    }
+<div class="hist-overlay" id="histOverlay">
+    <div class="hist-panel">
+        <div class="hist-header">
+            <h2><i class="bi bi-clock-history"></i> Lịch sử luyện tập</h2>
+            <button class="hist-close" onclick="closeHistory()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="hist-body" id="histBody">
+            <div class="hist-empty"><i class="bi bi-arrow-repeat"></i> Đang tải...</div>
+        </div>
+    </div>
+</div>
 
-    async function loadHistory() {
-        const list = document.getElementById('history-list');
-        list.innerHTML = '';
-        const data = await fetchAPI('get_quiz_history');
-        if (!data || data.length === 0) {
-            list.innerHTML = '<p class="empty-state-float" style="color:var(--gray);text-align:center;">Chưa có lịch sử luyện tập.</p>';
-            return;
+<script>
+const API_URL = 'api.php';
+const USER_ID = localStorage.getItem('hanngu_user_id') || 'default_user';
+
+async function fetchAPI(action, data = null, method = 'GET') {
+    try {
+        let url = API_URL + '?action=' + action;
+        let options = { method, headers: { 'Content-Type': 'application/json' } };
+        if (method === 'GET' && data) {
+            const d = { ...data, user_id: USER_ID };
+            url += '&' + new URLSearchParams(d).toString();
+        } else if (data) {
+            data.user_id = USER_ID;
+            options.body = JSON.stringify(data);
         }
-        list.innerHTML = data.map(r => {
-            const label = r.quiz_type === 'choice' ? 'Trắc nghiệm' : r.quiz_type === 'basic' ? 'Cơ bản' : r.quiz_type === 'sentence' ? 'Ghép câu' : r.quiz_type === 'reading' ? 'Đọc hiểu' : r.quiz_type === 'advanced' ? 'Cao cấp' : r.quiz_type;
-            return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.1);border-radius:8px;margin-bottom:8px;font-size:.85rem;">
-                <span>${label} • HSK ${r.level || 'all'}</span>
-                <span>${r.score}/${r.total_questions} (<strong>${Math.round(r.score/r.total_questions*100)}%</strong>)</span>
-                <span style="color:var(--gray);font-size:.75rem;">${r.completed_at ? new Date(r.completed_at).toLocaleDateString('vi') : ''}</span>
-            </div>`;
-        }).join('');
-    }
+        return await (await fetch(url, options)).json();
+    } catch (e) { showToast(' Lỗi tải dữ liệu!', 'error'); return null; }
+}
 
-    // ===== HSK FILTER =====
-    function filterByLevel(level) {
-        document.querySelectorAll('#practice-types .practice-card').forEach(card => {
-            const min = parseInt(card.dataset.hskMin) || 1;
-            const max = parseInt(card.dataset.hskMax) || 6;
-            if (level >= min && level <= max) {
-                card.style.opacity = '1';
-                card.style.filter = 'none';
-                card.style.pointerEvents = 'auto';
-            } else {
-                card.style.opacity = '.3';
-                card.style.filter = 'grayscale(.7)';
-                card.style.pointerEvents = 'none';
-            }
-        });
-    }
+// ===== MODULE LABELS & ICONS =====
+const moduleMeta = {
+    basic_quiz:    { label:'Trắc nghiệm từ vựng', icon:'bi-patch-question-fill', color:'#0d9488', short:'Trắc nghiệm' },
+    basic_audio:   { label:'Nghe và chọn',        icon:'bi-headphones',         color:'#fb923c', short:'Nghe' },
+    basic_radical: { label:'Ghép bộ thủ',          icon:'bi-puzzle-fill',        color:'#8b5cf6', short:'Bộ thủ' },
+    ghep_cau:      { label:'Ghép câu',             icon:'bi-columns-gap',        color:'#6366f1', short:'Ghép câu' },
+    reading_cloze: { label:'Điền khuyết',           icon:'bi-pencil-square',     color:'#d97706', short:'Điền khuyết' },
+    reading_synonym:{label:'Chọn từ đồng nghĩa',    icon:'bi-shuffle',           color:'#0d9488', short:'Đồng nghĩa' },
+    academic_grammar:{label:'Tìm lỗi ngữ pháp',     icon:'bi-exclamation-triangle',color:'#ef4444', short:'Ngữ pháp' },
+    academic_essay:{label:'Viết đoạn văn',          icon:'bi-pencil-square',     color:'#0d9488', short:'Viết' },
+    academic_summary:{label:'Tóm tắt văn bản',      icon:'bi-clock-history',     color:'#7c3aed', short:'Tóm tắt' },
+    time_summary:  { label:'Tóm tắt có giờ',        icon:'bi-stopwatch',         color:'#7c3aed', short:'Tóm tắt TG' }
+};
 
-    document.getElementById('level-select').addEventListener('change', function() {
-        filterByLevel(parseInt(this.value));
+function getModuleMeta(type) {
+    return moduleMeta[type] || { label:type, icon:'bi-question-circle', color:'#94a3b8', short:type };
+}
+
+// ===== SCORE BADGES ON CARDS =====
+async function loadCardBadges() {
+    const stats = await fetchAPI('get_practice_stats');
+    if (!stats) return;
+    Object.keys(stats).forEach(function(type) {
+        var s = stats[type];
+        var pct = Math.round(parseFloat(s.best_pct));
+        if (isNaN(pct)) return;
+        var el = document.getElementById('badge-' + type);
+        if (!el) return;
+        el.textContent = pct + '%';
+        el.className = 'practice-card__badge practice-card__badge--has';
+        el.title = 'Điểm cao nhất: ' + pct + '% (' + s.attempt_count + ' lần)';
     });
+}
 
-    filterByLevel(parseInt(document.getElementById('level-select').value));
-    </script>
+// ===== HISTORY MODAL =====
+function openHistory() {
+    document.getElementById('histOverlay').classList.add('active');
+    renderHistory();
+}
 
-    
-</body>
-</html>
+function closeHistory() {
+    document.getElementById('histOverlay').classList.remove('active');
+}
+
+document.getElementById('histOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeHistory();
+});
+
+async function renderHistory() {
+    var body = document.getElementById('histBody');
+    body.innerHTML = '<div class="hist-empty"><i class="bi bi-arrow-repeat"></i> Đang tải...</div>';
+    var [stats, history] = await Promise.all([
+        fetchAPI('get_practice_stats'),
+        fetchAPI('get_quiz_history')
+    ]);
+    if (!stats && !history) {
+        body.innerHTML = '<div class="hist-empty"><i class="bi bi-inbox"></i> Không thể tải dữ liệu.</div>';
+        return;
+    }
+    var hasData = (stats && Object.keys(stats).length > 0) || (history && history.length > 0);
+    if (!hasData) {
+        body.innerHTML = '<div class="hist-empty"><i class="bi bi-inbox"></i> Chưa có lịch sử luyện tập.</div>';
+        return;
+    }
+
+    var html = '';
+
+    // Summary grid
+    if (stats && Object.keys(stats).length > 0) {
+        html += '<div class="hist-grid">';
+        var typeKeys = Object.keys(stats).sort();
+        typeKeys.forEach(function(type) {
+            var s = stats[type];
+            var meta = getModuleMeta(type);
+            var pct = Math.round(parseFloat(s.best_pct));
+            if (isNaN(pct)) return;
+            var scoreClass = pct >= 80 ? 'hist-grid__item-score--good' : pct >= 50 ? 'hist-grid__item-score--mid' : 'hist-grid__item-score--low';
+            html += '<div class="hist-grid__item"><div class="hist-grid__item-icon"><i class="bi ' + meta.icon + '" style="color:' + meta.color + '"></i></div><div class="hist-grid__item-name">' + meta.short + '</div><div class="hist-grid__item-score ' + scoreClass + '">' + pct + '%</div><div class="hist-grid__item-count">' + s.attempt_count + ' lần</div></div>';
+        });
+        html += '</div>';
+    }
+
+    // Recent list
+    if (history && history.length > 0) {
+        html += '<div class="hist-recent-title"><i class="bi bi-list-ul"></i> Lần gần đây</div><div class="hist-list">';
+        var shown = 0;
+        history.forEach(function(r) {
+            if (shown >= 30) return;
+            var meta = getModuleMeta(r.quiz_type);
+            var pct = Math.round(r.score / r.total_questions * 100);
+            if (isNaN(pct)) return;
+            var scoreClass = pct >= 80 ? 'hist-row__score--pass' : 'hist-row__score--fail';
+            var dateStr = r.completed_at ? new Date(r.completed_at).toLocaleDateString('vi-VN', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'}) : '';
+            html += '<div class="hist-row"><div class="hist-row__icon"><i class="bi ' + meta.icon + '" style="color:' + meta.color + '"></i></div><div class="hist-row__name">' + meta.short + '</div><div class="hist-row__level">HSK ' + (r.level || '—') + '</div><div class="hist-row__score ' + scoreClass + '">' + r.score + '/' + r.total_questions + ' (' + pct + '%)</div><div class="hist-row__date">' + dateStr + '</div></div>';
+            shown++;
+        });
+        html += '</div>';
+    }
+
+    body.innerHTML = html;
+}
+
+// ===== LEVEL FILTER =====
+function filterByLevel(level) {
+    document.querySelectorAll('#practice-types .practice-card').forEach(function(card) {
+        const min = parseInt(card.dataset.hskMin) || 1;
+        const max = parseInt(card.dataset.hskMax) || 6;
+        if (level >= min && level <= max) {
+            card.style.opacity = '1';
+            card.style.filter = 'none';
+            card.style.pointerEvents = 'auto';
+        } else {
+            card.style.opacity = '.3';
+            card.style.filter = 'grayscale(.7)';
+            card.style.pointerEvents = 'none';
+        }
+    });
+}
+
+function go(page, module) {
+    const level = document.getElementById('level-select').value;
+    localStorage.setItem('hanngu_practice_level', level);
+    let url = page;
+    if (module) url += '?module=' + module + '&level=' + level;
+    else url += '?level=' + level;
+    window.location.href = url;
+}
+
+var sel = document.getElementById('level-select');
+var urlLevel = new URLSearchParams(location.search).get('level');
+var saved = urlLevel || localStorage.getItem('hanngu_practice_level');
+if (saved) { sel.value = saved; localStorage.setItem('hanngu_practice_level', saved); }
+
+sel.addEventListener('change', function() {
+    var v = parseInt(this.value);
+    localStorage.setItem('hanngu_practice_level', v);
+    filterByLevel(v);
+});
+
+filterByLevel(parseInt(sel.value));
+loadCardBadges();
+</script>
+</body></html>

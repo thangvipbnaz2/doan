@@ -582,9 +582,34 @@ if ($action === 'save_quiz_result') {
 // API lấy lịch sử quiz
 if ($action === 'get_quiz_history') {
     $userId = $_GET['user_id'] ?? 'default_user';
-    $stmt = $conn->prepare("SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC LIMIT 20");
+    $stmt = $conn->prepare("SELECT * FROM quiz_results WHERE user_id = ? ORDER BY completed_at DESC LIMIT 50");
     $stmt->execute([$userId]);
     echo json_encode($stmt->fetchAll());
+    exit;
+}
+
+// API lấy thống kê điểm theo từng loại bài tập
+if ($action === 'get_practice_stats') {
+    $userId = $_GET['user_id'] ?? 'default_user';
+    $stmt = $conn->prepare("
+        SELECT 
+            quiz_type,
+            COUNT(*) as attempt_count,
+            MAX(CASE WHEN total_questions > 0 THEN score * 100.0 / total_questions ELSE 0 END) as best_pct,
+            (SELECT score FROM quiz_results t2 WHERE t2.user_id = ? AND t2.quiz_type = t1.quiz_type ORDER BY t2.completed_at DESC LIMIT 1) as latest_score,
+            (SELECT total_questions FROM quiz_results t2 WHERE t2.user_id = ? AND t2.quiz_type = t1.quiz_type ORDER BY t2.completed_at DESC LIMIT 1) as latest_total,
+            MAX(level) as level
+        FROM quiz_results t1
+        WHERE user_id = ?
+        GROUP BY quiz_type
+    ");
+    $stmt->execute([$userId, $userId, $userId]);
+    $rows = $stmt->fetchAll();
+    $map = [];
+    foreach ($rows as $r) {
+        $map[$r['quiz_type']] = $r;
+    }
+    echo json_encode($map);
     exit;
 }
 

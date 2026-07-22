@@ -283,10 +283,8 @@ function esc(t){if(!t)return'';const d=document.createElement('div');d.textConte
 function updScore(){document.getElementById('rcScoreNum').textContent=state.score}
 
 function backToMenu(){
-document.getElementById('rcMenu').style.display='';
-document.getElementById('rcModule').classList.remove('active');
-document.getElementById('rcResult').classList.remove('active');
-document.getElementById('rcScore').style.display='flex';
+    var l = document.getElementById('rcLevel').value;
+    window.location.href = 'practice.php?level=' + l;
 }
 
 async function startModule(type){
@@ -558,6 +556,16 @@ document.addEventListener('click',function(e){
 });
 
 document.getElementById('rcScore').style.display='none';
+
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) location.reload();
+});
+(function(){
+    const p=new URLSearchParams(location.search);
+    const m=p.get('module'),l=p.get('level');
+    if(l){var sel=document.getElementById('rcLevel');if(sel)sel.value=l;}
+    if(m==='cloze'||m==='synonym')startModule(m);
+})();
 </script>
 
 <footer class="footer"><div class="footer__bottom"><div class="container"><p>&copy; 2026 HànNgữ. Đọc hiểu & Ngữ cảnh</p></div></div></footer>

@@ -48,6 +48,9 @@ function sidebarActive(string $page, string $current): string {
 </div>
 
 <script>
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) location.reload();
+});
 (function() {
     var theme = localStorage.getItem('hanngu_theme');
     if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');

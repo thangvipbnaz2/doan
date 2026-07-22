@@ -321,11 +321,9 @@ function esc(t){if(!t)return'';const d=document.createElement('div');d.textConte
 function updScore(){document.getElementById('aaScoreNum').textContent=state.score}
 
 function backToMenu(){
-if(tsTimer){clearInterval(tsTimer);tsTimer=null}
-document.getElementById('aaMenu').style.display='';
-document.getElementById('aaModule').classList.remove('active');
-document.getElementById('aaResult').classList.remove('active');
-document.getElementById('aaScore').style.display='none';
+    if(tsTimer){clearInterval(tsTimer);tsTimer=null}
+    var l = document.getElementById('aaLevel').value;
+    window.location.href = 'practice.php?level=' + l;
 }
 
 function startModule(type){
@@ -664,6 +662,16 @@ if(m==='grammar')startGrammar();
 else if(m==='essay')startEssay();
 else if(m==='summary')startSummary();
 }
+
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) location.reload();
+});
+(function(){
+    const p=new URLSearchParams(location.search);
+    const m=p.get('module'),l=p.get('level');
+    if(l){var sel=document.getElementById('aaLevel');if(sel)sel.value=l;}
+    if(m==='grammar'||m==='essay'||m==='summary')startModule(m);
+})();
 
 function spawnCF(){
 const c=document.createElement('div');c.className='cf-c';document.body.appendChild(c);

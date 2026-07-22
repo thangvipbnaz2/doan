@@ -4,41 +4,66 @@ namespace App\Models;
 class User extends Model
 {
     protected static string $table = 'users';
-    protected array $fillable = ['username', 'email', 'password', 'display_name', 'role', 'avatar', 'bio', 'hsk_level', 'is_active'];
+    protected array $fillable = ['role_id', 'username', 'email', 'password', 'display_name', 'avatar', 'bio', 'phone', 'birthdate', 'gender', 'hsk_level', 'is_active', 'settings'];
+    protected array $hidden = ['password', 'remember_token'];
     protected bool $timestamps = true;
 
-    public static function findByUsername(string $username): ?static
+    public function role(): ?Role
     {
-        return self::findOneBy('username', $username);
+        return Role::find($this->role_id);
     }
 
-    public static function findByEmail(string $email): ?static
+    public function orders(): array
     {
-        return self::findOneBy('email', $email);
+        return Order::findBy('user_id', $this->id);
     }
 
-    public static function findByUsernameOrEmail(string $login): ?static
+    public function enrollments(): array
     {
-        $table = self::getTable();
-        $data = \App\Helpers\Database::fetch("SELECT * FROM {$table} WHERE username = ? OR email = ? LIMIT 1", [$login, $login]);
-        if (!$data) return null;
-        $model = new static();
-        foreach ($data as $key => $val) $model->$key = $val;
-        return $model;
+        return Enrollment::findBy('user_id', $this->id);
+    }
+
+    public function achievements(): array
+    {
+        return Achievement::findBy('user_id', $this->id);
+    }
+
+    public function flashcards(): array
+    {
+        return Flashcard::findBy('user_id', $this->id);
     }
 
     public static function authenticate(string $login, string $password): ?static
     {
-        $user = self::findByUsernameOrEmail($login);
-        if ($user && password_verify($password, $user->password ?? '')) {
-            return $user;
+        $table = self::getTable();
+        $data = \App\Helpers\Database::fetch(
+            "SELECT * FROM {$table} WHERE username = ? OR email = ? LIMIT 1",
+            [$login, $login]
+        );
+        if ($data && password_verify($password, $data['password'] ?? '')) {
+            $model = new static();
+            foreach ($data as $key => $val) $model->$key = $val;
+            return $model;
         }
         return null;
     }
 
     public function isAdmin(): bool
     {
-        return ($this->role ?? '') === 'admin';
+        $role = $this->role();
+        return $role && $role->slug === 'admin';
+    }
+
+    public function isTeacher(): bool
+    {
+        $role = $this->role();
+        return $role && $role->slug === 'teacher';
+    }
+
+    public function hasRole(string $role): bool
+    {
+        $r = $this->role();
+        return $r && $r->slug === $role;
     }
 
     public function getProgress(int $lessonId): ?array
@@ -56,5 +81,22 @@ class User extends Model
             [$this->id]
         );
         return (int) ($data['streak_days'] ?? 0);
+    }
+
+    public function getFlashcardsDue(): array
+    {
+        return \App\Helpers\Database::fetchAll(
+            "SELECT * FROM flashcards WHERE user_id = ? AND next_review_at <= NOW() AND is_active = 1 ORDER BY next_review_at ASC",
+            [$this->id]
+        );
+    }
+
+    public function getUnreadNotificationsCount(): int
+    {
+        $data = \App\Helpers\Database::fetch(
+            "SELECT COUNT(*) as cnt FROM notifications WHERE user_id = ? AND is_read = 0",
+            [$this->id]
+        );
+        return (int) ($data['cnt'] ?? 0);
     }
 }

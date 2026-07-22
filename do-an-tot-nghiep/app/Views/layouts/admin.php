@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản trị - HànNgữ</title>
-    <link rel="stylesheet" href="/do-an-tot-nghiep/style.css">
+    <?php $base = App\Helpers\View::baseUrl(); ?>
+    <link rel="stylesheet" href="<?= $base ?>/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         .admin-wrapper { display: flex; min-height: 100vh; }
@@ -29,30 +30,46 @@
                 <small>Admin Panel</small>
             </div>
             <nav>
-                <a href="/do-an-tot-nghiep/admin" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin') && !str_contains($_SERVER['REQUEST_URI'], '/admin/') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin') && !str_contains($_SERVER['REQUEST_URI'], '/admin/') ? 'active' : '' ?>">
                     <i class="fas fa-tachometer-alt"></i> Dashboard
                 </a>
-                <a href="/do-an-tot-nghiep/admin/lessons" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/lessons') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin/lessons" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/lessons') ? 'active' : '' ?>">
                     <i class="fas fa-book"></i> Bài học
                 </a>
-                <a href="/do-an-tot-nghiep/admin/vocab" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/vocab') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin/reading" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/reading') ? 'active' : '' ?>">
+                    <i class="fas fa-book-open"></i> Đọc
+                </a>
+                <a href="<?= $base ?>/admin/listening" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/listening') ? 'active' : '' ?>">
+                    <i class="fas fa-headphones"></i> Nghe
+                </a>
+                <a href="<?= $base ?>/admin/speaking" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/speaking') ? 'active' : '' ?>">
+                    <i class="fas fa-microphone"></i> Nói
+                </a>
+                <a href="<?= $base ?>/admin/writing" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/writing') ? 'active' : '' ?>">
+                    <i class="fas fa-pen"></i> Viết
+                </a>
+                <a href="<?= $base ?>/admin/exam" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/exam') ? 'active' : '' ?>">
+                    <i class="fas fa-file-alt"></i> Đề thi
+                </a>
+                <a href="<?= $base ?>/admin/vocab" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/vocab') ? 'active' : '' ?>">
                     <i class="fas fa-font"></i> Từ vựng
                 </a>
-                <a href="/do-an-tot-nghiep/admin/grammar" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/grammar') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin/grammar" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/grammar') ? 'active' : '' ?>">
                     <i class="fas fa-language"></i> Ngữ pháp
                 </a>
-                <a href="/do-an-tot-nghiep/admin/dialogues" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/dialogues') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin/dialogues" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/dialogues') ? 'active' : '' ?>">
                     <i class="fas fa-comments"></i> Hội thoại
                 </a>
-                <a href="/do-an-tot-nghiep/admin/users" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/users') ? 'active' : '' ?>">
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 10px 20px;">
+                <a href="<?= $base ?>/admin/users" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/users') ? 'active' : '' ?>">
                     <i class="fas fa-users"></i> Người dùng
                 </a>
-                <a href="/do-an-tot-nghiep/admin/orders" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/orders') ? 'active' : '' ?>">
+                <a href="<?= $base ?>/admin/orders" class="<?= str_contains($_SERVER['REQUEST_URI'], '/admin/orders') ? 'active' : '' ?>">
                     <i class="fas fa-shopping-cart"></i> Đơn hàng
                 </a>
                 <hr style="border-color: rgba(255,255,255,0.1); margin: 20px;">
-                <a href="/do-an-tot-nghiep/"><i class="fas fa-home"></i> Về trang chủ</a>
-                <a href="/do-an-tot-nghiep/logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                <a href="<?= $base ?>/"><i class="fas fa-home"></i> Về trang chủ</a>
+                <a href="<?= $base ?>/logout.php"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
             </nav>
         </aside>
         <main class="admin-content">

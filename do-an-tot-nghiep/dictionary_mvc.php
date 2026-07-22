@@ -65,4 +65,6 @@ foreach ($radicals as $r) {
     $radicalsByCategory[$cat][] = $r;
 }
 
+require __DIR__ . '/app/Views/layouts/_standalone_header.php';
 require 'app/Views/frontend/dictionary/index.php';
+require __DIR__ . '/app/Views/layouts/_standalone_footer.php';

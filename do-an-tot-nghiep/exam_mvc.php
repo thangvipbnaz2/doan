@@ -8,8 +8,9 @@ $action = $_GET['action'] ?? 'list';
 $userId = $_SESSION['user_id'] ?? 0;
 
 $baseUrl = 'exam_mvc.php';
+$pageTitle = 'Thi thử HSK';
 
-
+require __DIR__ . '/app/Views/layouts/_standalone_header.php';
 switch ($action) {
     case 'list':
         $levelFilter = (int)($_GET['level'] ?? 0);
@@ -93,6 +94,10 @@ switch ($action) {
         ]);
         $resultId = $conn->lastInsertId();
 
+        require_once __DIR__ . '/app/Helpers/Autoloader.php';
+        App\Helpers\Autoloader::register();
+        App\Models\Achievement::checkExamAchievements($userId, $score);
+
         header("Location: exam_mvc.php?action=result&id=$resultId");
         exit;
 
@@ -132,3 +137,5 @@ switch ($action) {
         header("Location: exam_mvc.php");
         exit;
 }
+
+require __DIR__ . '/app/Views/layouts/_standalone_footer.php';

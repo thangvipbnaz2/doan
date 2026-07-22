@@ -1,0 +1,21 @@
+{
+  "name": "HànNgữ - Học Tiếng Trung",
+  "short_name": "HànNgữ",
+  "description": "Học tiếng Trung trực tuyến - Lộ trình HSK 1 đến HSK 6",
+  "start_url": "index.php",
+  "display": "standalone",
+  "background_color": "#fafbfc",
+  "theme_color": "#0d9488",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "vi",
+  "categories": ["education", "language"],
+  "prefer_related_applications": false
+}

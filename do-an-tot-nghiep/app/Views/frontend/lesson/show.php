@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title><?=escape($lesson['title'])?> | HànNgữ</title>
-<link rel="stylesheet" href="style.css">
 <style>
-:root{--teal:#0d9488;--teal-dark:#0f766e;--teal-light:#ccfbf1;--coral:#f97316;--dark:#0f172a;--dark-3:#334155;--gray:#64748b;--gray-light:#e2e8f0;--radius:16px;--radius-sm:10px;--transition:all .3s cubic-bezier(.4,0,.2,1)}
-.lesson-page{max-width:960px;margin:auto;padding:104px 24px 64px}
+.lesson-page{max-width:960px;margin:auto;padding:24px}
 .lesson-hero{background:linear-gradient(135deg,#0f766e,#134e4a);border-radius:24px;padding:32px;color:#fff;position:relative;overflow:hidden}
 .lesson-hero.hsk3-4{background:linear-gradient(135deg,#1e40af,#1e3a5f)}
 .lesson-hero.hsk5-6{background:linear-gradient(135deg,#7c3aed,#5b21b6)}
@@ -129,9 +121,6 @@
 .toggle-btn:hover{border-color:var(--teal);color:var(--teal)}
 .toggle-btn.active{background:var(--teal);color:#fff;border-color:var(--teal)}
 </style>
-</head>
-<body>
-<?php include 'sidebar.php'; ?>
 
 <main class="lesson-page">
 
@@ -141,7 +130,7 @@
   <h1><?=escape($lesson['title'])?></h1>
   <p><?=escape($lesson['description'])?></p>
   <div class="lesson-meta">
-    <span>&#9201; <?=(15 + $lesson['level']*5)?> ph&uacute;t</span>
+    <span>&#9201; <?=($lesson['duration_minutes'] ?? (15 + $lesson['level']*5))?> ph&uacute;t</span>
     <span>&#128218; <?=count($vocab)?> t&#7915; v&#7921;ng</span>
     <span>&#128221; <?=count($grammarList)?> ng&#7919; ph&aacute;p</span>
     <span>&#128290; C&#7845;p &#273;&#7897; <?=$lesson['level']?>/6</span>
@@ -518,7 +507,37 @@
   <?php endforeach; ?>
 </div>
 
-<!-- SECTION 13: SUMMARY -->
+<!-- SECTION 12: REVIEW VOCAB -->
+<?php if(count($reviewVocab) > 0): ?>
+<div class="section-card" id="review-section">
+  <h2>&#128260; T&#7915; v&#7921;ng c&#7847;n &ocirc;n l&#7841;i <span class="count">t&#7915; b&agrave;i tr&#432;&#7899;c</span></h2>
+  <div class="vocab-grid">
+    <?php foreach($reviewVocab as $rv): ?>
+    <div class="vocab-card" style="border-color:#fef3c7;background:#fffbeb">
+      <div class="top">
+        <span class="hanzi" onclick="speak('<?=escape($rv['hanzi'])?>')"><?=escape($rv['hanzi'])?></span>
+        <button class="btn-play-sm" onclick="speak('<?=escape($rv['hanzi'])?>')">&#9654; &Ocirc;n</button>
+      </div>
+      <div class="pinyin"><?=escape($rv['pinyin'])?></div>
+      <div class="meaning"><?=escape($rv['meaning'])?></div>
+      <?php if($rv['example']): ?>
+      <div class="example"><?=escape($rv['example'])?></div>
+      <?php endif; ?>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+<?php endif; ?>
+
+<!-- SECTION 13: PERSONAL NOTES -->
+<div class="section-card" id="notes-section">
+  <h2>&#128221; Ghi ch&uacute; c&aacute; nh&acirc;n</h2>
+  <textarea id="userNoteContent" style="width:100%;min-height:100px;padding:12px;border:2px solid #e2e8f0;border-radius:8px;font-size:.9rem;font-family:inherit;resize:vertical;box-sizing:border-box" placeholder="Vi&#7871;t ghi ch&uacute; c&#7911;a b&#7841;n v&#7873; b&agrave;i h&#7885;c n&agrave;y..."><?=escape($userNote['content'] ?? '')?></textarea>
+  <button class="btn btn--primary" onclick="saveNote(<?=$lessonId?>)" style="margin-top:8px">&#128190; L&#432;u ghi ch&uacute;</button>
+  <span id="noteStatus" style="font-size:.8rem;color:#64748b;margin-left:8px"></span>
+</div>
+
+<!-- SECTION 14: SUMMARY -->
 <div class="section-card" id="summary-section">
   <h2>&#128202; T&#7893;ng k&#7871;t b&agrave;i h&#7885;c</h2>
   <div class="summary-grid">
@@ -539,19 +558,22 @@
       <div>&#272;o&#7841;n h&#7897;i tho&#7841;i</div>
     </div>
   </div>
+  <div style="text-align:center;margin:20px 0">
+    <button class="btn btn--primary" id="completeBtn" onclick="markLessonCompleted(<?=$lessonId?>)" <?=$progress && $progress['is_completed'] ? 'disabled' : ''?>>
+      <?=$progress && $progress['is_completed'] ? '&#2705; Đã hoàn thành' : '&#9989; Đánh dấu hoàn thành bài học'?>
+    </button>
+  </div>
   <div class="lesson-nav">
     <?php if($prevLesson): ?>
-    <a href="lesson_view.php?id=<?=$prevLesson['id']?>" class="prev">&larr; B&agrave;i tr&#432;&#7899;c</a>
+    <a href="<?=App\Helpers\View::baseUrl()?>/lesson/<?=$prevLesson['id']?>" class="prev">&larr; B&agrave;i tr&#432;&#7899;c</a>
     <?php else: ?>
     <span></span>
     <?php endif; ?>
     <?php if($nextLesson): ?>
-    <a href="lesson_view.php?id=<?=$nextLesson['id']?>" class="next">B&agrave;i ti&#7871;p theo: <?=escape($nextLesson['title'])?> &rarr;</a>
+    <a href="<?=App\Helpers\View::baseUrl()?>/lesson/<?=$nextLesson['id']?>" class="next">B&agrave;i ti&#7871;p theo: <?=escape($nextLesson['title'])?> &rarr;</a>
     <?php endif; ?>
   </div>
 </div>
-
-</main>
 
 <script>
 // ====== UTILITY FUNCTIONS ======
@@ -878,13 +900,16 @@ function checkAllExercises() {
 
 // ====== VOCAB ACTIONS ======
 function toggleFav(vocabId, btn) {
-    fetch('flashcard_srs.php?action=add', {
+    var userId = localStorage.getItem('hanngu_user_id') || 'default_user';
+    fetch('api.php?action=toggle_favorite', {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: 'vocab_id=' + vocabId
-    }).then(function() {
-        btn.textContent = '\u2764 &Dstrok;&atilde; th&iacute;ch';
-        btn.style.background = '#fecaca';
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ vocab_id: vocabId, user_id: userId })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.success) {
+            btn.textContent = '\u2764 &Dstrok;&atilde; th&iacute;ch';
+            btn.style.background = '#fecaca';
+        }
     });
 }
 
@@ -893,10 +918,50 @@ function markLearned(vocabId, btn) {
     btn.style.background = '#bbf7d0';
 }
 
+// ====== SAVE NOTE ======
+function saveNote(lessonId) {
+    var content = document.getElementById('userNoteContent').value;
+    var status = document.getElementById('noteStatus');
+    fetch('api.php?action=save_note', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ lesson_id: lessonId, content: content })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.success) {
+            status.textContent = '\u2705 &Dstrok;&atilde; l&#432;u!';
+            status.style.color = '#047857';
+        } else {
+            status.textContent = '\u274C L&#7895;i l&#432;u ghi ch&uacute;';
+            status.style.color = '#b91c1c';
+        }
+        setTimeout(function() { status.textContent = ''; }, 3000);
+    }).catch(function() {
+        status.textContent = '\u274C L&#7895;i k&#7871;t n&#7889;i';
+        status.style.color = '#b91c1c';
+    });
+}
+
+// ====== MARK LESSON COMPLETED ======
+function markLessonCompleted(lessonId) {
+    fetch('api.php?action=complete_lesson', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ lesson_id: lessonId })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.success) {
+            var btn = document.getElementById('completeBtn');
+            if (btn) {
+                btn.textContent = '\u2705 &Dstrok;&atilde; ho&agrave;n th&agrave;nh';
+                btn.className = 'btn btn--success';
+                btn.disabled = true;
+            }
+        }
+    });
+}
+
 // Initialize speech voices
 if ('speechSynthesis' in window) {
     speechSynthesis.onvoiceschanged = function() { speechSynthesis.getVoices(); };
 }
 </script>
-</body>
-</html>
+</main>

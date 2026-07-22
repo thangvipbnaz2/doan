@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Helpers;
 
 use PDO;
@@ -83,5 +84,20 @@ class Database
     public static function rollback(): void
     {
         self::getInstance()->rollBack();
+    }
+
+    public static function tableExists(string $table): bool
+    {
+        $config = require __DIR__ . '/../../config/database.php';
+        $result = self::fetch(
+            "SELECT COUNT(*) as cnt FROM information_schema.tables WHERE table_schema = ? AND table_name = ?",
+            [$config['database'], $table]
+        );
+        return ($result['cnt'] ?? 0) > 0;
+    }
+
+    public static function lastInsertId(): int
+    {
+        return (int) self::getInstance()->lastInsertId();
     }
 }

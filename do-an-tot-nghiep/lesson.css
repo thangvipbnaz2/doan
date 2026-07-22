@@ -25,6 +25,12 @@
     color: var(--dark);
     margin-bottom: 12px;
 }
+.quiz-question__prompt {
+    font-size: 1rem;
+    color: var(--dark);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
 .quiz-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -39,6 +45,10 @@
     cursor: pointer;
     transition: var(--transition);
     text-align: center;
+}
+.quiz-option__text {
+    font-weight: 500;
+}
 }
 .quiz-option:hover {
     border-color: var(--teal);
@@ -152,6 +162,12 @@
     background: #fff;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+}
+.lesson-header__info {
+    flex: 1;
+}
+.lesson-header__progress {
+    flex-shrink: 0;
 }
 .lesson-header__badge {
     display: inline-block;
@@ -327,10 +343,7 @@
     background: var(--teal-dark);
 }
 
-.btn--sm {
-    padding: 8px 18px;
-    font-size: 0.85rem;
-}
+
 .btn--sm:disabled {
     opacity: 0.4;
     cursor: not-allowed;
@@ -517,6 +530,11 @@
     font-size: 1rem;
     font-weight: 500;
     line-height: 1.6;
+}
+.info-card__vi {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 4px;
 }
 
 /* ===== SPEECH PRACTICE ===== */

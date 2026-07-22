@@ -73,7 +73,7 @@ class DialogueController extends BaseController
         }
 
         Session::flash('success', 'Hội thoại đã được tạo thành công.');
-        $this->redirect('/do-an-tot-nghiep/admin/dialogues');
+        $this->adminRedirect('admin/dialogues');
     }
 
     public function edit(int $id): void
@@ -81,7 +81,7 @@ class DialogueController extends BaseController
         $dialogue = Database::fetch("SELECT * FROM dialogues WHERE id = ?", [$id]);
         if (!$dialogue) {
             Session::flash('error', 'Không tìm thấy hội thoại.');
-            $this->redirect('/do-an-tot-nghiep/admin/dialogues');
+            $this->adminRedirect('admin/dialogues');
         }
         $sentences = Database::fetchAll("SELECT * FROM dialogue_sentences WHERE dialogue_id = ? ORDER BY sort_order", [$id]);
         $lessons = Database::fetchAll("SELECT id, title, level, lesson_num FROM lessons ORDER BY level, lesson_num");
@@ -119,7 +119,7 @@ class DialogueController extends BaseController
         }
 
         Session::flash('success', 'Hội thoại đã được cập nhật.');
-        $this->redirect('/do-an-tot-nghiep/admin/dialogues');
+        $this->adminRedirect('admin/dialogues');
     }
 
     public function delete(int $id): void
@@ -127,6 +127,6 @@ class DialogueController extends BaseController
         Database::delete('dialogue_sentences', 'dialogue_id = ?', [$id]);
         Database::delete('dialogues', 'id = ?', [$id]);
         Session::flash('success', 'Hội thoại đã được xóa.');
-        $this->redirect('/do-an-tot-nghiep/admin/dialogues');
+        $this->adminRedirect('admin/dialogues');
     }
 }

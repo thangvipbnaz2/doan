@@ -6,13 +6,13 @@ $messages=[];
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     $sql=file_get_contents(__DIR__.'/payment_migration.sql');
     foreach (explode(';',$sql) as $statement) { $statement=trim(preg_replace('/--[^\r\n]*/','',$statement)); if($statement==='') continue; try{$conn->exec($statement);$messages[]='Đã chạy migration.';}catch(Throwable $e){$messages[]='Lỗi: '.$e->getMessage();} }
-    // Tạo sẵn các gói để nút Mua khóa học có thể dùng ngay.
+    // Tạo sẵn các khóa học miễn phí.
     $seed = [
-        ['hsk-1-nen-tang','HSK 1 - Nền tảng tiếng Trung',1490000,'Dành cho người mới bắt đầu: Pinyin, từ vựng và hội thoại cơ bản.',1],
-        ['hsk-2-giao-tiep','HSK 2 - Giao tiếp cơ bản',1790000,'Mở rộng vốn từ và phản xạ giao tiếp tiếng Trung hàng ngày.',2],
-        ['hsk-3-so-cap','HSK 3 - Sơ cấp nâng cao',2190000,'Củng cố ngữ pháp, nghe đọc và chuẩn bị thi HSK 3.',3],
-        ['hsk-4-trung-cap','HSK 4 - Trung cấp',2790000,'Phát triển giao tiếp, đọc hiểu và luyện thi HSK 4.',4],
-        ['hsk-5-nang-cao','HSK 5 - Nâng cao',3490000,'Tăng tốc từ vựng, kỹ năng đọc viết và đề thi chuyên sâu.',5],
+        ['hsk-1-nen-tang','HSK 1 - Nền tảng tiếng Trung',0,'Dành cho người mới bắt đầu: Pinyin, từ vựng và hội thoại cơ bản.',1],
+        ['hsk-2-giao-tiep','HSK 2 - Giao tiếp cơ bản',0,'Mở rộng vốn từ và phản xạ giao tiếp tiếng Trung hàng ngày.',2],
+        ['hsk-3-so-cap','HSK 3 - Sơ cấp nâng cao',0,'Củng cố ngữ pháp, nghe đọc và chuẩn bị thi HSK 3.',3],
+        ['hsk-4-trung-cap','HSK 4 - Trung cấp',0,'Phát triển giao tiếp, đọc hiểu và luyện thi HSK 4.',4],
+        ['hsk-5-nang-cao','HSK 5 - Nâng cao',0,'Tăng tốc từ vựng, kỹ năng đọc viết và đề thi chuyên sâu.',5],
         ['hsk-6-chuyen-sau','HSK 6 - Chuyên sâu',0,'Lộ trình chinh phục HSK 6 dành cho người học trình độ cao.',6],
     ];
     $insert=$conn->prepare('INSERT INTO courses (slug,title,price,short_description,hsk_level,is_published) VALUES (?,?,?,?,?,1) ON DUPLICATE KEY UPDATE title=VALUES(title),price=VALUES(price),short_description=VALUES(short_description),hsk_level=VALUES(hsk_level),is_published=1');

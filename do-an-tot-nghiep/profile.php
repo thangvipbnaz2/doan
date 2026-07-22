@@ -84,7 +84,7 @@ for ($i = 6; $i >= 0; $i--) {
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $isOwn ? 'Hồ sơ' : htmlspecialchars($viewUser['display_name']); ?> - HànNgữ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">

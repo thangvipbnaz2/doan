@@ -12,11 +12,11 @@ foreach (explode(';', $sql) as $statement) {
 }
 
 $courses = [
-    ['hsk-1-nen-tang', 'HSK 1 - Nen tang tieng Trung', 1490000, 'Danh cho nguoi moi bat dau: Pinyin, tu vung va hoi thoai co ban.', 1],
-    ['hsk-2-giao-tiep', 'HSK 2 - Giao tiep co ban', 1790000, 'Mo rong von tu va phan xa giao tiep tieng Trung hang ngay.', 2],
-    ['hsk-3-so-cap', 'HSK 3 - So cap nang cao', 2190000, 'Cung co ngu phap, nghe doc va chuan bi thi HSK 3.', 3],
-    ['hsk-4-trung-cap', 'HSK 4 - Trung cap', 2790000, 'Phat trien giao tiep, doc hieu va luyen thi HSK 4.', 4],
-    ['hsk-5-nang-cao', 'HSK 5 - Nang cao', 3490000, 'Tang toc tu vung, ky nang doc viet va de thi chuyen sau.', 5],
+    ['hsk-1-nen-tang', 'HSK 1 - Nen tang tieng Trung', 0, 'Danh cho nguoi moi bat dau: Pinyin, tu vung va hoi thoai co ban.', 1],
+    ['hsk-2-giao-tiep', 'HSK 2 - Giao tiep co ban', 0, 'Mo rong von tu va phan xa giao tiep tieng Trung hang ngay.', 2],
+    ['hsk-3-so-cap', 'HSK 3 - So cap nang cao', 0, 'Cung co ngu phap, nghe doc va chuan bi thi HSK 3.', 3],
+    ['hsk-4-trung-cap', 'HSK 4 - Trung cap', 0, 'Phat trien giao tiep, doc hieu va luyen thi HSK 4.', 4],
+    ['hsk-5-nang-cao', 'HSK 5 - Nang cao', 0, 'Tang toc tu vung, ky nang doc viet va de thi chuyen sau.', 5],
     ['hsk-6-chuyen-sau', 'HSK 6 - Chuyen sau', 0, 'Lo trinh chinh phuc HSK 6 danh cho nguoi hoc trinh do cao.', 6],
 ];
 $insert = $conn->prepare('INSERT INTO courses (slug,title,price,short_description,hsk_level,is_published) VALUES (?,?,?,?,?,1) ON DUPLICATE KEY UPDATE title=VALUES(title),price=VALUES(price),short_description=VALUES(short_description),hsk_level=VALUES(hsk_level),is_published=1');

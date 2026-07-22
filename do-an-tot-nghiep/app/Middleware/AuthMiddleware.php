@@ -1,16 +1,18 @@
 <?php
+declare(strict_types=1);
 namespace App\Middleware;
 
+use App\Auth\Auth;
 use App\Helpers\Session;
+use App\Helpers\View;
 
 class AuthMiddleware
 {
     public function handle(): void
     {
-        $userId = Session::get('user_id');
-        if (!$userId) {
-            Session::flash('error', 'Vui lòng đăng nhập để tiếp tục.');
-            header('Location: /do-an-tot-nghiep/login.php');
+        if (!Auth::check()) {
+            Session::flash('error', 'You must be logged in to access this page');
+            header('Location: ' . View::baseUrl() . '/login.php');
             exit;
         }
     }

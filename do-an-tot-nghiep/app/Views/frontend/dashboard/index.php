@@ -1,3 +1,4 @@
+<?php $baseUrl = App\Helpers\View::baseUrl(); ?>
 <div class="dashboard-container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
     <h1 style="font-size: 28px; margin-bottom: 8px;">Bảng điều khiển</h1>
     <p style="color: #666; margin-bottom: 30px;">Chào mừng trở lại! Hãy tiếp tục hành trình học tiếng Trung của bạn.</p>
@@ -50,11 +51,11 @@
                         <div style="flex: 1;">
                             <div style="font-weight: 500;"><?= App\Helpers\View::escape($activity['lesson_title']) ?></div>
                             <div style="color: #999; font-size: 13px;">
-                                <?= $activity['completed'] ? 'Đã hoàn thành' : 'Đang học' ?> - <?= date('d/m/Y', strtotime($activity['updated_at'])) ?>
+                                <?= ($activity['is_completed'] ?? 0) ? 'Đã hoàn thành' : 'Đang học' ?> - <?= date('d/m/Y', strtotime($activity['updated_at'])) ?>
                             </div>
                         </div>
-                        <span style="color: <?= $activity['completed'] ? '#43e97b' : '#ffc107' ?>;">
-                            <i class="fas fa-<?= $activity['completed'] ? 'check-circle' : 'clock' ?>"></i>
+                        <span style="color: <?= ($activity['is_completed'] ?? 0) ? '#43e97b' : '#ffc107' ?>;">
+                            <i class="fas fa-<?= ($activity['is_completed'] ?? 0) ? 'check-circle' : 'clock' ?>"></i>
                         </span>
                     </div>
                     <?php endforeach; ?>
@@ -68,10 +69,10 @@
         <div>
             <div class="card" style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); margin-bottom: 24px;">
                 <h3 style="margin-bottom: 16px;">Tiếp tục học</h3>
-                <a href="/do-an-tot-nghiep/lessons" class="btn" style="display: block; padding: 14px; background: #e94560; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                <a href="<?= $baseUrl ?>/lessons" class="btn" style="display: block; padding: 14px; background: #e94560; color: #fff; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">
                     <i class="fas fa-play"></i> Học bài tiếp theo
                 </a>
-                <a href="/do-an-tot-nghiep/dashboard" class="btn" style="display: block; padding: 14px; background: #f0f0f0; color: #333; text-align: center; border-radius: 8px; text-decoration: none; margin-top: 10px;">
+                <a href="<?= $baseUrl ?>/dashboard" class="btn" style="display: block; padding: 14px; background: #f0f0f0; color: #333; text-align: center; border-radius: 8px; text-decoration: none; margin-top: 10px;">
                     <i class="fas fa-sync"></i> Ôn tập từ vựng
                 </a>
             </div>
@@ -84,7 +85,7 @@
                     <div class="badge-item" style="text-align: center; padding: 16px; background: #f8f9fa; border-radius: 8px;">
                         <div style="font-size: 32px; margin-bottom: 8px;"><?= App\Helpers\View::escape($badge['icon'] ?? '🏆') ?></div>
                         <div style="font-weight: 500; font-size: 13px;"><?= App\Helpers\View::escape($badge['title'] ?? $badge['name'] ?? '') ?></div>
-                        <div style="color: #999; font-size: 11px;"><?= date('d/m/Y', strtotime($badge['earned_at'])) ?></div>
+                        <div style="color: #999; font-size: 11px;"><?= date('d/m/Y', strtotime($badge['unlocked_at'] ?? $badge['created_at'] ?? 'now')) ?></div>
                     </div>
                     <?php endforeach; ?>
                 </div>

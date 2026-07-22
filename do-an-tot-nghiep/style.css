@@ -14,7 +14,7 @@
   --glass-shadow-lg:0 8px 40px rgba(0,0,0,0.08),0 2px 8px rgba(0,0,0,0.03);
 
   --primary:#0d9488;--primary-dark:#0f766e;--primary-light:#ccfbf1;
-  --red:#0d9488;--red-dark:#0f766e;--red-light:#ccfbf1;
+  --danger:#ef4444;--danger-dark:#dc2626;--danger-light:#fee2e2;
   --gold:#f97316;--gold-dark:#ea580c;--gold-light:#ffedd5;
 
   --dark:#0f172a;--dark-2:#1e293b;--dark-3:#334155;
@@ -212,6 +212,7 @@ img{max-width:100%;display:block}
 
 /* ===== SCROLL REVEAL ===== */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal--watched{opacity:0;transform:translateY(30px)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 .reveal-d1{transition-delay:.05s}
 .reveal-d2{transition-delay:.1s}

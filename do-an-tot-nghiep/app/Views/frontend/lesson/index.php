@@ -3,11 +3,11 @@
     <p style="color: #666; margin-bottom: 30px;">Chọn cấp độ và bài học để bắt đầu học</p>
 
     <div class="level-tabs" style="display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; border-bottom: 2px solid #eee; padding-bottom: 16px;">
-        <a href="/do-an-tot-nghiep/lessons" class="level-tab" style="padding: 8px 20px; background: <?= $currentLevel === '' ? '#e94560' : '#f0f0f0' ?>; color: <?= $currentLevel === '' ? '#fff' : '#333' ?>; border-radius: 20px; text-decoration: none; font-weight: 500;">
+        <a href="<?= App\Helpers\View::baseUrl() ?>/lessons" class="level-tab" style="padding: 8px 20px; background: <?= $currentLevel === '' ? '#e94560' : '#f0f0f0' ?>; color: <?= $currentLevel === '' ? '#fff' : '#333' ?>; border-radius: 20px; text-decoration: none; font-weight: 500;">
             Tất cả
         </a>
         <?php foreach ($levels as $lv): ?>
-        <a href="/do-an-tot-nghiep/lessons?level=<?= App\Helpers\View::escape($lv['level']) ?>" class="level-tab" style="padding: 8px 20px; background: <?= $currentLevel === $lv['level'] ? '#e94560' : '#f0f0f0' ?>; color: <?= $currentLevel === $lv['level'] ? '#fff' : '#333' ?>; border-radius: 20px; text-decoration: none; font-weight: 500;">
+        <a href="<?= App\Helpers\View::baseUrl() ?>/lessons?level=<?= App\Helpers\View::escape($lv['level']) ?>" class="level-tab" style="padding: 8px 20px; background: <?= $currentLevel === $lv['level'] ? '#e94560' : '#f0f0f0' ?>; color: <?= $currentLevel === $lv['level'] ? '#fff' : '#333' ?>; border-radius: 20px; text-decoration: none; font-weight: 500;">
             <?= App\Helpers\View::escape($lv['level']) ?>
         </a>
         <?php endforeach; ?>
@@ -15,7 +15,7 @@
 
     <div class="lesson-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
         <?php foreach ($lessons as $lesson): ?>
-        <a href="/do-an-tot-nghiep/lesson/<?= $lesson['id'] ?>" class="lesson-card" style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; display: block;" 
+        <a href="<?= App\Helpers\View::baseUrl() ?>/lesson/<?= $lesson['id'] ?>" class="lesson-card" style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; display: block;" 
            onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.12)'" 
            onmouseout="this.style.transform='';this.style.boxShadow='0 2px 10px rgba(0,0,0,0.08)'">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">

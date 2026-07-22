@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="vi">
 
@@ -6,7 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Chọn lộ trình học tiếng Trung HSK 1 đến HSK 6 tại HànNgữ.">
   <title>Khóa học tiếng Trung HSK 1–6 | HànNgữ</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     /* Trang bán khóa học: tất cả style được đặt tên cm-* để không ảnh hưởng các trang khác. */
     .course-market {
@@ -1542,15 +1545,15 @@
               <a class="cm-action cm-action--light" href="#course-list">Xem 6 khóa học <span
                   aria-hidden="true">↓</span></a>
               <?php if (isset($_SESSION['user_id'])): ?>
-                <a class="cm-action cm-action--ghost" href="my_courses.php">📚 Khóa của tôi</a>
+                <a class="cm-action cm-action--ghost" href="profile.php">📚 Khóa của tôi</a>
               <?php else: ?>
                 <a class="cm-action cm-action--ghost" href="#study-path">Tìm cấp độ phù hợp</a>
               <?php endif; ?>
             </div>
             <div class="cm-hero__trust" aria-label="Cam kết khóa học">
               <span><b aria-hidden="true">✓</b> Học mọi lúc trên web</span>
-              <span><b aria-hidden="true">✓</b> Thanh toán QR an toàn</span>
-              <span><b aria-hidden="true">✓</b> Cấp quyền học sau xác nhận</span>
+              <span><b aria-hidden="true">✓</b> Tất cả khóa học miễn phí</span>
+              <span><b aria-hidden="true">✓</b> Đăng ký là học ngay</span>
             </div>
           </div>
 
@@ -1595,8 +1598,7 @@
           <div><span class="cm-eyebrow">Chọn cấp độ của bạn</span>
             <h2 id="course-list-title">Sáu khóa học, một hành trình tiến bộ rõ ràng</h2>
           </div>
-          <p>Học phí là trọn gói cho từng khóa. Nhấn xem chi tiết để kiểm tra nội dung trước khi tạo đơn và thanh toán
-            bằng QR.</p>
+           <p>Tất cả khóa học đều miễn phí. Nhấn xem chi tiết để kiểm tra nội dung trước khi đăng ký.</p>
         </div>
 
         <div class="cm-course-grid">
@@ -1620,11 +1622,10 @@
                 <li>Bài kiểm tra tổng kết cấp độ</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>1.490.000₫</strong><del>2.000.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 510.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-1-nen-tang">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-1-nen-tang">Chọn HSK 1</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-1-nen-tang">Đăng ký HSK 1</a></div>
             </div>
           </article>
 
@@ -1648,11 +1649,10 @@
                 <li>Luyện tập từ vựng, phản xạ hằng ngày</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>1.790.000₫</strong><del>2.400.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 610.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-2-giao-tiep">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-2-giao-tiep">Chọn HSK 2</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-2-giao-tiep">Đăng ký HSK 2</a></div>
             </div>
           </article>
 
@@ -1678,11 +1678,10 @@
                 <li>Đề tự luyện và kiểm tra tiến độ</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>2.190.000₫</strong><del>3.000.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 810.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-3-so-cap">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-3-so-cap">Chọn HSK 3</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-3-so-cap">Đăng ký HSK 3</a></div>
             </div>
           </article>
 
@@ -1706,11 +1705,10 @@
                 <li>Chuyên đề ôn luyện HSK 4</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>2.790.000₫</strong><del>4.500.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 1.710.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-4-trung-cap">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-4-trung-cap">Chọn HSK 4</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-4-trung-cap">Đăng ký HSK 4</a></div>
             </div>
           </article>
 
@@ -1734,11 +1732,10 @@
                 <li>Bộ đề luyện và chiến lược ôn HSK 5</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>3.490.000₫</strong><del>4.800.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 1.310.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-5-nang-cao">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-5-nang-cao">Chọn HSK 5</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-5-nang-cao">Đăng ký HSK 5</a></div>
             </div>
           </article>
 
@@ -1762,16 +1759,15 @@
                 <li>Đề mô phỏng cùng chiến thuật làm bài</li>
               </ul>
               <div class="cm-course-price"><span class="cm-course-price__label">Học phí trọn khóa</span>
-                <div class="cm-course-price__row"><strong>Miễn phí</strong><del>4.290.000₫</del></div><span
-                  class="cm-course-price__save">Tiết kiệm 1.710.000₫</span>
+                <div class="cm-course-price__row"><strong>Miễn phí</strong></div>
               </div>
               <div class="cm-course-actions"><a class="cm-card-link" href="course.php?slug=hsk-6-chuyen-sau">Xem lộ
-                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-6-chuyen-sau">Chọn HSK 6</a></div>
+                  trình</a><a class="cm-course-buy" href="course.php?slug=hsk-6-chuyen-sau">Đăng ký HSK 6</a></div>
             </div>
           </article>
         </div>
-        <p class="cm-note"><b aria-hidden="true">i</b> Giá hiển thị là học phí trọn khóa; nội dung và quyền học sẽ được
-          mở sau khi thanh toán được xác nhận.</p>
+        <p class="cm-note"><b aria-hidden="true">i</b> Tất cả khóa học đều miễn phí. Đăng ký tài khoản và bắt đầu học
+          ngay, không cần thanh toán.</p>
       </div>
     </section>
 
@@ -1781,8 +1777,8 @@
           <div><span class="cm-eyebrow">Chưa biết nên học từ đâu?</span>
             <h2 id="study-path-title">Chọn theo điểm xuất phát của bạn</h2>
           </div>
-          <p>Không cần mua cả lộ trình cùng lúc. Bắt đầu từ cấp phù hợp nhất, sau đó tiếp tục lên cấp kế tiếp khi đã sẵn
-            sàng.</p>
+           <p>Không cần đăng ký cả lộ trình cùng lúc. Bắt đầu từ cấp phù hợp nhất, sau đó tiếp tục lên cấp kế tiếp khi đã sẵn
+             sàng.</p>
         </div>
         <div class="cm-path-grid">
           <a class="cm-route-card" data-hanzi="初" style="--route:#0b8f7e;--route-soft:#dff6f0"
@@ -1837,7 +1833,7 @@
                   <td>30 bài</td>
                   <td>150+</td>
                   <td>8 tuần</td>
-                  <td><strong>1.490.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-1-nen-tang">Xem khóa →</a></td>
                 </tr>
                 <tr>
@@ -1846,7 +1842,7 @@
                   <td>38 bài</td>
                   <td>300+</td>
                   <td>10 tuần</td>
-                  <td><strong>1.790.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-2-giao-tiep">Xem khóa →</a></td>
                 </tr>
                 <tr>
@@ -1855,7 +1851,7 @@
                   <td>45 bài</td>
                   <td>600+</td>
                   <td>12 tuần</td>
-                  <td><strong>2.190.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-3-so-cap">Xem khóa →</a></td>
                 </tr>
                 <tr>
@@ -1864,7 +1860,7 @@
                   <td>48 bài</td>
                   <td>1.200+</td>
                   <td>16 tuần</td>
-                  <td><strong>2.790.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-4-trung-cap">Xem khóa →</a></td>
                 </tr>
                 <tr>
@@ -1873,7 +1869,7 @@
                   <td>54 bài</td>
                   <td>2.500+</td>
                   <td>20 tuần</td>
-                  <td><strong>3.490.000₫</strong></td>
+                  <td><strong>Miễn phí</strong></td>
                   <td><a class="cm-table-link" href="course.php?slug=hsk-5-nang-cao">Xem khóa →</a></td>
                 </tr>
                 <tr>
@@ -1896,30 +1892,30 @@
       <div class="cm-wrap">
         <div class="cm-steps">
           <div>
-            <span class="cm-eyebrow">Mua khóa học đơn giản</span>
-            <h2 id="payment-title">Chọn khóa, quét QR và bắt đầu học</h2>
-            <p class="cm-steps__intro">Khi nhấn chọn khóa học, bạn sẽ xem được trang chi tiết và tạo đơn thanh toán. Mã
-              QR hiển thị đúng số tiền cùng mã đơn để việc đối soát rõ ràng hơn.</p>
+            <span class="cm-eyebrow">Bắt đầu học miễn phí</span>
+            <h2 id="payment-title">Đăng ký tài khoản và học ngay</h2>
+            <p class="cm-steps__intro">Tất cả khóa học đều hoàn toàn miễn phí. Bạn chỉ cần đăng ký tài khoản, chọn khóa
+              học phù hợp và bắt đầu học ngay lập tức, không cần thanh toán.</p>
             <div class="cm-steps__points">
-              <div class="cm-steps__point"><span>1</span><strong>Chọn khóa học</strong>
-                <p>Xem nội dung và học phí.</p>
+              <div class="cm-steps__point"><span>1</span><strong>Đăng ký tài khoản</strong>
+                <p>Tạo tài khoản miễn phí trên HànNgữ.</p>
               </div>
-              <div class="cm-steps__point"><span>2</span><strong>Quét mã QR</strong>
-                <p>Thanh toán theo mã đơn riêng.</p>
+              <div class="cm-steps__point"><span>2</span><strong>Chọn khóa học</strong>
+                <p>Xem nội dung và chọn cấp độ phù hợp.</p>
               </div>
-              <div class="cm-steps__point"><span>3</span><strong>Nhận quyền học</strong>
-                <p>Mở khóa sau khi xác nhận.</p>
+              <div class="cm-steps__point"><span>3</span><strong>Học ngay</strong>
+                <p>Quyền học được mở sau khi đăng ký.</p>
               </div>
             </div>
           </div>
-          <div class="cm-steps__receipt" aria-label="Minh họa hóa đơn điện tử">
+          <div class="cm-steps__receipt" aria-label="Học ngay miễn phí">
             <div class="cm-receipt">
-              <div class="cm-receipt__brand"><span>HÀNNGỮ</span><span>HÓA ĐƠN ĐIỆN TỬ</span></div>
+              <div class="cm-receipt__brand"><span>HÀNNGỮ</span><span>HỌC MIỄN PHÍ</span></div>
               <h3>Khóa học tiếng Trung HSK</h3>
-              <p>Sau khi thanh toán được xác nhận, bạn có thể xem lịch sử đơn hàng và nhận hóa đơn qua email nếu đã cấu
-                hình.</p>
-              <div class="cm-receipt__amount"><span>Thanh toán</span><strong>QR MB Bank</strong></div>
-              <div class="cm-receipt__ok"><b aria-hidden="true">✓</b> Quyền học được cấp theo đơn hàng</div>
+              <p>Bạn không cần thanh toán. Chỉ cần đăng ký tài khoản là có quyền truy cập toàn bộ nội dung khóa học
+                ngay lập tức.</p>
+              <div class="cm-receipt__amount"><span>Học phí</span><strong>0₫</strong></div>
+              <div class="cm-receipt__ok"><b aria-hidden="true">✓</b> Học ngay, không cần thẻ tín dụng</div>
             </div>
           </div>
         </div>
@@ -1930,28 +1926,28 @@
       <div class="cm-wrap cm-faq">
         <div class="cm-faq__intro"><span class="cm-eyebrow">Câu hỏi thường gặp</span>
           <h2 id="faq-title">Bạn cần biết trước khi đăng ký</h2>
-          <p>Những thông tin cơ bản về quyền học và quy trình thanh toán cho các khóa HSK trên HànNgữ.</p>
+          <p>Những thông tin cơ bản về quyền học và cách bắt đầu các khóa HSK miễn phí trên HànNgữ.</p>
         </div>
         <div class="cm-faq-list">
           <details open>
-            <summary>Mua xong tôi học khóa học ở đâu?</summary>
-            <p>Sau khi thanh toán được xác nhận, tài khoản của bạn được cấp quyền vào khóa học tương ứng. Bạn có thể mở
-              lại trang khóa học hoặc xem đơn hàng của mình để tiếp tục học.</p>
+            <summary>Đăng ký xong tôi học khóa học ở đâu?</summary>
+            <p>Sau khi đăng ký tài khoản, bạn được cấp quyền vào khóa học tương ứng ngay lập tức. Bạn có thể mở
+              lại trang khóa học để tiếp tục học.</p>
           </details>
           <details>
-            <summary>Tôi có cần mua toàn bộ HSK 1 đến HSK 6 không?</summary>
-            <p>Không. Mỗi khóa được bán riêng để bạn chọn đúng cấp độ hiện tại. Nếu mới bắt đầu, nên đi từ HSK 1; nếu đã
+            <summary>Tôi có cần đăng ký toàn bộ HSK 1 đến HSK 6 không?</summary>
+            <p>Không. Mỗi khóa được mở riêng để bạn chọn đúng cấp độ hiện tại. Nếu mới bắt đầu, nên đi từ HSK 1; nếu đã
               có nền tảng, hãy chọn cấp phù hợp với mục tiêu của bạn.</p>
           </details>
           <details>
-            <summary>Thanh toán QR có an toàn không?</summary>
-            <p>Mã QR được tạo theo đơn hàng với số tiền và mã nội dung riêng. Hệ thống chỉ cấp quyền học khi trạng thái
-              đơn đã được xác nhận thanh toán.</p>
+            <summary>Khóa học miễn phí có thời hạn không?</summary>
+            <p>Không. Bạn có thể truy cập nội dung khóa học bất cứ lúc nào sau khi đăng ký, không giới hạn thời gian
+              học.</p>
           </details>
           <details>
-            <summary>Tôi có nhận được hóa đơn không?</summary>
-            <p>Sau khi đơn được xác nhận, hệ thống tạo hóa đơn điện tử cho đơn hàng. Nếu cấu hình email đã hoàn tất, hóa
-              đơn cũng được gửi đến địa chỉ email của tài khoản.</p>
+            <summary>Tôi cần thẻ tín dụng hay thông tin thanh toán không?</summary>
+            <p>Không. Tất cả khóa học đều miễn phí 100%. Bạn chỉ cần đăng ký tài khoản là có thể bắt đầu học ngay,
+              không yêu cầu bất kỳ thông tin thanh toán nào.</p>
           </details>
         </div>
       </div>

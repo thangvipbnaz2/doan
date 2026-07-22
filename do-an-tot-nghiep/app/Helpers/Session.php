@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Helpers;
 
 class Session
@@ -15,8 +16,8 @@ class Session
         $sessionConfig = $config['session'];
 
         if (session_status() === PHP_SESSION_NONE) {
-            ini_set('session.cookie_lifetime', $sessionConfig['lifetime']);
-            ini_set('session.gc_maxlifetime', $sessionConfig['lifetime']);
+            ini_set('session.cookie_lifetime', (string) $sessionConfig['lifetime']);
+            ini_set('session.gc_maxlifetime', (string) $sessionConfig['lifetime']);
             session_name($sessionConfig['name']);
             session_start();
         }
@@ -24,13 +25,13 @@ class Session
         self::$started = true;
     }
 
-    public static function set(string $key, $value): void
+    public static function set(string $key, mixed $value): void
     {
         self::start();
         $_SESSION[$key] = $value;
     }
 
-    public static function get(string $key, $default = null)
+    public static function get(string $key, mixed $default = null): mixed
     {
         self::start();
         return $_SESSION[$key] ?? $default;
@@ -63,16 +64,22 @@ class Session
         self::$started = false;
     }
 
-    public static function flash(string $key, $value = null)
+    public static function flash(string $key, mixed $value = null): mixed
     {
         self::start();
         if ($value !== null) {
             $_SESSION['_flash'][$key] = $value;
-            return;
+            return null;
         }
         $val = $_SESSION['_flash'][$key] ?? null;
         unset($_SESSION['_flash'][$key]);
         return $val;
+    }
+
+    public static function flashWithType(string $key, mixed $value, string $type = 'info'): void
+    {
+        self::start();
+        $_SESSION['_flash'][$key] = ['value' => $value, 'type' => $type];
     }
 
     public static function hasFlash(string $key): bool
@@ -87,5 +94,13 @@ class Session
         $messages = $_SESSION['_flash'] ?? [];
         unset($_SESSION['_flash']);
         return $messages;
+    }
+
+    public static function getAndForget(string $key): mixed
+    {
+        self::start();
+        $value = $_SESSION[$key] ?? null;
+        unset($_SESSION[$key]);
+        return $value;
     }
 }

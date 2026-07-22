@@ -30,6 +30,7 @@ $conn->exec("CREATE TABLE IF NOT EXISTS flashcard_reviews (
 $action = $_GET['action'] ?? 'study';
 $level = (int)($_GET['level'] ?? 0);
 
+require __DIR__ . '/app/Views/layouts/_standalone_header.php';
 switch ($action) {
     case 'study':
         $today = date('Y-m-d');
@@ -111,8 +112,12 @@ switch ($action) {
         $log = $conn->prepare("INSERT INTO flashcard_reviews (flashcard_id, quality) VALUES (?, ?)");
         $log->execute([$flashcardId, $quality]);
 
+        require_once __DIR__ . '/app/Helpers/Autoloader.php';
+        App\Helpers\Autoloader::register();
+        App\Models\Achievement::checkFlashcardAchievements($userId);
+
         echo json_encode(['success' => true, 'next_date' => $nextDate, 'interval' => $interval]);
-        break;
+        exit;
 
     case 'stats':
         $today = date('Y-m-d');
@@ -168,3 +173,5 @@ switch ($action) {
         require __DIR__ . '/app/Views/frontend/flashcard/stats.php';
         break;
 }
+
+require __DIR__ . '/app/Views/layouts/_standalone_footer.php';

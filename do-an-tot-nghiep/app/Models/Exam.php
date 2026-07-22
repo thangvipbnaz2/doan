@@ -3,23 +3,27 @@ namespace App\Models;
 
 class Exam extends Model
 {
-    protected static string $table = 'exam_templates';
-    protected array $fillable = ['title', 'level', 'duration_minutes', 'total_questions', 'passing_score', 'description', 'is_active'];
+    protected static string $table = 'exams';
+    protected array $fillable = ['title', 'description', 'hsk_level', 'lesson_id', 'duration_minutes', 'total_questions', 'total_points', 'passing_score', 'type', 'is_random', 'is_active', 'attempts_allowed', 'sort_order'];
     protected bool $timestamps = true;
 
     public function questions(): array
     {
-        return \App\Helpers\Database::fetchAll(
-            "SELECT * FROM exam_questions WHERE exam_template_id = ? ORDER BY section, sort_order",
-            [$this->id]
-        );
+        return ExamQuestion::findBy('exam_id', $this->id);
     }
 
-    public function getResults(int $userId): array
+    public function results(): array
     {
-        return \App\Helpers\Database::fetchAll(
-            "SELECT * FROM exam_results WHERE exam_template_id = ? AND user_id = ? ORDER BY completed_at DESC",
-            [$this->id, $userId]
-        );
+        return ExamResult::findBy('exam_id', $this->id);
+    }
+
+    public function hskLevel(): ?HskLevel
+    {
+        return HskLevel::findOneBy('level', $this->hsk_level);
+    }
+
+    public function lesson(): ?Lesson
+    {
+        return Lesson::find($this->lesson_id);
     }
 }

@@ -55,15 +55,15 @@ class LessonController extends BaseController
 
         Database::insert('lessons', $data);
         Session::flash('success', 'Bài học đã được tạo thành công.');
-        $this->redirect('/do-an-tot-nghiep/admin/lessons');
+        $this->adminRedirect('admin/lessons');
     }
 
     public function edit(int $id): void
     {
-        $lesson = Database::fetch("SELECT * FROM lessons WHERE id = ?", [$id]);
+        $lesson = Database::fetch("SELECT l.*, (SELECT COUNT(*) FROM vocab WHERE lesson_id = l.id) as vocab_count FROM lessons l WHERE l.id = ?", [$id]);
         if (!$lesson) {
             Session::flash('error', 'Không tìm thấy bài học.');
-            $this->redirect('/do-an-tot-nghiep/admin/lessons');
+            $this->adminRedirect('admin/lessons');
         }
         $this->adminView('lessons/form', ['lesson' => $lesson]);
     }
@@ -80,14 +80,14 @@ class LessonController extends BaseController
 
         Database::update('lessons', $data, 'id = :id', ['id' => $id]);
         Session::flash('success', 'Bài học đã được cập nhật.');
-        $this->redirect('/do-an-tot-nghiep/admin/lessons');
+        $this->adminRedirect('admin/lessons');
     }
 
     public function delete(int $id): void
     {
         Database::delete('lessons', 'id = ?', [$id]);
         Session::flash('success', 'Bài học đã được xóa.');
-        $this->redirect('/do-an-tot-nghiep/admin/lessons');
+        $this->adminRedirect('admin/lessons');
     }
 
     public function manageSections(int $lessonId): void
@@ -95,7 +95,7 @@ class LessonController extends BaseController
         $lesson = Database::fetch("SELECT * FROM lessons WHERE id = ?", [$lessonId]);
         if (!$lesson) {
             Session::flash('error', 'Không tìm thấy bài học.');
-            $this->redirect('/do-an-tot-nghiep/admin/lessons');
+            $this->adminRedirect('admin/lessons');
         }
 
         $vocab = Database::fetchAll("SELECT * FROM vocab WHERE lesson_id = ?", [$lessonId]);

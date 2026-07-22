@@ -4,7 +4,7 @@ namespace App\Models;
 class Order extends Model
 {
     protected static string $table = 'orders';
-    protected array $fillable = ['user_id', 'course_id', 'amount', 'status', 'payment_method', 'transaction_id', 'fullname', 'email', 'address', 'notes'];
+    protected array $fillable = ['order_code', 'user_id', 'course_id', 'amount', 'discount', 'total', 'status', 'payment_method', 'transaction_id', 'fullname', 'email', 'phone', 'address', 'notes', 'expires_at', 'paid_at'];
     protected bool $timestamps = true;
 
     public function user(): ?User
@@ -12,19 +12,18 @@ class Order extends Model
         return User::find($this->user_id);
     }
 
-    public static function getRevenue(): float
+    public function course(): ?Course
     {
-        $data = \App\Helpers\Database::fetch(
-            "SELECT COALESCE(SUM(amount), 0) as total FROM orders WHERE status = 'paid'"
-        );
-        return (float) ($data['total'] ?? 0);
+        return Course::find($this->course_id);
     }
 
-    public static function getRecent(int $limit = 10): array
+    public function payment(): ?Payment
     {
-        return \App\Helpers\Database::fetchAll(
-            "SELECT o.*, u.username, u.display_name FROM orders o JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC LIMIT ?",
-            [$limit]
-        );
+        return Payment::findOneBy('order_id', $this->id);
+    }
+
+    public function invoice(): ?Invoice
+    {
+        return Invoice::findOneBy('order_id', $this->id);
     }
 }

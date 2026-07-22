@@ -45,13 +45,13 @@ class UserController extends BaseController
             Database::update('users', ['role' => $role], 'id = :id', ['id' => $id]);
             Session::flash('success', 'Vai trò người dùng đã được cập nhật.');
         }
-        $this->redirect('/do-an-tot-nghiep/admin/users');
+        $this->adminRedirect('admin/users');
     }
 
     public function delete(int $id): void
     {
         Database::delete('users', 'id = ?', [$id]);
         Session::flash('success', 'Người dùng đã được xóa.');
-        $this->redirect('/do-an-tot-nghiep/admin/users');
+        $this->adminRedirect('admin/users');
     }
 }

@@ -39,6 +39,12 @@ if (!function_exists('sidebarActive')) {
         <li><a href="community.php" class="sidebar__link<?= sidebarActive('community.php', $current_page) ?>"> Cộng
                 đồng</a></li>
         <li><a href="pvp.php" class="sidebar__link<?= sidebarActive('pvp.php', $current_page) ?>"> PvP</a></li>
+        <li><a href="study_stats.php" class="sidebar__link<?= sidebarActive('study_stats.php', $current_page) ?>">
+                Thống kê</a></li>
+        <li><a href="daily_challenge.php" class="sidebar__link<?= sidebarActive('daily_challenge.php', $current_page) ?>">
+                Thử thách</a></li>
+        <li><a href="hanzi_writing.php" class="sidebar__link<?= sidebarActive('hanzi_writing.php', $current_page) ?>">
+                Luyện viết</a></li>
         <li><a href="leaderboard.php" class="sidebar__link<?= sidebarActive('leaderboard.php', $current_page) ?>">
                 BXH</a></li>
         <li><a href="radicals.php" class="sidebar__link<?= sidebarActive('radicals.php', $current_page) ?>"> Bộ thủ</a>
@@ -177,3 +183,4 @@ if (!function_exists('sidebarActive')) {
     })();
 </script>
 <script src="utils.js"></script>
+<script>if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}</script>

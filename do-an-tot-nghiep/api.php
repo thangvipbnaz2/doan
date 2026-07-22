@@ -190,14 +190,8 @@ if ($action === 'get_notebook') {
     try {
         $userId = $_GET['user_id'] ?? 'default_user';
         $stmt = $conn->prepare("SELECT n.id, n.vocab_id, n.saved_at,
-                                    COALESCE(v.hanzi, n.custom_hanzi) AS hanzi,
-                                    COALESCE(v.pinyin, n.custom_pinyin) AS pinyin,
-                                    COALESCE(v.meaning, n.custom_meaning) AS meaning,
-                                    COALESCE(v.strokes, n.custom_strokes) AS strokes,
-                                    COALESCE(v.radical, n.custom_radical) AS radical,
-                                    COALESCE(v.example, n.custom_example) AS example,
-                                    n.custom_hanzi, n.custom_pinyin, n.custom_meaning,
-                                    n.custom_strokes, n.custom_radical, n.custom_example
+                                    v.hanzi, v.pinyin, v.meaning,
+                                    v.strokes, v.radical, v.example
                                 FROM notebook n
                                 LEFT JOIN vocab v ON n.vocab_id = v.id
                                 WHERE n.user_id = ?
@@ -209,7 +203,6 @@ if ($action === 'get_notebook') {
             $r['id'] = intval($r['id']);
             $r['vocab_id'] = $r['vocab_id'] !== null ? intval($r['vocab_id']) : null;
             $r['strokes'] = $r['strokes'] !== null ? intval($r['strokes']) : null;
-            $r['custom_strokes'] = $r['custom_strokes'] !== null ? intval($r['custom_strokes']) : null;
         }
         echo json_encode($rows);
     } catch (Exception $e) {
@@ -422,10 +415,30 @@ if ($action === 'update_lesson_progress') {
         exit;
     }
 
+    $existing = $conn->prepare("SELECT id FROM progress WHERE lesson_id = ? AND user_id = ? AND write_completed = TRUE");
+    $existing->execute([$lesson_id, $userId]);
+    $wasAlreadyComplete = $existing->fetch();
+
     $stmt = $conn->prepare("INSERT INTO progress (lesson_id, user_id, write_completed, completed_at)
                             VALUES (?, ?, TRUE, NOW())
                             ON DUPLICATE KEY UPDATE write_completed = TRUE, completed_at = NOW()");
     $result = $stmt->execute([$lesson_id, $userId]);
+
+    if (!$wasAlreadyComplete && is_numeric($userId) && $userId > 0) {
+        $lessonTitle = $conn->prepare("SELECT title FROM lessons WHERE id = ?");
+        $lessonTitle->execute([$lesson_id]);
+        $lt = $lessonTitle->fetchColumn();
+        if ($lt) {
+            $conn->prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'course', ?, ?, ?)")
+                ->execute([$userId, 'Bài học hoàn thành', "Chúc mừng! Bạn đã hoàn thành bài \"$lt\"", "lessons"]);
+        }
+    }
+
+    if (is_numeric($userId) && $userId > 0) {
+        require_once __DIR__ . '/app/Helpers/Autoloader.php';
+        App\Helpers\Autoloader::register();
+        App\Models\Achievement::checkLessonAchievements((int)$userId);
+    }
 
     echo json_encode(['success' => $result, 'message' => 'Đã cập nhật tiến trình bài học']);
     exit;
@@ -792,6 +805,22 @@ if ($action === 'checkin') {
             break;
     }
 
+    if (is_numeric($userId) && $userId > 0) {
+        require_once __DIR__ . '/app/Helpers/Autoloader.php';
+        App\Helpers\Autoloader::register();
+        App\Models\Achievement::checkStreakAchievements((int)$userId, $streak);
+    }
+
+    $milestones = [7, 30, 100, 365];
+    if ($result && in_array($streak, $milestones) && is_numeric($userId) && $userId > 0) {
+        $existingNotif = $conn->prepare("SELECT id FROM notifications WHERE user_id = ? AND type = 'streak' AND message LIKE ? AND created_at >= CURDATE()");
+        $existingNotif->execute([$userId, "%$streak ngày%"]);
+        if (!$existingNotif->fetch()) {
+            $conn->prepare("INSERT INTO notifications (user_id, type, title, message, link) VALUES (?, 'streak', ?, ?, 'study_stats.php')")
+                ->execute([$userId, "Cột mốc $streak ngày!", "Chúc mừng! Bạn đã duy trì thói quen $streak ngày liên tiếp. Hãy tiếp tục phát huy!"]);
+        }
+    }
+
     echo json_encode(['success' => $result, 'streak' => $streak, 'today' => $today]);
     exit;
 }
@@ -823,10 +852,7 @@ if ($action === 'get_streak') {
 if ($action === 'export_notebook') {
     $userId = $_GET['user_id'] ?? 'default_user';
     $stmt = $conn->prepare("
-        SELECT COALESCE(v.hanzi, n.custom_hanzi) AS hanzi,
-               COALESCE(v.pinyin, n.custom_pinyin) AS pinyin,
-               COALESCE(v.meaning, n.custom_meaning) AS meaning,
-               COALESCE(v.example, n.custom_example) AS example
+        SELECT v.hanzi, v.pinyin, v.meaning, v.example
         FROM notebook n
         LEFT JOIN vocab v ON n.vocab_id = v.id
         WHERE n.user_id = ?
@@ -854,10 +880,7 @@ if ($action === 'export_notebook') {
 if ($action === 'export_notebook_pdf') {
     $userId = $_GET['user_id'] ?? 'default_user';
     $stmt = $conn->prepare("
-        SELECT COALESCE(v.hanzi, n.custom_hanzi) AS hanzi,
-               COALESCE(v.pinyin, n.custom_pinyin) AS pinyin,
-               COALESCE(v.meaning, n.custom_meaning) AS meaning,
-               COALESCE(v.example, n.custom_example) AS example
+        SELECT v.hanzi, v.pinyin, v.meaning, v.example
         FROM notebook n
         LEFT JOIN vocab v ON n.vocab_id = v.id
         WHERE n.user_id = ? ORDER BY n.saved_at DESC");
@@ -1064,7 +1087,7 @@ if ($action === 'submit_pvp_score') {
 if ($action === 'get_leaderboard') {
     $limit = min(50, max(1, intval($_GET['limit'] ?? 20)));
 
-    $stmt = $conn->query("
+    $stmt = $conn->prepare("
         SELECT
             u.id,
             u.display_name,
@@ -1077,8 +1100,9 @@ if ($action === 'get_leaderboard') {
         FROM users u
         HAVING vocab_learned > 0 OR quiz_count > 0
         ORDER BY total_score DESC, vocab_learned DESC
-        LIMIT $limit
+        LIMIT ?
     ");
+    $stmt->execute([$limit]);
     $results = $stmt->fetchAll();
 
     // Calculate ranks
@@ -1217,7 +1241,7 @@ if ($action === 'submit_review') {
     }
 
     // Also log to study_logs
-    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, vocab_id, action, score) VALUES (?, ?, 'review', ?)");
+    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, activity_type, reference_id, score) VALUES (?, 'flashcard', ?, ?)");
     $stmt->execute([$userId, $vocabId, $known ? 1 : 0]);
 
     echo json_encode(['success' => true, 'interval' => $interval, 'next_review' => $nextReview]);
@@ -1229,11 +1253,14 @@ if ($action === 'log_study') {
     $input = json_decode(file_get_contents('php://input'), true);
     $userId = $input['user_id'] ?? 'default_user';
     $vocabId = intval($input['vocab_id'] ?? 0);
-    $action = $input['action'] ?? 'view';
+    $studyAction = $input['action'] ?? 'view';
     $score = isset($input['score']) ? intval($input['score']) : null;
 
-    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, vocab_id, action, score) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$userId, $vocabId ?: null, $action, $score]);
+    $validActions = ['lesson','vocab','grammar','dialogue','reading','listening','speaking','writing','flashcard','quiz','exam'];
+    if (!in_array($studyAction, $validActions)) $studyAction = 'vocab';
+
+    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, activity_type, reference_id, score) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$userId, $studyAction, $vocabId ?: null, $score]);
 
     echo json_encode(['success' => true]);
     exit;
@@ -1389,7 +1416,7 @@ if ($action === 'evaluate_handwriting') {
 
     // Log the evaluation
     $userId = $input['user_id'] ?? 'default_user';
-    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, action, score) VALUES (?, 'handwriting', ?)");
+    $stmt = $conn->prepare("INSERT INTO study_logs (user_id, activity_type, score) VALUES (?, 'writing', ?)");
     $stmt->execute([$userId, $score]);
 
     echo json_encode([
@@ -1885,7 +1912,7 @@ if ($action === 'ai_recognize') {
         $relativePath = 'uploads/ai/' . $filename;
 
         // Call Gemini API
-        $apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=" . GEMINI_API_KEY;
+        $apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . GEMINI_API_KEY;
 
         $requestBody = [
             'contents' => [
@@ -2071,7 +2098,7 @@ Luôn trả lời đúng format sau, dùng dấu 【】cho các tiêu đề:
 【Gợi Ý】<từ vựng hoặc câu mẫu mới>
 【Luyện Tập】<câu hỏi tiếng Trung để học viên trả lời>';
 
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . GEMINI_API_KEY;
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" . GEMINI_API_KEY;
     $payload = [
         'contents' => [
             [
@@ -2199,7 +2226,7 @@ if ($action === 'chatbot') {
         $systemPrompt .= "\n\n[Dữ liệu từ website HànNgữ]\n" . $context;
     }
 
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=" . GEMINI_API_KEY;
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=" . GEMINI_API_KEY;
     $resp = @file_get_contents($url, false, stream_context_create([
         'http' => [
             'method' => 'POST',
@@ -2218,6 +2245,151 @@ if ($action === 'chatbot') {
     $json = json_decode($resp, true);
     $reply = $json['candidates'][0]['content']['parts'][0]['text'] ?? 'Xin lỗi, tôi chưa hiểu ý bạn.';
     echo json_encode(['reply' => $reply]);
+    exit;
+}
+
+// ===== TOGGLE FAVORITE WORD =====
+if ($action === 'toggle_favorite') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $vocabId = intval($input['vocab_id'] ?? 0);
+    $userInput = $input['user_id'] ?? 'default_user';
+    $userId = is_numeric($userInput) ? intval($userInput) : null;
+
+    if (!$vocabId || !$userId) {
+        echo json_encode(['success' => false, 'message' => 'Thiếu thông tin']);
+        exit;
+    }
+
+    $existing = $conn->prepare("SELECT id FROM favorite_words WHERE user_id = ? AND vocab_id = ?");
+    $existing->execute([$userId, $vocabId]);
+    if ($existing->fetch()) {
+        $conn->prepare("DELETE FROM favorite_words WHERE user_id = ? AND vocab_id = ?")->execute([$userId, $vocabId]);
+        echo json_encode(['success' => true, 'action' => 'removed']);
+    } else {
+        $conn->prepare("INSERT INTO favorite_words (user_id, vocab_id) VALUES (?, ?)")->execute([$userId, $vocabId]);
+        echo json_encode(['success' => true, 'action' => 'added']);
+    }
+    exit;
+}
+
+if ($action === 'toggle_favorite_lesson') {
+    $input = json_decode(file_get_contents('php://input'), true);
+    $lessonId = intval($input['lesson_id'] ?? 0);
+    $userInput = $input['user_id'] ?? $_SESSION['user_id'] ?? 0;
+    $userId = is_numeric($userInput) ? intval($userInput) : 0;
+    if (!$lessonId || !$userId) {
+        echo json_encode(['success' => false, 'message' => 'Thiếu thông tin']);
+        exit;
+    }
+    $existing = $conn->prepare("SELECT id FROM favorite_lessons WHERE user_id = ? AND lesson_id = ?");
+    $existing->execute([$userId, $lessonId]);
+    if ($existing->fetch()) {
+        $conn->prepare("DELETE FROM favorite_lessons WHERE user_id = ? AND lesson_id = ?")->execute([$userId, $lessonId]);
+        echo json_encode(['success' => true, 'action' => 'removed']);
+    } else {
+        $conn->prepare("INSERT INTO favorite_lessons (user_id, lesson_id) VALUES (?, ?)")->execute([$userId, $lessonId]);
+        echo json_encode(['success' => true, 'action' => 'added']);
+    }
+    exit;
+}
+
+// ===== PROGRESS - TRACK LESSON START =====
+if ($action === 'track_lesson_view') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $userId = intval($data['user_id'] ?? 0);
+    $lessonId = intval($data['lesson_id'] ?? 0);
+    if ($userId && $lessonId) {
+        $existing = $conn->prepare("SELECT id FROM lesson_progress WHERE user_id = ? AND lesson_id = ?");
+        $existing->execute([$userId, $lessonId]);
+        if (!$existing->fetch()) {
+            $conn->prepare("INSERT INTO lesson_progress (user_id, lesson_id) VALUES (?, ?)")->execute([$userId, $lessonId]);
+        }
+        $conn->prepare("INSERT INTO study_logs (user_id, activity_type, reference_id) VALUES (?, 'lesson', ?)")->execute([$userId, $lessonId]);
+    }
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+// ===== SAVE VOCAB COMPLETION =====
+if ($action === 'complete_vocab') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $userId = intval($data['user_id'] ?? 0);
+    $vocabId = intval($data['vocab_id'] ?? 0);
+    if ($userId && $vocabId) {
+        $vocab = $conn->prepare("SELECT lesson_id FROM vocab WHERE id = ?")->execute([$vocabId]);
+        $conn->prepare("INSERT INTO progress (user_id, vocab_id, write_completed) VALUES (CONCAT('user_', ?), ?, 1)
+            ON DUPLICATE KEY UPDATE write_completed = 1")->execute([$userId, $vocabId]);
+    }
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+// ===== NOTIFICATIONS =====
+if ($action === 'get_notifications') {
+    $userId = intval($_GET['user_id'] ?? $_SESSION['user_id'] ?? 0);
+    if (!$userId) { echo json_encode(['error' => 'Unauthorized']); exit; }
+    $stmt = $conn->prepare("SELECT * FROM notifications WHERE user_id = ? AND is_read = 0 ORDER BY created_at DESC LIMIT 10");
+    $stmt->execute([$userId]);
+    echo json_encode(['success' => true, 'notifications' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
+    exit;
+}
+
+if ($action === 'mark_notification_read') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $id = intval($data['id'] ?? 0);
+    $userId = intval($data['user_id'] ?? $_SESSION['user_id'] ?? 0);
+    if ($id && $userId) {
+        $conn->prepare("UPDATE notifications SET is_read = 1 WHERE id = ? AND user_id = ?")->execute([$id, $userId]);
+    }
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+if ($action === 'mark_all_notifications_read') {
+    $userId = intval($_SESSION['user_id'] ?? 0);
+    if ($userId) {
+        $conn->prepare("UPDATE notifications SET is_read = 1 WHERE user_id = ? AND is_read = 0")->execute([$userId]);
+    }
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+// ===== SAVE LESSON NOTE =====
+if ($action === 'save_note') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $userId = intval($_SESSION['user_id'] ?? 0);
+    $lessonId = intval($data['lesson_id'] ?? 0);
+    $content = $data['content'] ?? '';
+    if (!$userId || !$lessonId) { echo json_encode(['success' => false, 'message' => 'Thiếu thông tin']); exit; }
+    $stmt = $conn->prepare("INSERT INTO user_notes (user_id, lesson_id, content) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE content = ?");
+    $stmt->execute([$userId, $lessonId, $content, $content]);
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+// ===== COMPLETE LESSON =====
+if ($action === 'complete_lesson') {
+    $data = json_decode(file_get_contents('php://input'), true);
+    $userId = intval($_SESSION['user_id'] ?? 0);
+    $lessonId = intval($data['lesson_id'] ?? 0);
+    if (!$userId || !$lessonId) { echo json_encode(['success' => false, 'message' => 'Thiếu thông tin']); exit; }
+    $stmt = $conn->prepare("INSERT INTO lesson_progress (user_id, lesson_id, is_completed) VALUES (?, ?, 1) ON DUPLICATE KEY UPDATE is_completed = 1");
+    $stmt->execute([$userId, $lessonId]);
+    
+    // Log study
+    $conn->prepare("INSERT INTO study_logs (user_id, activity_type, duration_seconds, score) VALUES (?, 'lesson_complete', 0, 100)")->execute([$userId]);
+    
+    echo json_encode(['success' => true]);
+    exit;
+}
+
+// ===== GET LESSON HISTORY =====
+if ($action === 'get_lesson_history') {
+    $userId = intval($_SESSION['user_id'] ?? 0);
+    if (!$userId) { echo json_encode(['success' => false, 'message' => 'Chưa đăng nhập']); exit; }
+    $stmt = $conn->prepare("SELECT lh.*, l.title, l.level, l.lesson_num FROM lesson_history lh JOIN lessons l ON lh.lesson_id = l.id WHERE lh.user_id = ? ORDER BY lh.created_at DESC LIMIT 50");
+    $stmt->execute([$userId]);
+    echo json_encode(['success' => true, 'history' => $stmt->fetchAll(PDO::FETCH_ASSOC)]);
     exit;
 }
 

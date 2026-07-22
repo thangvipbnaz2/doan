@@ -75,7 +75,7 @@ class VocabController extends BaseController
 
         Database::insert('vocab', $data);
         Session::flash('success', 'Từ vựng đã được thêm thành công.');
-        $this->redirect('/do-an-tot-nghiep/admin/vocab');
+        $this->adminRedirect('admin/vocab');
     }
 
     public function edit(int $id): void
@@ -83,7 +83,7 @@ class VocabController extends BaseController
         $vocab = Database::fetch("SELECT * FROM vocab WHERE id = ?", [$id]);
         if (!$vocab) {
             Session::flash('error', 'Không tìm thấy từ vựng.');
-            $this->redirect('/do-an-tot-nghiep/admin/vocab');
+            $this->adminRedirect('admin/vocab');
         }
         $lessons = Database::fetchAll("SELECT id, title, level, lesson_num FROM lessons ORDER BY level, lesson_num");
         $this->adminView('vocab/form', ['vocab' => $vocab, 'lessons' => $lessons]);
@@ -105,14 +105,14 @@ class VocabController extends BaseController
 
         Database::update('vocab', $data, 'id = :id', ['id' => $id]);
         Session::flash('success', 'Từ vựng đã được cập nhật.');
-        $this->redirect('/do-an-tot-nghiep/admin/vocab');
+        $this->adminRedirect('admin/vocab');
     }
 
     public function delete(int $id): void
     {
         Database::delete('vocab', 'id = ?', [$id]);
         Session::flash('success', 'Từ vựng đã được xóa.');
-        $this->redirect('/do-an-tot-nghiep/admin/vocab');
+        $this->adminRedirect('admin/vocab');
     }
 
     public function import(): void
@@ -155,7 +155,7 @@ class VocabController extends BaseController
                 Session::flash('success', "Đã nhập {$imported} từ vựng từ JSON.");
             }
         }
-        $this->redirect('/do-an-tot-nghiep/admin/vocab');
+        $this->adminRedirect('admin/vocab');
     }
 
     public function export(): void

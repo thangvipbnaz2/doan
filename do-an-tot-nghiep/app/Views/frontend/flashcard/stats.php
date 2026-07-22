@@ -1,56 +1,3 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8">
-<title>Thống kê Flashcard | HànNgữ</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<style>
-.stats-page{max-width:1000px;margin:auto;padding:104px 24px 64px}
-.stats-page h1{font-size:1.8rem;font-weight:800;color:var(--dark);margin-bottom:4px;font-family:var(--font-display);text-align:center}
-.stats-page .subtitle{text-align:center;color:var(--gray);font-size:.9rem;margin-bottom:32px}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
-.stat-card{border-radius:16px;padding:24px;background:#fff;box-shadow:var(--shadow);text-align:center}
-.stat-card .num{font-size:2.2rem;font-weight:800;color:var(--dark);line-height:1.2}
-.stat-card .label{font-size:.85rem;color:var(--gray);margin-top:4px}
-.stat-card .sub{font-size:.75rem;color:#94a3b8;margin-top:2px}
-.stat-card.primary{border-left:4px solid var(--teal)}
-.stat-card.warning{border-left:4px solid var(--coral)}
-.stat-card.success{border-left:4px solid var(--emerald)}
-.stat-card.info{border-left:4px solid #3b82f6}
-.chart-section{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:24px;margin-bottom:24px}
-.chart-section h3{font-size:1.05rem;font-weight:700;color:var(--dark);margin-bottom:16px}
-.bar-chart{display:flex;align-items:flex-end;gap:12px;height:160px;padding:0 8px}
-.bar-wrapper{flex:1;display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end}
-.bar{width:100%;max-width:48px;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--teal),#0d9488);min-height:4px;transition:height .4s}
-.bar-label{font-size:.75rem;color:var(--gray);margin-top:8px;text-align:center}
-.bar-value{font-size:.7rem;color:var(--dark-3);font-weight:600;margin-bottom:4px}
-.level-chart{display:flex;flex-wrap:wrap;gap:12px}
-.level-bar-item{flex:1;min-width:120px}
-.level-bar-header{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px}
-.level-bar-header .name{font-weight:600;color:var(--dark)}
-.level-bar-header .val{color:var(--gray)}
-.level-bar-track{height:8px;background:#f1f5f9;border-radius:99px;overflow:hidden}
-.level-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),#0d9488);transition:width .4s}
-.donut{width:160px;height:160px;border-radius:50%;position:relative;margin:0 auto 16px}
-.donut-center{position:absolute;inset:20px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.donut-center .num{font-size:1.6rem;font-weight:800;color:var(--dark)}
-.donut-center .label{font-size:.7rem;color:var(--gray)}
-.donut-legend{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:.85rem}
-.donut-legend-item{display:flex;align-items:center;gap:6px}
-.donut-legend-dot{width:12px;height:12px;border-radius:50%}
-.back-link{display:inline-flex;align-items:center;gap:8px;margin-bottom:24px;color:var(--teal);font-weight:600;font-size:.9rem;text-decoration:none}
-.back-link:hover{text-decoration:underline}
-@media(max-width:640px){
-  .stats-page{padding:84px 16px 48px}
-  .stats-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .stat-card .num{font-size:1.6rem}
-  .bar-chart{height:120px;gap:8px}
-}
-</style>
-</head><body>
-<?php include __DIR__ . '/../../../../sidebar.php'; ?>
 <div class="stats-page">
   <a href="flashcard_srs.php" class="back-link">&larr; Quay lại ôn tập</a>
   <h1>Thống kê Flashcard</h1>
@@ -186,6 +133,3 @@
     </div>
   </div>
 </div>
-<script src="utils.js"></script>
-<script src="init.js"></script>
-</body></html>

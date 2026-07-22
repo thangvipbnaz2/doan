@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.svg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Luyện viết chữ Hán - Học tiếng Trung qua luyện tập nét chữ với hướng dẫn trực quan.">
     <title>Luyện viết chữ Hán - HànNgữ</title>

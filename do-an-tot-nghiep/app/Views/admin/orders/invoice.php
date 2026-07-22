@@ -1,6 +1,6 @@
 <div class="admin-header">
     <h1>Hóa đơn #<?= App\Helpers\View::escape($order['id']) ?></h1>
-    <a href="/do-an-tot-nghiep/admin/orders" class="btn" style="padding: 10px 20px; background: #636e72; color: #fff; border-radius: 8px; text-decoration: none;">
+    <a href="/admin/orders" class="btn" style="padding: 10px 20px; background: #636e72; color: #fff; border-radius: 8px; text-decoration: none;">
         <i class="fas fa-arrow-left"></i> Quay lại
     </a>
     <button onclick="window.print()" class="btn" style="padding: 10px 20px; background: #4facfe; color: #fff; border-radius: 8px; border: none; cursor: pointer;">
@@ -46,7 +46,7 @@
             <?php foreach ($items as $i => $item): ?>
             <tr>
                 <td style="padding: 12px; border-bottom: 1px solid #eee;"><?= $i + 1 ?></td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><?= App\Helpers\View::escape($item['product_name'] ?? $item['name']) ?></td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><?= App\Helpers\View::escape($item['name'] ?? 'Khóa học') ?></td>
                 <td style="padding: 12px; text-align: right; border-bottom: 1px solid #eee;"><?= number_format($item['price'], 0, ',', '.') ?>đ</td>
                 <td style="padding: 12px; text-align: center; border-bottom: 1px solid #eee;"><?= (int)($item['quantity'] ?? 1) ?></td>
                 <td style="padding: 12px; text-align: right; border-bottom: 1px solid #eee;"><?= number_format($item['price'] * ($item['quantity'] ?? 1), 0, ',', '.') ?>đ</td>

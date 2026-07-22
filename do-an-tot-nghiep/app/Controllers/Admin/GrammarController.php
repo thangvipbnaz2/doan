@@ -61,7 +61,7 @@ class GrammarController extends BaseController
 
         Database::insert('grammar', $data);
         Session::flash('success', 'Ngữ pháp đã được thêm thành công.');
-        $this->redirect('/do-an-tot-nghiep/admin/grammar');
+        $this->adminRedirect('admin/grammar');
     }
 
     public function edit(int $id): void
@@ -69,7 +69,7 @@ class GrammarController extends BaseController
         $grammar = Database::fetch("SELECT * FROM grammar WHERE id = ?", [$id]);
         if (!$grammar) {
             Session::flash('error', 'Không tìm thấy ngữ pháp.');
-            $this->redirect('/do-an-tot-nghiep/admin/grammar');
+            $this->adminRedirect('admin/grammar');
         }
         $lessons = Database::fetchAll("SELECT id, title, level, lesson_num FROM lessons ORDER BY level, lesson_num");
         $this->adminView('grammar/form', ['grammar' => $grammar, 'lessons' => $lessons]);
@@ -89,13 +89,13 @@ class GrammarController extends BaseController
 
         Database::update('grammar', $data, 'id = :id', ['id' => $id]);
         Session::flash('success', 'Ngữ pháp đã được cập nhật.');
-        $this->redirect('/do-an-tot-nghiep/admin/grammar');
+        $this->adminRedirect('admin/grammar');
     }
 
     public function delete(int $id): void
     {
         Database::delete('grammar', 'id = ?', [$id]);
         Session::flash('success', 'Ngữ pháp đã được xóa.');
-        $this->redirect('/do-an-tot-nghiep/admin/grammar');
+        $this->adminRedirect('admin/grammar');
     }
 }

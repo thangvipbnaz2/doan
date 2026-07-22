@@ -41,34 +41,37 @@ class OrderController extends BaseController
     public function confirmPayment(int $id): void
     {
         Database::update('orders', [
-            'status' => 'completed',
+            'status' => 'paid',
             'paid_at' => date('Y-m-d H:i:s'),
         ], 'id = :id', ['id' => $id]);
 
         Session::flash('success', 'Thanh toán đã được xác nhận.');
-        $this->redirect('/do-an-tot-nghiep/admin/orders');
+        $this->adminRedirect('admin/orders');
     }
 
     public function cancel(int $id): void
     {
         Database::update('orders', ['status' => 'cancelled'], 'id = :id', ['id' => $id]);
         Session::flash('success', 'Đơn hàng đã bị hủy.');
-        $this->redirect('/do-an-tot-nghiep/admin/orders');
+        $this->adminRedirect('admin/orders');
     }
 
     public function invoice(int $id): void
     {
         $order = Database::fetch(
-            "SELECT o.*, u.display_name as fullname, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?",
+            "SELECT o.*, u.display_name as fullname, u.email, c.title as course_name
+             FROM orders o
+             JOIN users u ON o.user_id = u.id
+             LEFT JOIN courses c ON o.course_id = c.id
+             WHERE o.id = ?",
             [$id]
         );
         if (!$order) {
             Session::flash('error', 'Không tìm thấy đơn hàng.');
-            $this->redirect('/do-an-tot-nghiep/admin/orders');
+            $this->adminRedirect('admin/orders');
         }
 
-        $items = Database::fetchAll("SELECT * FROM orders WHERE id = ?", [$id]);
-        $items = $items ? [$items[0]] : [];
+        $items = [['name' => $order['course_name'] ?? 'Khóa học', 'price' => $order['amount'], 'quantity' => 1]];
 
         $this->adminView('orders/invoice', [
             'order' => $order,

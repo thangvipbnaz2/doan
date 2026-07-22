@@ -22,11 +22,11 @@ class DashboardController extends Controller
         $userId = Session::get('user_id');
 
         $stats = [
-            'lessons_completed' => Database::fetch("SELECT COUNT(*) as cnt FROM lesson_progress WHERE user_id = ? AND completed = 1", [$userId])['cnt'] ?? 0,
+            'lessons_completed' => Database::fetch("SELECT COUNT(*) as cnt FROM lesson_progress WHERE user_id = ? AND is_completed = 1", [$userId])['cnt'] ?? 0,
             'total_lessons' => Database::fetch("SELECT COUNT(*) as cnt FROM lessons")['cnt'] ?? 0,
-            'vocab_learned' => Database::fetch("SELECT COUNT(*) as cnt FROM vocab_progress WHERE user_id = ? AND learned = 1", [$userId])['cnt'] ?? 0,
-            'streak_days' => Database::fetch("SELECT streak_days FROM user_streaks WHERE user_id = ?", [$userId])['streak_days'] ?? 0,
-            'average_score' => Database::fetch("SELECT AVG(score) as avg_score FROM exercise_results WHERE user_id = ?", [$userId])['avg_score'] ?? 0,
+            'vocab_learned' => Database::fetch("SELECT COUNT(*) as cnt FROM progress WHERE user_id = CONCAT('user_', ?) AND (write_completed = 1 OR speech_completed = 1)", [$userId])['cnt'] ?? 0,
+            'streak_days' => Database::fetch("SELECT COUNT(*) as cnt FROM daily_streak WHERE user_id = CONCAT('user_', ?)", [$userId])['cnt'] ?? 0,
+            'average_score' => Database::fetch("SELECT AVG(score * 100.0 / total_questions) as avg_score FROM quiz_results WHERE user_id = CONCAT('user_', ?) AND total_questions > 0", [$userId])['avg_score'] ?? 0,
         ];
 
         $recentActivity = Database::fetchAll(
@@ -35,12 +35,12 @@ class DashboardController extends Controller
         );
 
         $achievements = Database::fetchAll(
-            "SELECT * FROM user_achievements WHERE user_id = ? ORDER BY earned_at DESC",
+            "SELECT * FROM achievements WHERE user_id = ? ORDER BY unlocked_at DESC",
             [$userId]
         );
 
         $currentLevel = Database::fetch(
-            "SELECT level FROM user_progress WHERE user_id = ? ORDER BY id DESC LIMIT 1",
+            "SELECT level FROM lesson_progress lp JOIN lessons l ON lp.lesson_id = l.id WHERE lp.user_id = ? AND lp.is_completed = 1 ORDER BY l.level DESC LIMIT 1",
             [$userId]
         );
 

@@ -2,12 +2,13 @@
 namespace App\Controllers\Frontend;
 
 use App\Controllers\Controller;
+use App\Helpers\View;
 
 class HomeController extends Controller
 {
     public function index(): void
     {
-        $basePath = '/do-an-tot-nghiep';
+        $basePath = View::baseUrl();
 
         $levels = [
             'HSK1' => ['name' => 'HSK 1', 'count' => 150, 'icon' => '🌱'],

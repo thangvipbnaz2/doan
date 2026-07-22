@@ -73,11 +73,25 @@ if (!empty($gIds)) {
 
 $userId = $_SESSION['user_id'] ?? 0;
 $progress = null;
+$userNote = null;
 if ($userId) {
     $pStmt = $db->prepare("SELECT * FROM lesson_progress WHERE user_id = ? AND lesson_id = ?");
     $pStmt->execute([$userId, $lessonId]);
     $progress = $pStmt->fetch();
+    
+    $nStmt = $db->prepare("SELECT * FROM user_notes WHERE user_id = ? AND lesson_id = ?");
+    $nStmt->execute([$userId, $lessonId]);
+    $userNote = $nStmt->fetch();
+    
+    // Log study history
+    $hStmt = $db->prepare("INSERT INTO lesson_history (user_id, lesson_id, action, duration_seconds) VALUES (?, ?, 'view', 0)");
+    $hStmt->execute([$userId, $lessonId]);
 }
+
+// Get review vocab (from previous lessons same level)
+$reviewVocab = $db->prepare("SELECT v.* FROM vocab v JOIN lessons l ON v.lesson_id = l.id WHERE l.level = ? AND l.lesson_num < ? ORDER BY l.lesson_num DESC, v.id LIMIT 10");
+$reviewVocab->execute([$lesson['level'], $lesson['lesson_num']]);
+$reviewVocab = $reviewVocab->fetchAll();
 
 $prevLesson = $db->prepare("SELECT id FROM lessons WHERE level = ? AND lesson_num < ? ORDER BY lesson_num DESC LIMIT 1");
 $prevLesson->execute([$lesson['level'], $lesson['lesson_num']]);

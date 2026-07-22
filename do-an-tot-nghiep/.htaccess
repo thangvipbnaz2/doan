@@ -1,6 +1,6 @@
 RewriteEngine On
 
-# Serve existing files directly (don't rewrite)
+# Serve existing files directly
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
@@ -8,13 +8,25 @@ RewriteRule ^ - [L]
 # Route /app/* paths to MVC framework
 RewriteRule ^app/(.*)$ public/index.php [QSA,L]
 
+# Route all other requests (not existing files/dirs) to MVC framework
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/index.php [QSA,L]
+
 # Error pages
 ErrorDocument 404 /404.php
+ErrorDocument 403 /404.php
+ErrorDocument 500 /404.php
 
 # Block sensitive files
-<FilesMatch "\.(env|log|sql|md|gitignore)$">
+<FilesMatch "\.(env|log|sql|md|gitignore|bat|sh)$">
   Require all denied
 </FilesMatch>
+
+# Block install script in production
+<Files "install.php">
+  Require all denied
+</Files>
 
 # Block directory listing
 Options -Indexes
@@ -23,3 +35,20 @@ Options -Indexes
 <FilesMatch "\.(css|js|ico|svg|woff2)$">
   Header set Cache-Control "max-age=31536000, public"
 </FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "DENY"
+  Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(self), camera=(self)"
+</IfModule>
+
+# Prevent access to hidden files
+RedirectMatch 404 /\..*$
+
+# Gzip compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml
+</IfModule>

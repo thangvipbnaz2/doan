@@ -4,14 +4,16 @@ namespace App\Models;
 class Listening extends Model
 {
     protected static string $table = 'listening_exercises';
-    protected array $fillable = ['lesson_id', 'title', 'audio_url', 'transcript', 'transcript_pinyin', 'transcript_vi', 'sort_order'];
+    protected array $fillable = ['lesson_id', 'title', 'audio_url', 'transcript', 'transcript_pinyin', 'transcript_vi', 'image_url', 'duration_seconds', 'sort_order', 'is_active'];
     protected bool $timestamps = true;
+
+    public function lesson(): ?Lesson
+    {
+        return Lesson::find($this->lesson_id);
+    }
 
     public function questions(): array
     {
-        return \App\Helpers\Database::fetchAll(
-            "SELECT * FROM listening_questions WHERE listening_id = ? ORDER BY sort_order",
-            [$this->id]
-        );
+        return ListeningQuestion::findBy('listening_id', $this->id);
     }
 }

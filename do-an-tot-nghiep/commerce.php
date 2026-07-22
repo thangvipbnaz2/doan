@@ -149,14 +149,14 @@ function commerceSendInvoiceEmail(PDO $conn, array $order): bool
 
         $invoiceLink = SITE_URL . '/invoice.php?order=' . $order['id'];
         $mail->isHTML(true);
-        $mail->Subject = 'Hóa đơn thanh toán - ' . $fromName;
+        $mail->Subject = 'Xác nhận đăng ký khóa học - ' . $fromName;
         $mail->Body = '
-            <h2>Xác nhận thanh toán thành công</h2>
+            <h2>Xác nhận đăng ký thành công</h2>
             <p>Xin chào <strong>' . htmlspecialchars($userName) . '</strong>,</p>
-            <p>Cảm ơn bạn đã mua khóa học <strong>' . htmlspecialchars($order['course_title'] ?? '') . '</strong>.</p>
+            <p>Bạn đã đăng ký khóa học <strong>' . htmlspecialchars($order['course_title'] ?? '') . '</strong>.</p>
             <p><b>Mã hóa đơn:</b> ' . htmlspecialchars($order['invoice_number'] ?? '') . '</p>
-            <p><b>Số tiền:</b> ' . number_format((float)($order['amount'] ?? 0)) . ' đ</p>
-            <p>Bạn có thể tải hóa đơn tại: <a href="' . $invoiceLink . '">' . $invoiceLink . '</a></p>
+            <p><b>Học phí:</b> ' . ((float)($order['amount'] ?? 0) <= 0 ? 'Miễn phí' : number_format((float)($order['amount'] ?? 0)) . ' đ') . '</p>
+            <p>Bạn có thể xem thông tin tại: <a href="' . $invoiceLink . '">' . $invoiceLink . '</a></p>
             <p>Chúc bạn học tập tốt!</p>';
 
         $mail->send();

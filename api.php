@@ -1978,6 +1978,18 @@ if ($action === 'toggle_user_ban') {
     exit;
 }
 
+if ($action === 'check_ban_status') {
+    if (!isset($_SESSION['user_id'])) {
+        echo json_encode(['banned' => false]);
+        exit;
+    }
+    $stmt = $conn->prepare("SELECT banned FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $u = $stmt->fetch();
+    echo json_encode(['banned' => !empty($u['banned'])]);
+    exit;
+}
+
 if ($action === 'get_all_posts') {
     requireAdmin();
     $stmt = $conn->query("SELECT p.*, (SELECT COUNT(*) FROM comments WHERE post_id = p.id) as comment_count FROM posts p ORDER BY p.created_at DESC");

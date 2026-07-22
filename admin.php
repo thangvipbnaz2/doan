@@ -1,11 +1,16 @@
 <?php
 session_start();
 require 'db.php';
+
+// Ensure columns exist (run before any query referencing them)
+try { $conn->exec("ALTER TABLE posts ADD COLUMN status VARCHAR(20) DEFAULT 'pending' AFTER tags"); } catch (PDOException $e) {}
+try { $conn->exec("ALTER TABLE users ADD COLUMN banned TINYINT(1) DEFAULT 0 AFTER role"); } catch (PDOException $e) {}
+
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
 }
-$stmt = $conn->prepare("SELECT role FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT role, banned FROM users WHERE id = ?");
 $stmt->execute([$_SESSION['user_id']]);
 $user = $stmt->fetch();
 $role = $user['role'] ?? '';
@@ -20,22 +25,12 @@ if (!$user || !in_array($role, $allowedRoles)) {
     exit;
 }
 // Check if banned
-$stmt = $conn->prepare("SELECT banned FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$bannedCheck = $stmt->fetch();
-if (!empty($bannedCheck['banned'])) {
+if (!empty($user['banned'])) {
     session_destroy();
     header('Location: login.php');
     exit;
 }
 $userId = $_SESSION['user_id'];
-
-try {
-    $conn->exec("ALTER TABLE posts ADD COLUMN status VARCHAR(20) DEFAULT 'pending' AFTER tags");
-} catch (PDOException $e) {}
-try {
-    $conn->exec("ALTER TABLE users ADD COLUMN banned TINYINT(1) DEFAULT 0 AFTER role");
-} catch (PDOException $e) {}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
@@ -808,6 +803,11 @@ try {
             margin-bottom: 4px;
         }
 
+        .admin-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
         [data-theme="dark"] .table-empty h3 {
             color: #f1f5f9;
         }
@@ -1044,8 +1044,116 @@ try {
         .td-btn--ban.unban { background:rgba(16,185,129,0.08); color:#059669; }
         .td-btn--ban.unban:hover { background:rgba(16,185,129,0.18); }
 
-        .admin-user-avatar { width:36px; height:36px; border-radius:10px; object-fit:cover; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-        .admin-user-avatar--init { background:linear-gradient(135deg,#0d9488,#14b8a6); color:#fff; font-weight:700; font-size:.8rem; line-height:36px; text-align:center; }
+        .admin-user-avatar { width:48px; height:48px; border-radius:12px; object-fit:cover; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .admin-user-avatar--init { background:linear-gradient(135deg,#0d9488,#14b8a6); color:#fff; font-weight:700; font-size:1.1rem; line-height:48px; text-align:center; }
+
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+        }
+        .user-card {
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(16px);
+            border-radius: var(--admin-radius);
+            border: 1px solid rgba(255,255,255,0.85);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+            padding: 20px;
+            transition: all .3s cubic-bezier(.34,1.56,.64,1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .user-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+        }
+        [data-theme="dark"] .user-card {
+            background: rgba(30,41,59,0.6);
+            border-color: rgba(255,255,255,0.04);
+        }
+        .user-card__top {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .user-card__info {
+            flex: 1;
+            min-width: 0;
+        }
+        .user-card__name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        [data-theme="dark"] .user-card__name {
+            color: #f1f5f9;
+        }
+        .user-card__display {
+            font-size: .82rem;
+            color: var(--gray);
+        }
+        .user-card__email {
+            font-size: .82rem;
+            color: var(--gray);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .user-card__meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            padding: 10px 0;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            font-size: .85rem;
+        }
+        [data-theme="dark"] .user-card__meta {
+            border-color: rgba(255,255,255,0.04);
+        }
+        .user-card__meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--gray);
+        }
+        .user-card__meta-item strong {
+            color: var(--dark);
+        }
+        [data-theme="dark"] .user-card__meta-item strong {
+            color: #e2e8f0;
+        }
+        .user-card__actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .user-card__role {
+            margin-right: auto;
+        }
+        .user-card__role select {
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1.5px solid #e2e8f0;
+            font-family: inherit;
+            font-size: .82rem;
+            background: #fff;
+            cursor: pointer;
+        }
+        [data-theme="dark"] .user-card__role select {
+            background: rgba(30,41,59,0.8);
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        .user-card__role select:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
         .ud-stat { background:var(--gray-light); border-radius:12px; padding:14px; text-align:center; }
         .ud-stat__num { font-size:1.4rem; font-weight:800; color:var(--dark); }
         .ud-stat__label { font-size:.78rem; color:var(--gray); margin-top:4px; }
@@ -1706,37 +1814,44 @@ try {
             container.innerHTML = '<div class="table-empty"><div class="table-empty__icon">👥</div><h3>Chưa có người dùng</h3></div>';
             return;
         }
-        let html = '<table class="admin-table"><thead><tr><th>ID</th><th>Avatar</th><th>Username</th><th>Hiển thị</th><th>Email</th><th>Role</th><th>Từ</th><th>Quiz</th><th>Trạng thái</th><th>Ngày tạo</th><th></th></tr></thead><tbody>';
+        let html = '<div class="user-grid">';
         users.forEach(u => {
             const isBanned = parseInt(u.banned || 0);
             const avatarHtml = u.avatar
                 ? `<img src="${u.avatar}" class="admin-user-avatar" alt="">`
                 : `<span class="admin-user-avatar admin-user-avatar--init">${(u.display_name || u.username)[0].toUpperCase()}</span>`;
-            html += `<tr>
-                <td style="font-weight:600;color:var(--gray)">#${u.id}</td>
-                <td>${avatarHtml}</td>
-                <td><strong>${u.username}</strong></td>
-                <td>${u.display_name || '-'}</td>
-                <td style="font-size:.85rem;color:var(--gray)">${u.email || '-'}</td>
-                <td>
-                    <select class="role-select" data-id="${u.id}" ${u.role==='super_admin'?'disabled':''}>
-                        <option value="super_admin" ${u.role==='super_admin'?'selected':''}>Super Admin</option>
-                        <option value="content_creator" ${u.role==='content_creator'?'selected':''}>Content Creator</option>
-                        <option value="moderator" ${u.role==='moderator'?'selected':''}>Moderator</option>
-                        <option value="user" ${u.role==='user'?'selected':''}>User</option>
-                    </select>
-                </td>
-                <td>${u.vocab_count}</td>
-                <td>${u.quiz_count}</td>
-                <td><span class="status-badge ${isBanned ? 'status-badge--rejected' : 'status-badge--approved'}">${isBanned ? '🔒 Đã khoá' : '🔓 Hoạt động'}</span></td>
-                <td style="font-size:.82rem;color:var(--gray)">${u.created_at}</td>
-                <td style="white-space:nowrap">
+            const displayName = u.display_name && u.display_name !== u.username ? u.display_name : '';
+            const createdDate = u.created_at ? u.created_at.slice(0,10) : '-';
+            const roleLabels = { super_admin:'Super Admin', content_creator:'Content Creator', moderator:'Moderator', user:'User' };
+            html += `<div class="user-card">
+                <div class="user-card__top">
+                    ${avatarHtml}
+                    <div class="user-card__info">
+                        <div class="user-card__name">${u.username} <span style="font-size:.75rem;color:var(--gray);font-weight:500">#${u.id}</span></div>
+                        ${displayName ? `<div class="user-card__display">${displayName}</div>` : ''}
+                        <div class="user-card__email">${u.email || '—'}</div>
+                    </div>
+                </div>
+                <div class="user-card__meta">
+                    <span class="user-card__meta-item"><i class="bi bi-book" style="color:#0d9488"></i> <strong>${u.vocab_count}</strong> từ</span>
+                    <span class="user-card__meta-item"><i class="bi bi-calendar3" style="color:#8b5cf6"></i> ${createdDate}</span>
+                    <span class="user-card__meta-item"><span class="status-badge ${isBanned ? 'status-badge--rejected' : 'status-badge--approved'}" style="padding:2px 8px">${isBanned ? '🔒 Khoá' : '🔓 Hđộng'}</span></span>
+                </div>
+                <div class="user-card__actions">
+                    <div class="user-card__role">
+                        <select class="role-select" data-id="${u.id}" ${u.role==='super_admin'?'disabled':''}>
+                            <option value="super_admin" ${u.role==='super_admin'?'selected':''}>Super Admin</option>
+                            <option value="content_creator" ${u.role==='content_creator'?'selected':''}>Content Creator</option>
+                            <option value="moderator" ${u.role==='moderator'?'selected':''}>Moderator</option>
+                            <option value="user" ${u.role==='user'?'selected':''}>User</option>
+                        </select>
+                    </div>
                     <button class="td-btn td-btn--detail" data-id="${u.id}" onclick="showUserDetail(${u.id})"><i class="bi bi-eye-fill"></i></button>
                     ${u.role !== 'super_admin' ? `<button class="td-btn td-btn--ban" data-id="${u.id}" data-banned="${isBanned}"><i class="bi ${isBanned ? 'bi-unlock-fill' : 'bi-lock-fill'}"></i></button>` : ''}
-                </td>
-            </tr>`;
+                </div>
+            </div>`;
         });
-        html += '</tbody></table>';
+        html += '</div>';
         container.innerHTML = html;
     }
 
@@ -1744,6 +1859,7 @@ try {
     loadLessons();
     loadUsers();
     loadPosts();
+    loadDashboard();
     let lineChartInstance = null;
     let pieChartInstance = null;
 

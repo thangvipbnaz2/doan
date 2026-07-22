@@ -148,3 +148,32 @@ function sidebarActive(string $page, string $current): string {
 })();
 </script>
 <script src="utils.js"></script>
+<script>
+(function(){
+    var userId = localStorage.getItem('hanngu_user_id');
+    if (!userId) return;
+    function checkBan() {
+        fetch('api.php?action=check_ban_status')
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                if (data.banned) {
+                    if (typeof showToast === 'function') {
+                        showToast('Tài khoản của bạn đã bị khoá. Đang đăng xuất...', 'error');
+                    }
+                    setTimeout(function(){
+                        localStorage.removeItem('hanngu_user_id');
+                        localStorage.removeItem('hanngu_username');
+                        localStorage.removeItem('hanngu_display_name');
+                        localStorage.removeItem('hanngu_avatar');
+                        fetch('auth.php?action=logout').then(function(){
+                            window.location.href = 'login.php';
+                        });
+                    }, 2000);
+                }
+            })
+            .catch(function(){});
+    }
+    checkBan();
+    setInterval(checkBan, 45000);
+})();
+</script>
